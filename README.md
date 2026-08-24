@@ -1,4 +1,4 @@
-# AutoSP AJakarta - Headless WordPress Project
+# AutoSPA Jakarta - Headless WordPress Project
 
 **Stack:** Next.js 15 + React 19 + TypeScript + Tailwind CSS + WPGraphQL + Headless WordPress
 **Last Updated:** 2026-08-18
