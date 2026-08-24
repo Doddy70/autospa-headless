@@ -134,9 +134,18 @@ Testimonial:
 | FAQ | 7001, 7002, 7003 | All populated |
 | Testimonial | 7004, 7005 | All populated |
 
+## Known Issues
+
+| Issue | Severity | Status |
+|-------|----------|--------|
+| WordPress 7.0.4 anomaly | Medium | Documented |
+| Category consolidation | — | Scheduled for 2D.9 |
+| FAQ faqCategory not exposed | Low | Documented in 2D.8 report |
+| Project challenge/solution/result not exposed | Low | Documented in 2D.8 report |
+
 ## Documentation
 
-- **API Contract:** `docs/phase-2d8-execution-report.md` ← CRITICAL
+- **API Testing Report:** `docs/phase-2d8-api-testing-report.md` ← NEW
 - **Phase Reports:** `docs/phase-2d*-execution-report.md`
 - **Full Specs:** `docs/phase-2c-*.md`
 - **Content Model:** `docs/phase-2b-content-model.md`
