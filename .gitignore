@@ -1,0 +1,21 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude
+.claude/
+.remember/
+
+# Archives and unrelated docs
+archived/
+Materi\ Raw/
+
+# OS files in subdirectories
+**/.DS_Store

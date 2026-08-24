@@ -1,0 +1,464 @@
+[
+    {
+        "key": "group_location_identity",
+        "title": "Location Identity",
+        "fields": [
+            {
+                "key": "field_location_status",
+                "label": "Location Status",
+                "name": "location_status",
+                "type": "select",
+                "required": 1,
+                "default_value": "draft",
+                "choices": {
+                    "draft": "Draft (Not verified)",
+                    "verified": "Verified (Data complete)",
+                    "active": "Active (Operating)",
+                    "inactive": "Inactive (Closed/Temporary)"
+                }
+            },
+            {
+                "key": "field_location_phone",
+                "label": "Phone",
+                "name": "location_phone",
+                "type": "text",
+                "required": 1,
+                "placeholder": "021-XXXX-XXXX"
+            },
+            {
+                "key": "field_location_whatsapp",
+                "label": "WhatsApp",
+                "name": "location_whatsapp",
+                "type": "text",
+                "placeholder": "628XXXXXXXXX"
+            },
+            {
+                "key": "field_location_email",
+                "label": "Email",
+                "name": "location_email",
+                "type": "email",
+                "placeholder": "info@autospajakarta.com"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_location_address",
+        "title": "Location Address",
+        "fields": [
+            {
+                "key": "field_address_street",
+                "label": "Street Address",
+                "name": "address_street",
+                "type": "text",
+                "required": 1,
+                "placeholder": "Jl. Pluit Karang Ayu Barat No.16"
+            },
+            {
+                "key": "field_address_district",
+                "label": "District",
+                "name": "address_district",
+                "type": "text",
+                "placeholder": "Pluit"
+            },
+            {
+                "key": "field_address_city",
+                "label": "City",
+                "name": "address_city",
+                "type": "text",
+                "required": 1,
+                "placeholder": "Jakarta Utara"
+            },
+            {
+                "key": "field_address_province",
+                "label": "Province",
+                "name": "address_province",
+                "type": "text",
+                "required": 1,
+                "placeholder": "DKI Jakarta"
+            },
+            {
+                "key": "field_address_postal_code",
+                "label": "Postal Code",
+                "name": "address_postal_code",
+                "type": "text",
+                "placeholder": "14440"
+            },
+            {
+                "key": "field_address_country",
+                "label": "Country",
+                "name": "address_country",
+                "type": "text",
+                "default_value": "Indonesia"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_location_geo",
+        "title": "Location Geo",
+        "fields": [
+            {
+                "key": "field_geo_latitude",
+                "label": "Latitude",
+                "name": "geo_latitude",
+                "type": "number",
+                "required": 1,
+                "step": 0.000001
+            },
+            {
+                "key": "field_geo_longitude",
+                "label": "Longitude",
+                "name": "geo_longitude",
+                "type": "number",
+                "required": 1,
+                "step": 0.000001
+            },
+            {
+                "key": "field_google_maps_url",
+                "label": "Google Maps URL",
+                "name": "google_maps_url",
+                "type": "url",
+                "placeholder": "https://maps.google.com/..."
+            },
+            {
+                "key": "field_google_place_id",
+                "label": "Google Place ID",
+                "name": "google_place_id",
+                "type": "text",
+                "placeholder": "ChIJ..."
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 2,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_location_business",
+        "title": "Business Hours",
+        "fields": [
+            {
+                "key": "field_opening_hours",
+                "label": "Opening Hours",
+                "name": "opening_hours",
+                "type": "repeater",
+                "min": 7,
+                "max": 7,
+                "layout": "row",
+                "button_label": "Add Day",
+                "sub_fields": [
+                    {
+                        "key": "field_day_name",
+                        "label": "Day",
+                        "name": "day_name",
+                        "type": "select",
+                        "required": 1,
+                        "choices": {
+                            "monday": "Monday",
+                            "tuesday": "Tuesday",
+                            "wednesday": "Wednesday",
+                            "thursday": "Thursday",
+                            "friday": "Friday",
+                            "saturday": "Saturday",
+                            "sunday": "Sunday"
+                        }
+                    },
+                    {
+                        "key": "field_is_closed",
+                        "label": "Closed",
+                        "name": "is_closed",
+                        "type": "true_false",
+                        "default_value": 0,
+                        "message": "Mark if closed on this day"
+                    },
+                    {
+                        "key": "field_open_time",
+                        "label": "Open Time",
+                        "name": "open_time",
+                        "type": "time_picker",
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    },
+                    {
+                        "key": "field_close_time",
+                        "label": "Close Time",
+                        "name": "close_time",
+                        "type": "time_picker",
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 3,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_location_content",
+        "title": "Location Content",
+        "fields": [
+            {
+                "key": "field_location_tagline",
+                "label": "Tagline",
+                "name": "location_tagline",
+                "type": "text",
+                "maxlength": 100,
+                "placeholder": "Spesialis Ceramic Coating sejak 2014"
+            },
+            {
+                "key": "field_location_description",
+                "label": "Description",
+                "name": "location_description",
+                "type": "wysiwyg",
+                "tabs": "visual",
+                "toolbar": "full",
+                "media_upload": 1
+            },
+            {
+                "key": "field_location_highlights",
+                "label": "Highlights",
+                "name": "location_highlights",
+                "type": "repeater",
+                "max": 5,
+                "button_label": "Add Highlight",
+                "sub_fields": [
+                    {
+                        "key": "field_highlight",
+                        "label": "Highlight",
+                        "name": "highlight",
+                        "type": "text",
+                        "required": 1
+                    }
+                ]
+            },
+            {
+                "key": "field_location_facilities",
+                "label": "Facilities",
+                "name": "location_facilities",
+                "type": "repeater",
+                "max": 10,
+                "button_label": "Add Facility",
+                "sub_fields": [
+                    {
+                        "key": "field_facility",
+                        "label": "Facility",
+                        "name": "facility",
+                        "type": "text",
+                        "required": 1
+                    }
+                ]
+            },
+            {
+                "key": "field_service_areas",
+                "label": "Service Areas",
+                "name": "service_areas",
+                "type": "repeater",
+                "button_label": "Add Area",
+                "sub_fields": [
+                    {
+                        "key": "field_area_name",
+                        "label": "Area Name",
+                        "name": "area_name",
+                        "type": "text",
+                        "required": 1,
+                        "placeholder": "Jakarta Utara"
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 4,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_location_relationships",
+        "title": "Location Relationships",
+        "fields": [
+            {
+                "key": "field_location_services",
+                "label": "Services Offered",
+                "name": "location_services",
+                "type": "relationship",
+                "post_type": ["service"],
+                "filters": ["search"],
+                "min": 1
+            },
+            {
+                "key": "field_location_google_business_url",
+                "label": "Google Business URL",
+                "name": "location_google_business_url",
+                "type": "url",
+                "placeholder": "Google Business Profile URL"
+            },
+            {
+                "key": "field_location_testimonials",
+                "label": "Testimonials",
+                "name": "location_testimonials",
+                "type": "relationship",
+                "post_type": ["testimonial"],
+                "filters": ["search"]
+            },
+            {
+                "key": "field_location_faqs",
+                "label": "FAQs",
+                "name": "location_faqs",
+                "type": "relationship",
+                "post_type": ["faq"],
+                "filters": ["search"]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 5,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_location_gallery",
+        "title": "Location Gallery",
+        "fields": [
+            {
+                "key": "field_location_gallery",
+                "label": "Gallery",
+                "name": "location_gallery",
+                "type": "repeater",
+                "max": 30,
+                "layout": "row",
+                "button_label": "Add Image",
+                "sub_fields": [
+                    {
+                        "key": "field_location_gallery_image",
+                        "label": "Image",
+                        "name": "location_gallery_image",
+                        "type": "image",
+                        "return_format": "array",
+                        "required": 1
+                    },
+                    {
+                        "key": "field_location_gallery_caption",
+                        "label": "Caption",
+                        "name": "location_gallery_caption",
+                        "type": "text"
+                    },
+                    {
+                        "key": "field_location_gallery_type",
+                        "label": "Type",
+                        "name": "location_gallery_type",
+                        "type": "select",
+                        "choices": {
+                            "exterior": "Exterior",
+                            "interior": "Interior",
+                            "facility": "Facility",
+                            "team": "Team",
+                            "general": "General"
+                        }
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "location"
+                }
+            ]
+        ],
+        "menu_order": 6,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

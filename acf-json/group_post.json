@@ -1,0 +1,100 @@
+[
+    {
+        "key": "group_post_relationships",
+        "title": "Post Relationships",
+        "fields": [
+            {
+                "key": "field_post_topic",
+                "label": "Topic",
+                "name": "post_topic",
+                "type": "text",
+                "placeholder": "Ceramic Coating",
+                "instructions": "Semantic topic classification"
+            },
+            {
+                "key": "field_post_service",
+                "label": "Related Service",
+                "name": "post_service",
+                "type": "relationship",
+                "post_type": ["service"]
+            },
+            {
+                "key": "field_post_location",
+                "label": "Related Location",
+                "name": "post_location",
+                "type": "relationship",
+                "post_type": ["location"]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_migration_status",
+        "title": "Migration Status",
+        "fields": [
+            {
+                "key": "field_migration_status",
+                "label": "Status",
+                "name": "migration_status",
+                "type": "select",
+                "choices": {
+                    "pending": "Pending Review",
+                    "reviewed": "Reviewed",
+                    "updated": "Updated",
+                    "merged": "Merged",
+                    "redirected": "Redirected",
+                    "noindex": "Noindex"
+                }
+            },
+            {
+                "key": "field_migration_notes",
+                "label": "Notes",
+                "name": "migration_notes",
+                "type": "textarea",
+                "rows": 3,
+                "placeholder": "Internal notes about migration status"
+            },
+            {
+                "key": "field_migration_date",
+                "label": "Migration Date",
+                "name": "migration_date",
+                "type": "date_time_picker",
+                "display_format": "d/m/Y H:i",
+                "return_format": "Y-m-d H:i:s"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

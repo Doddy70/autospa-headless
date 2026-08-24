@@ -1,0 +1,516 @@
+[
+    {
+        "key": "group_service_hero",
+        "title": "Service Hero",
+        "fields": [
+            {
+                "key": "field_hero_image",
+                "label": "Hero Image",
+                "name": "hero_image",
+                "type": "image",
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all",
+                "required": 1
+            },
+            {
+                "key": "field_hero_title",
+                "label": "Hero Title",
+                "name": "hero_title",
+                "type": "text",
+                "maxlength": 80,
+                "required": 1
+            },
+            {
+                "key": "field_hero_description",
+                "label": "Hero Description",
+                "name": "hero_description",
+                "type": "textarea",
+                "rows": 3,
+                "maxlength": 300
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "service"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_service_content",
+        "title": "Service Content",
+        "fields": [
+            {
+                "key": "field_short_description",
+                "label": "Short Description",
+                "name": "short_description",
+                "type": "textarea",
+                "rows": 4,
+                "maxlength": 500,
+                "required": 1
+            },
+            {
+                "key": "field_description",
+                "label": "Description",
+                "name": "description",
+                "type": "wysiwyg",
+                "tabs": "visual",
+                "toolbar": "full",
+                "media_upload": 1
+            },
+            {
+                "key": "field_benefits",
+                "label": "Benefits",
+                "name": "benefits",
+                "type": "repeater",
+                "collapsed": "field_benefit_title",
+                "min": 3,
+                "max": 7,
+                "layout": "row",
+                "button_label": "Add Benefit",
+                "sub_fields": [
+                    {
+                        "key": "field_benefit_title",
+                        "label": "Benefit Title",
+                        "name": "benefit_title",
+                        "type": "text",
+                        "required": 1
+                    },
+                    {
+                        "key": "field_benefit_description",
+                        "label": "Benefit Description",
+                        "name": "benefit_description",
+                        "type": "textarea",
+                        "rows": 2
+                    }
+                ]
+            },
+            {
+                "key": "field_process",
+                "label": "Process Steps",
+                "name": "process",
+                "type": "repeater",
+                "min": 4,
+                "max": 8,
+                "layout": "row",
+                "button_label": "Add Step",
+                "sub_fields": [
+                    {
+                        "key": "field_step_number",
+                        "label": "Step Number",
+                        "name": "step_number",
+                        "type": "number",
+                        "required": 1
+                    },
+                    {
+                        "key": "field_step_title",
+                        "label": "Step Title",
+                        "name": "step_title",
+                        "type": "text",
+                        "required": 1
+                    },
+                    {
+                        "key": "field_step_description",
+                        "label": "Step Description",
+                        "name": "step_description",
+                        "type": "textarea",
+                        "rows": 3
+                    },
+                    {
+                        "key": "field_step_image",
+                        "label": "Step Image",
+                        "name": "step_image",
+                        "type": "image",
+                        "return_format": "url"
+                    }
+                ]
+            },
+            {
+                "key": "field_technology",
+                "label": "Technology",
+                "name": "technology",
+                "type": "repeater",
+                "button_label": "Add Technology",
+                "sub_fields": [
+                    {
+                        "key": "field_technology_name",
+                        "label": "Technology Name",
+                        "name": "technology_name",
+                        "type": "text",
+                        "required": 1
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "service"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_service_packages",
+        "title": "Service Packages",
+        "fields": [
+            {
+                "key": "field_packages",
+                "label": "Packages",
+                "name": "packages",
+                "type": "repeater",
+                "collapsed": "field_package_name",
+                "min": 1,
+                "max": 10,
+                "layout": "block",
+                "button_label": "Add Package",
+                "sub_fields": [
+                    {
+                        "key": "field_package_name",
+                        "label": "Package Name",
+                        "name": "package_name",
+                        "type": "text",
+                        "required": 1,
+                        "placeholder": "Light Package"
+                    },
+                    {
+                        "key": "field_package_tier",
+                        "label": "Package Tier",
+                        "name": "package_tier",
+                        "type": "select",
+                        "required": 1,
+                        "choices": {
+                            "basic": "Basic",
+                            "standard": "Standard",
+                            "premium": "Premium",
+                            "ultimate": "Ultimate"
+                        }
+                    },
+                    {
+                        "key": "field_package_description",
+                        "label": "Package Description",
+                        "name": "package_description",
+                        "type": "text",
+                        "placeholder": "Double layer nano ceramic coating"
+                    },
+                    {
+                        "key": "field_package_recommended",
+                        "label": "Recommended Package",
+                        "name": "package_recommended",
+                        "type": "true_false",
+                        "default_value": 0,
+                        "message": "Mark as recommended package"
+                    },
+                    {
+                        "key": "field_vehicle_sizes",
+                        "label": "Vehicle Sizes & Pricing",
+                        "name": "vehicle_sizes",
+                        "type": "repeater",
+                        "min": 5,
+                        "max": 5,
+                        "layout": "row",
+                        "sub_fields": [
+                            {
+                                "key": "field_size_label",
+                                "label": "Size",
+                                "name": "size_label",
+                                "type": "select",
+                                "required": 1,
+                                "choices": {
+                                    "small": "Small (City Car)",
+                                    "medium": "Medium (Sedan/SUV)",
+                                    "large": "Large (Large SUV)",
+                                    "xlarge": "X-Large (MPV)",
+                                    "super": "Super (Luxury)"
+                                }
+                            },
+                            {
+                                "key": "field_price",
+                                "label": "Price",
+                                "name": "price",
+                                "type": "number",
+                                "required": 1,
+                                "thousand_separator": ",",
+                                "prepend": "IDR"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "field_package_features",
+                        "label": "Package Features",
+                        "name": "package_features",
+                        "type": "repeater",
+                        "button_label": "Add Feature",
+                        "sub_fields": [
+                            {
+                                "key": "field_feature",
+                                "label": "Feature",
+                                "name": "feature",
+                                "type": "text",
+                                "required": 1
+                            }
+                        ]
+                    },
+                    {
+                        "key": "field_package_durability",
+                        "label": "Durability",
+                        "name": "package_durability",
+                        "type": "text",
+                        "placeholder": "1-2 years"
+                    },
+                    {
+                        "key": "field_package_maintenance",
+                        "label": "Maintenance",
+                        "name": "package_maintenance",
+                        "type": "text",
+                        "placeholder": "1 year member maintenance"
+                    },
+                    {
+                        "key": "field_package_workmanship",
+                        "label": "Workmanship Time",
+                        "name": "package_workmanship",
+                        "type": "text",
+                        "placeholder": "3-4 days"
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "service"
+                }
+            ]
+        ],
+        "menu_order": 2,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_service_media",
+        "title": "Service Gallery",
+        "fields": [
+            {
+                "key": "field_gallery",
+                "label": "Gallery",
+                "name": "gallery",
+                "type": "repeater",
+                "max": 20,
+                "layout": "row",
+                "button_label": "Add Image",
+                "sub_fields": [
+                    {
+                        "key": "field_gallery_image",
+                        "label": "Image",
+                        "name": "gallery_image",
+                        "type": "image",
+                        "return_format": "array",
+                        "required": 1
+                    },
+                    {
+                        "key": "field_gallery_caption",
+                        "label": "Caption",
+                        "name": "gallery_caption",
+                        "type": "text"
+                    },
+                    {
+                        "key": "field_gallery_type",
+                        "label": "Type",
+                        "name": "gallery_type",
+                        "type": "select",
+                        "choices": {
+                            "before": "Before Image",
+                            "after": "After Image",
+                            "process": "Process Image",
+                            "general": "General"
+                        }
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "service"
+                }
+            ]
+        ],
+        "menu_order": 3,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_service_relationships",
+        "title": "Service Relationships",
+        "fields": [
+            {
+                "key": "field_related_locations",
+                "label": "Related Locations",
+                "name": "related_locations",
+                "type": "relationship",
+                "post_type": ["location"],
+                "filters": ["search"],
+                "min": 1
+            },
+            {
+                "key": "field_related_projects",
+                "label": "Related Projects",
+                "name": "related_projects",
+                "type": "relationship",
+                "post_type": ["project"],
+                "filters": ["search"]
+            },
+            {
+                "key": "field_related_faqs",
+                "label": "Related FAQs",
+                "name": "related_faqs",
+                "type": "relationship",
+                "post_type": ["faq"],
+                "filters": ["search"]
+            },
+            {
+                "key": "field_related_services",
+                "label": "Related Services",
+                "name": "related_services",
+                "type": "relationship",
+                "post_type": ["service"],
+                "filters": ["search"]
+            },
+            {
+                "key": "field_service_category",
+                "label": "Service Category",
+                "name": "service_category",
+                "type": "select",
+                "required": 1,
+                "choices": {
+                    "coating": "Coating",
+                    "protection": "Protection",
+                    "detailing": "Detailing",
+                    "wash": "Wash",
+                    "other": "Other"
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "service"
+                }
+            ]
+        ],
+        "menu_order": 4,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_service_seo",
+        "title": "Service SEO",
+        "fields": [
+            {
+                "key": "field_seo_title",
+                "label": "SEO Title",
+                "name": "seo_title",
+                "type": "text",
+                "maxlength": 60,
+                "placeholder": "{title} | AutoSPA Jakarta"
+            },
+            {
+                "key": "field_seo_description",
+                "label": "SEO Description",
+                "name": "seo_description",
+                "type": "textarea",
+                "rows": 3,
+                "maxlength": 160
+            },
+            {
+                "key": "field_seo_canonical",
+                "label": "Canonical URL",
+                "name": "seo_canonical",
+                "type": "url"
+            },
+            {
+                "key": "field_seo_robots",
+                "label": "Robots",
+                "name": "seo_robots",
+                "type": "checkbox",
+                "choices": {
+                    "index": "Index",
+                    "follow": "Follow"
+                }
+            },
+            {
+                "key": "field_seo_focus_keyword",
+                "label": "Focus Keyword",
+                "name": "seo_focus_keyword",
+                "type": "text"
+            },
+            {
+                "key": "field_seo_og_image",
+                "label": "OG Image",
+                "name": "seo_og_image",
+                "type": "image",
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "service"
+                }
+            ]
+        ],
+        "menu_order": 5,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

@@ -1,0 +1,166 @@
+[
+    {
+        "key": "group_testimonial_content",
+        "title": "Testimonial Content",
+        "fields": [
+            {
+                "key": "field_customer_name",
+                "label": "Customer Name",
+                "name": "customer_name",
+                "type": "text",
+                "required": 1,
+                "placeholder": "Bpk. John Doe"
+            },
+            {
+                "key": "field_customer_role",
+                "label": "Role/Title",
+                "name": "customer_role",
+                "type": "text",
+                "placeholder": "Pengusaha"
+            },
+            {
+                "key": "field_customer_company",
+                "label": "Company",
+                "name": "customer_company",
+                "type": "text",
+                "placeholder": "PT Contoh Indonesia"
+            },
+            {
+                "key": "field_customer_quote",
+                "label": "Quote",
+                "name": "customer_quote",
+                "type": "textarea",
+                "rows": 4,
+                "required": 1
+            },
+            {
+                "key": "field_customer_vehicle",
+                "label": "Vehicle",
+                "name": "customer_vehicle",
+                "type": "text",
+                "placeholder": "Toyota Alphard 2023"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "testimonial"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_testimonial_media",
+        "title": "Testimonial Media",
+        "fields": [
+            {
+                "key": "field_customer_photo",
+                "label": "Customer Photo",
+                "name": "customer_photo",
+                "type": "image",
+                "return_format": "array",
+                "preview_size": "thumbnail"
+            },
+            {
+                "key": "field_video_url",
+                "label": "Video URL",
+                "name": "video_url",
+                "type": "url",
+                "placeholder": "YouTube or video URL (optional)"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "testimonial"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_testimonial_context",
+        "title": "Testimonial Context",
+        "fields": [
+            {
+                "key": "field_testimonial_service",
+                "label": "Related Service",
+                "name": "testimonial_service",
+                "type": "relationship",
+                "post_type": ["service"]
+            },
+            {
+                "key": "field_testimonial_location",
+                "label": "Related Location",
+                "name": "testimonial_location",
+                "type": "relationship",
+                "post_type": ["location"]
+            },
+            {
+                "key": "field_testimonial_source",
+                "label": "Source",
+                "name": "testimonial_source",
+                "type": "select",
+                "required": 1,
+                "choices": {
+                    "website": "Website",
+                    "google": "Google Review",
+                    "instagram": "Instagram",
+                    "facebook": "Facebook",
+                    "other": "Other"
+                }
+            },
+            {
+                "key": "field_testimonial_source_url",
+                "label": "Source URL",
+                "name": "testimonial_source_url",
+                "type": "url",
+                "placeholder": "Link to original review"
+            },
+            {
+                "key": "field_testimonial_featured",
+                "label": "Featured",
+                "name": "testimonial_featured",
+                "type": "true_false",
+                "default_value": 0,
+                "message": "Display prominently"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "testimonial"
+                }
+            ]
+        ],
+        "menu_order": 2,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

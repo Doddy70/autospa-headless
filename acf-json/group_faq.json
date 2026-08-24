@@ -1,0 +1,108 @@
+[
+    {
+        "key": "group_faq_content",
+        "title": "FAQ Content",
+        "fields": [
+            {
+                "key": "field_faq_question",
+                "label": "Question",
+                "name": "faq_question",
+                "type": "text",
+                "required": 1,
+                "placeholder": "Berapa lama proses ceramic coating?"
+            },
+            {
+                "key": "field_faq_answer",
+                "label": "Answer",
+                "name": "faq_answer",
+                "type": "wysiwyg",
+                "tabs": "visual",
+                "toolbar": "full",
+                "media_upload": 1,
+                "required": 1
+            },
+            {
+                "key": "field_faq_order",
+                "label": "Display Order",
+                "name": "faq_order",
+                "type": "number",
+                "default_value": 0
+            },
+            {
+                "key": "field_faq_featured",
+                "label": "Featured",
+                "name": "faq_featured",
+                "type": "true_false",
+                "default_value": 0,
+                "message": "Show in FAQ page highlights"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "faq"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_faq_context",
+        "title": "FAQ Context",
+        "fields": [
+            {
+                "key": "field_faq_service",
+                "label": "Related Service",
+                "name": "faq_service",
+                "type": "relationship",
+                "post_type": ["service"]
+            },
+            {
+                "key": "field_faq_location",
+                "label": "Related Location",
+                "name": "faq_location",
+                "type": "relationship",
+                "post_type": ["location"]
+            },
+            {
+                "key": "field_faq_category",
+                "label": "Category",
+                "name": "faq_category",
+                "type": "select",
+                "choices": {
+                    "general": "General",
+                    "pricing": "Pricing",
+                    "process": "Process",
+                    "technical": "Technical",
+                    "booking": "Booking"
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "faq"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

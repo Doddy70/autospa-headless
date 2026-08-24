@@ -1,0 +1,3 @@
+{
+  "query": "{ project(id: \"6999\", idType: DATABASE_ID) { databaseId title projectContent { vehicleBrand vehicleModel } projectRelationships { projectService { nodes { databaseId } } completedAt } }"
+}

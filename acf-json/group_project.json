@@ -1,0 +1,178 @@
+[
+    {
+        "key": "group_project_content",
+        "title": "Project Content",
+        "fields": [
+            {
+                "key": "field_vehicle_brand",
+                "label": "Vehicle Brand",
+                "name": "vehicle_brand",
+                "type": "text",
+                "required": 1,
+                "placeholder": "Toyota"
+            },
+            {
+                "key": "field_vehicle_model",
+                "label": "Vehicle Model",
+                "name": "vehicle_model",
+                "type": "text",
+                "required": 1,
+                "placeholder": "Alphard"
+            },
+            {
+                "key": "field_vehicle_year",
+                "label": "Vehicle Year",
+                "name": "vehicle_year",
+                "type": "text",
+                "placeholder": "2023"
+            },
+            {
+                "key": "field_vehicle_color",
+                "label": "Vehicle Color",
+                "name": "vehicle_color",
+                "type": "text",
+                "placeholder": "Black"
+            },
+            {
+                "key": "field_project_challenge",
+                "label": "Challenge",
+                "name": "project_challenge",
+                "type": "textarea",
+                "rows": 4,
+                "placeholder": "Apa masalah yang dibawa customer?"
+            },
+            {
+                "key": "field_project_solution",
+                "label": "Solution",
+                "name": "project_solution",
+                "type": "textarea",
+                "rows": 4,
+                "placeholder": "Solusi yang dilakukan"
+            },
+            {
+                "key": "field_project_result",
+                "label": "Result",
+                "name": "project_result",
+                "type": "textarea",
+                "rows": 4,
+                "placeholder": "Hasil akhir yang dicapai"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "project"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_project_media",
+        "title": "Project Media",
+        "fields": [
+            {
+                "key": "field_before_images",
+                "label": "Before Images",
+                "name": "before_images",
+                "type": "gallery",
+                "instructions": "Upload before images (minimum 1)",
+                "min": 1
+            },
+            {
+                "key": "field_process_images",
+                "label": "Process Images",
+                "name": "process_images",
+                "type": "gallery",
+                "instructions": "Upload process/work in progress images"
+            },
+            {
+                "key": "field_after_images",
+                "label": "After Images",
+                "name": "after_images",
+                "type": "gallery",
+                "instructions": "Upload after images (minimum 1)",
+                "min": 1
+            },
+            {
+                "key": "field_project_gallery",
+                "label": "Additional Gallery",
+                "name": "project_gallery",
+                "type": "gallery",
+                "instructions": "Additional project images"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "project"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_project_relationships",
+        "title": "Project Relationships",
+        "fields": [
+            {
+                "key": "field_project_service",
+                "label": "Service",
+                "name": "project_service",
+                "type": "relationship",
+                "post_type": ["service"],
+                "required": 1
+            },
+            {
+                "key": "field_project_location",
+                "label": "Location",
+                "name": "project_location",
+                "type": "relationship",
+                "post_type": ["location"]
+            },
+            {
+                "key": "field_completed_at",
+                "label": "Completed Date",
+                "name": "completed_at",
+                "type": "date_picker",
+                "display_format": "d/m/Y",
+                "return_format": "Y-m-d"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "project"
+                }
+            ]
+        ],
+        "menu_order": 2,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

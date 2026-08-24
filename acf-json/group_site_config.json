@@ -1,0 +1,193 @@
+[
+    {
+        "key": "group_site_config",
+        "title": "Site Configuration",
+        "fields": [
+            {
+                "key": "field_tab_organization",
+                "label": "Organization Info",
+                "name": "tab_organization",
+                "type": "tab",
+                "placement": "left"
+            },
+            {
+                "key": "field_org_name",
+                "label": "Organization Name",
+                "name": "org_name",
+                "type": "text",
+                "required": 1,
+                "default_value": "AutoSP AJakarta"
+            },
+            {
+                "key": "field_org_legal_name",
+                "label": "Legal Name",
+                "name": "org_legal_name",
+                "type": "text"
+            },
+            {
+                "key": "field_org_description",
+                "label": "Description",
+                "name": "org_description",
+                "type": "textarea",
+                "rows": 3
+            },
+            {
+                "key": "field_org_logo",
+                "label": "Logo",
+                "name": "org_logo",
+                "type": "image",
+                "return_format": "array"
+            },
+            {
+                "key": "field_org_favicon",
+                "label": "Favicon",
+                "name": "org_favicon",
+                "type": "image",
+                "return_format": "array"
+            },
+            {
+                "key": "field_org_url",
+                "label": "Website URL",
+                "name": "org_url",
+                "type": "url",
+                "default_value": "https://autospajakarta.com"
+            },
+            {
+                "key": "field_tab_contact",
+                "label": "Contact Info",
+                "name": "tab_contact",
+                "type": "tab",
+                "placement": "left"
+            },
+            {
+                "key": "field_org_primary_phone",
+                "label": "Primary Phone",
+                "name": "org_primary_phone",
+                "type": "text",
+                "placeholder": "021-XXXX-XXXX"
+            },
+            {
+                "key": "field_org_whatsapp",
+                "label": "WhatsApp",
+                "name": "org_whatsapp",
+                "type": "text",
+                "placeholder": "628XXXXXXXXX"
+            },
+            {
+                "key": "field_org_email",
+                "label": "Email",
+                "name": "org_email",
+                "type": "email",
+                "default_value": "info@autospajakarta.com"
+            },
+            {
+                "key": "field_tab_social",
+                "label": "Social Profiles",
+                "name": "tab_social",
+                "type": "tab",
+                "placement": "left"
+            },
+            {
+                "key": "field_social_instagram",
+                "label": "Instagram",
+                "name": "social_instagram",
+                "type": "url"
+            },
+            {
+                "key": "field_social_facebook",
+                "label": "Facebook",
+                "name": "social_facebook",
+                "type": "url"
+            },
+            {
+                "key": "field_social_youtube",
+                "label": "YouTube",
+                "name": "social_youtube",
+                "type": "url"
+            },
+            {
+                "key": "field_social_tiktok",
+                "label": "TikTok",
+                "name": "social_tiktok",
+                "type": "url"
+            },
+            {
+                "key": "field_social_linkedin",
+                "label": "LinkedIn",
+                "name": "social_linkedin",
+                "type": "url"
+            },
+            {
+                "key": "field_tab_seo",
+                "label": "Default SEO",
+                "name": "tab_seo",
+                "type": "tab",
+                "placement": "left"
+            },
+            {
+                "key": "field_default_seo_title",
+                "label": "Default SEO Title",
+                "name": "default_seo_title",
+                "type": "text",
+                "maxlength": 60,
+                "placeholder": "{page_title} | AutoSPA Jakarta"
+            },
+            {
+                "key": "field_default_seo_description",
+                "label": "Default SEO Description",
+                "name": "default_seo_description",
+                "type": "textarea",
+                "rows": 3,
+                "maxlength": 160
+            },
+            {
+                "key": "field_default_og_image",
+                "label": "Default OG Image",
+                "name": "default_og_image",
+                "type": "image",
+                "return_format": "array"
+            },
+            {
+                "key": "field_default_robots",
+                "label": "Default Robots",
+                "name": "default_robots",
+                "type": "checkbox",
+                "choices": {
+                    "index": "Index",
+                    "follow": "Follow"
+                }
+            },
+            {
+                "key": "field_google_analytics_id",
+                "label": "Google Analytics ID",
+                "name": "google_analytics_id",
+                "type": "text",
+                "placeholder": "G-XXXXXXXXXX"
+            },
+            {
+                "key": "field_google_tag_manager_id",
+                "label": "Google Tag Manager ID",
+                "name": "google_tag_manager_id",
+                "type": "text",
+                "placeholder": "GTM-XXXXXXX"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "site-configuration"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "acf_after_title",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_screen": "",
+        "active": true,
+        "description": ""
+    }
+]
