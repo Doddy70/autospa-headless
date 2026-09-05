@@ -12,11 +12,10 @@ export default function HomePage() {
 
   return (
     <>
-      {/* PalletRossCards must be rendered inside the scroll container */}
-      {/* It reads scroll position and animates cards over the content */}
+      {/* PalletRossCards overlay - renders over Hero and Section 2 */}
       <PalletRossCards containerRef={containerRef} />
 
-      {/* Container ref spans from Hero through Section 2 */}
+      {/* Main content container */}
       <div
         ref={containerRef}
         style={{
@@ -25,10 +24,10 @@ export default function HomePage() {
           overflowX: 'hidden',
         }}
       >
+        {/* Hero Section */}
         <Hero />
 
-        {/* Section 2 - The e-commerce / cascade section */}
-        {/* data-section="two" is required by PalletRossCards to determine lock timing */}
+        {/* Section 2 - Refine & Protect */}
         <section
           data-section="two"
           style={{
@@ -41,7 +40,6 @@ export default function HomePage() {
             overflow: 'hidden',
           }}
         >
-          {/* Left text column */}
           <div style={{ width: 520, paddingTop: 32 }}>
             <div
               style={{
@@ -90,7 +88,6 @@ export default function HomePage() {
               vehicle looking its best.
             </p>
 
-            {/* CTA Buttons */}
             <div style={{ display: 'flex', marginTop: 48, gap: 12 }}>
               <button
                 style={{
@@ -111,8 +108,13 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Gallery Banner */}
         <GalleryBanner />
+
+        {/* AutoSpa Features Section */}
         <AutoSpaFeaturesSection />
+
+        {/* CTA Section */}
         <CTA />
       </div>
     </>

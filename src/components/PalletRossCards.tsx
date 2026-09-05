@@ -160,16 +160,17 @@ function getHeroRowY(h: number): number {
 function cardShellStyle(z: number, cardSize: number): React.CSSProperties {
 	return {
 		position: "absolute",
-		top: 0,
-		left: 0,
-		width: cardSize,
-		height: cardSize,
-		borderRadius: 18,
+		top: "0px",
+		left: "0px",
+		width: `${cardSize}px`,
+		height: `${cardSize}px`,
+		borderRadius: "18px",
 		overflow: "hidden",
 		boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
-		zIndex: z,
+		zIndex: String(z),
 		willChange: "transform",
-	};
+		opacity: "0",
+	} as React.CSSProperties;
 }
 
 function CardImage({ src, cardSize }: { src: string; cardSize: number }) {
@@ -486,6 +487,7 @@ export default function PalletRossCards({
 	if (!introDone) {
 		return (
 			<div
+				suppressHydrationWarning
 				style={{
 					position: "fixed",
 					inset: 0,
@@ -537,6 +539,7 @@ export default function PalletRossCards({
 
 	return (
 		<div
+			suppressHydrationWarning
 			data-progress={currentProgress.toFixed(3)}
 			data-locked={String(isLocked)}
 			style={{ ...wrapperStyle, pointerEvents: "none" }}
