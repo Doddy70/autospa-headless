@@ -1,0 +1,253 @@
+/* SevenCardSection - Transition Object Architecture */
+
+/* ============================================
+   SECTION (scrollTrack)
+   The scrollable container that creates
+   the animation distance
+   ============================================ */
+.section {
+  position: relative;
+  /* Height determined by: (CASCADE_ORIGIN_Y - FAN_CENTER_Y) + animation space */
+  /* This creates enough scroll distance for the full animation */
+  min-height: 200vh;
+  background: var(--color-background-5, #000000);
+  overflow: hidden;
+}
+
+/* ============================================
+   STICKY CONTAINER (visualStage)
+   The fixed viewport area where cards animate
+   ============================================ */
+.stickyContainer {
+  position: sticky;
+  top: 60px;
+  height: 100vh;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ============================================
+   CARDS
+   Positioned absolutely, animated by Framer Motion
+   ============================================ */
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  background: var(--color-background-5, #000000);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  border-radius: 18px;
+}
+
+/* ============================================
+   SECTION CONTENT
+   Positioned to the right of the cascade
+   ============================================ */
+.content {
+  position: relative;
+  z-index: 10;
+  padding: 80px 64px;
+  max-width: 520px;
+  margin-left: 52%;
+  mix-blend-mode: normal;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: rgba(252, 252, 252, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.heading {
+  font-family: var(--font-inter-tight, 'Inter Tight', sans-serif);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  color: var(--color-accent, #fcfcfc);
+  margin: 0 0 24px 0;
+}
+
+.headingLine {
+  display: block;
+}
+
+.primaryWord {
+  display: inline-block;
+  margin-right: 0.25em;
+  color: var(--color-accent, #fcfcfc);
+}
+
+.accentWord {
+  display: inline-block;
+  margin-right: 0.25em;
+  color: var(--color-primary-500, #27A8DF);
+}
+
+.description {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(252, 252, 252, 0.7);
+  max-width: 380px;
+}
+
+.ctaWrapper {
+  display: flex;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.ctaPrimary {
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-background-5, #000000);
+  background: var(--color-primary-500, #27A8DF);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ctaPrimary:hover {
+  background: #50c8ff;
+  transform: translateY(-2px);
+}
+
+.ctaSecondary {
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-accent, #fcfcfc);
+  background: transparent;
+  border: 1.5px solid rgba(252, 252, 252, 0.2);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ctaSecondary:hover {
+  border-color: var(--color-primary-500, #27A8DF);
+  color: var(--color-primary-500, #27A8DF);
+}
+
+/* ============================================
+   FLOATING TAGS
+   Appear after cascade is formed
+   ============================================ */
+.floatingTagPrimary {
+  position: absolute;
+  top: 100px;
+  right: 80px;
+  z-index: 20;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: white;
+  background: var(--color-primary-500, #27A8DF);
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(39, 168, 223, 0.4);
+  pointer-events: auto;
+}
+
+.floatingTagSecondary {
+  position: absolute;
+  top: 240px;
+  right: 100px;
+  z-index: 20;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: white;
+  background: rgba(26, 26, 28, 0.9);
+  border: 1px solid rgba(252, 252, 252, 0.1);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+/* ============================================
+   RESPONSIVE: TABLET
+   ============================================ */
+@media (max-width: 1024px) {
+  .section {
+    min-height: 180vh;
+  }
+
+  .content {
+    padding: 60px 40px;
+    max-width: 400px;
+    margin-left: 45%;
+  }
+
+  .heading {
+    font-size: 36px;
+  }
+
+  .floatingTagPrimary,
+  .floatingTagSecondary {
+    display: none;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: MOBILE
+   ============================================ */
+@media (max-width: 768px) {
+  .section {
+    min-height: 150vh;
+  }
+
+  .content {
+    padding: 40px 24px;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .heading {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .ctaWrapper {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+  }
+
+  .floatingTagPrimary,
+  .floatingTagSecondary {
+    display: none;
+  }
+}

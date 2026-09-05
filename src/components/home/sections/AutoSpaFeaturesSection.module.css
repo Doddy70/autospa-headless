@@ -1,0 +1,470 @@
+/* ============================================================
+   AutoSpaFeaturesSection — scoped styles
+   AutoSPA Jakarta | Premium Automotive Detailing
+   ============================================================ */
+
+.autospa-features {
+  width: 100%;
+  padding: 5rem 0;
+  position: relative;
+}
+
+.autospa-features__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem;
+}
+
+/* ── Base Card ── */
+.autospa-features__card {
+  border-radius: 3rem;
+  overflow: hidden;
+  position: relative;
+  background: #0c1520;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Liquid Glass ── */
+.autospa-glass {
+  background: rgba(12, 21, 32, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Noise Overlay ── */
+.autospa-noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+}
+
+/* ── Image Background ── */
+.autospa-features__image-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── Dark Overlay ── */
+.autospa-features__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    160deg,
+    rgba(3, 8, 16, 0.55) 0%,
+    rgba(3, 8, 16, 0.88) 100%
+  );
+  border-radius: inherit;
+}
+
+/* ── Card Content ── */
+.autospa-features__card-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ── Label ── */
+.autospa-features__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(252, 252, 252, 0.45);
+  margin-bottom: 1.5rem;
+}
+
+.autospa-features__label-icon {
+  width: 12px;
+  height: 12px;
+  color: #27A8DF;
+  flex-shrink: 0;
+}
+
+/* ── Craftsmanship Card ── */
+.autospa-features__craft-card {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.autospa-features__craft-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.autospa-features__craft-title {
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #fcfcfc;
+  margin-bottom: 0.25rem;
+}
+
+.autospa-features__craft-title span {
+  color: #27A8DF;
+}
+
+/* ── Timeline ── */
+.autospa-features__timeline {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.autospa-features__timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.autospa-features__timeline-item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.autospa-features__timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #27A8DF;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(39, 168, 223, 0.6);
+}
+
+.autospa-features__timeline-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(252, 252, 252, 0.6);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Column 2 ── */
+.autospa-features__col2 {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Customer Voice Card ── */
+.autospa-features__voice-card {
+  flex: 1;
+}
+
+.autospa-features__voice-quote {
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(252, 252, 252, 0.85);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.autospa-features__voice-quote::before {
+  content: '\201C';
+  color: #27A8DF;
+  font-size: 2.5rem;
+  line-height: 0;
+  vertical-align: -0.6em;
+  margin-right: 0.25rem;
+  font-style: normal;
+}
+
+.autospa-features__voice-attribution {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(252, 252, 252, 0.4);
+  font-style: normal;
+}
+
+/* ── Statistic Card ── */
+.autospa-features__stat-wordmark {
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: #fcfcfc;
+  margin-bottom: 0.5rem;
+}
+
+.autospa-features__stat-wordmark span {
+  color: #27A8DF;
+}
+
+.autospa-features__stat-caption {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(252, 252, 252, 0.45);
+  letter-spacing: 0.08em;
+}
+
+/* ── Column 3 ── */
+.autospa-features__col3 {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Expertise Card ── */
+.autospa-features__expertise-card {
+  flex: 1;
+}
+
+.autospa-features__expertise-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Marquee */
+.autospa-features__marquee-track {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 1rem;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.autospa-features__marquee-inner {
+  display: flex;
+  gap: 0.75rem;
+  width: max-content;
+}
+
+.autospa-features__marquee-row-left {
+  animation: marqueeLeft 30s linear infinite;
+}
+
+.autospa-features__marquee-row-right {
+  animation: marqueeRight 30s linear infinite;
+}
+
+.autospa-features__marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(252, 252, 252, 0.75);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.autospa-features__marquee-icon {
+  width: 14px;
+  height: 14px;
+  color: #27A8DF;
+  flex-shrink: 0;
+}
+
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Booking Card ── */
+.autospa-features__booking-card {
+  flex: 1;
+}
+
+.autospa-features__booking-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.autospa-features__booking-title {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fcfcfc;
+  margin-bottom: 0.75rem;
+}
+
+.autospa-features__booking-desc {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(252, 252, 252, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.autospa-features__booking-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: #27A8DF;
+  color: #fff;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  width: fit-content;
+  transition: background 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.autospa-features__booking-cta:hover {
+  background: #1f87b3;
+  transform: scale(1.02);
+}
+
+.autospa-features__booking-cta:active {
+  transform: scale(0.98);
+}
+
+.autospa-features__booking-cta-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .autospa-features {
+    padding: 4rem 0;
+  }
+
+  .autospa-features__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    padding: 0 2rem 4rem;
+    gap: 1.25rem;
+  }
+
+  .autospa-features__craft-card {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    min-height: 400px;
+  }
+
+  .autospa-features__col2 {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+  }
+
+  .autospa-features__col3 {
+    grid-column: 2;
+    grid-row: 2;
+    flex-direction: row;
+  }
+
+  .autospa-features__card {
+    border-radius: 2rem;
+    flex: 1;
+  }
+
+  .autospa-features__card-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .autospa-features {
+    padding: 3rem 0;
+  }
+
+  .autospa-features__grid {
+    grid-template-columns: 1fr;
+    padding: 0 1.25rem 3rem;
+    gap: 1rem;
+  }
+
+  .autospa-features__craft-card,
+  .autospa-features__col2,
+  .autospa-features__col3 {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .autospa-features__col2,
+  .autospa-features__col3 {
+    flex-direction: column;
+  }
+
+  .autospa-features__craft-card {
+    min-height: 480px;
+  }
+
+  .autospa-features__card {
+    border-radius: 1.75rem;
+  }
+
+  .autospa-features__card-content {
+    padding: 1.5rem;
+  }
+
+  .autospa-features__booking-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .autospa-features__marquee-row-left,
+  .autospa-features__marquee-row-right {
+    animation: none;
+  }
+}

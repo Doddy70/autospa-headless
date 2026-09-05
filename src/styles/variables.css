@@ -1,0 +1,127 @@
+/* =========================
+AutoSPA Design Tokens
+Based on creative-portfolio template
+AutoSPA Brand: #27A8DF
+=========================== */
+@theme {
+  /* =============== FONTS =============== */
+  /* Inter Tight loaded via next/font in layout.tsx, referenced as CSS variable */
+  /* Use --font-inter for Inter font loaded by next/font */
+  --font-inter-tight: var(--font-inter), 'Inter Tight', sans-serif;
+
+  /* =============== COLORS - AutoSPA Brand =============== */
+  /* Primary Blue - AutoSPA */
+  --color-primary-50: #e6f7fd;
+  --color-primary-100: #cceefa;
+  --color-primary-200: #99ddf5;
+  --color-primary-300: #66ccf0;
+  --color-primary-400: #33bbeb;
+  --color-primary-500: #27A8DF;  /* AutoSPA Brand Blue */
+  --color-primary-600: #1f87b3;
+  --color-primary-700: #176687;
+  --color-primary-800: #0f445a;
+  --color-primary-900: #07232d;
+
+  --color-secondary: #1a1a1c;
+  --color-accent: #fcfcfc;
+  --color-split-text: #1a1a1c;
+
+  /* Backgrounds - Dark mode default */
+  --color-background-1: #000;
+  --color-background-2: #000;
+  --color-background-3: #000;
+  --color-background-4: #000;
+  --color-background-5: #000;  /* Dark navy for AutoSPA */
+  --color-background-6: #000;
+  --color-background-7: #000;
+  --color-background-8: #000;  /* Darkest for AutoSPA */
+  --color-background-9: #000;
+  --color-background-10: #000;
+  --color-background-11: #000;
+  --color-background-12: #000;
+
+  /* Strokes */
+  --color-stroke-1: #dfe4eb;
+  --color-stroke-2: #e3e7ed;
+  --color-stroke-3: #d7dde5;
+  --color-stroke-4: #eceff4;
+  --color-stroke-5: #1b2b3b;
+  --color-stroke-6: #2a3a52;
+  --color-stroke-7: #3a4a63;
+  --color-stroke-8: #000;
+  --color-stroke-9: var(--color-background-8);
+
+  /* Accent Colors */
+  --color-ns-yellow: #f9eb57;
+  --color-ns-green: #c6f56f;
+  --color-ns-red: #ff6b6b;
+  --color-ns-cyan: #27A8DF;  /* AutoSPA brand cyan */
+  --color-ns-green-light: #e8fbc6;
+  --color-ns-cyan-light: #cdf5f8;
+  --color-ns-yellow-light: #fdf7bc;
+
+  /* Gradients */
+  --color-gradient-1: linear-gradient(135deg, #27A8DF 0%, #1e8bc4 100%);
+  --color-gradient-2: linear-gradient(135deg, #27A8DF 0%, #50c8ff 100%);
+  --color-gradient-3: linear-gradient(135deg, #83e7ee 0%, #27A8DF 100%);
+  --color-gradient-4: linear-gradient(135deg, #27A8DF 0%, #23eed6 100%);
+  --color-gradient-5: linear-gradient(165deg, rgba(255, 255, 255, 0.1) 0.51%, rgba(255, 255, 255, 0) 64.43%);
+  --color-gradient-6: linear-gradient(#27A8DF 0%, #c6f56f 100%);
+  --color-gradient-7: linear-gradient(#ffffff 0%, #27A8DF 100%);
+  --color-gradient-8: linear-gradient(156deg, #ffffff 32.92%, #27A8DF 91%);
+  --color-gradient-9: linear-gradient(156deg, #dfb0ff 32.92%, #27A8DF 91%);
+  --color-gradient-10: linear-gradient(135deg, #27A8DF 0%, #c6f56f 100%);
+  --color-gradient-11: linear-gradient(179deg, rgba(255, 255, 255, 0) 0.68%, #fff 79.47%);
+  --color-gradient-12: radial-gradient(73.01% 80.77% at 19.23% 47.79%, #27A8DF 0%, rgba(39, 168, 223, 0) 100%);
+
+  /* =============== TYPOGRAPHY =============== */
+  --text-heading-1: 4.25rem;
+  --text-heading-1--line-height: 110%;
+  --text-heading-2: 3.25rem;
+  --text-heading-2--line-height: 120%;
+  --text-heading-3: 2.5rem;
+  --text-heading-3--line-height: 120%;
+  --text-heading-4: 2rem;
+  --text-heading-4--line-height: 130%;
+  --text-heading-5: 1.5rem;
+  --text-heading-5--line-height: 140%;
+  --text-heading-6: 1.25rem;
+  --text-heading-6--line-height: 140%;
+  --text-tagline-1: 1rem;
+  --text-tagline-1--line-height: 150%;
+  --text-tagline-2: 0.875rem;
+  --text-tagline-2--line-height: 150%;
+  --text-tagline-3: 0.75rem;
+  --text-tagline-3--line-height: 150%;
+
+  /* Blur */
+  --blur-ns-badge-blur: 17.228288650512695px;
+
+  /* Ease */
+  --team-ease-1: cubic-bezier(10.34, 10.56, 0.64, 40);
+
+  /* Breakpoints */
+  --breakpoint-lp: 1440px;
+
+  /* Shadows */
+  --shadow-1: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  --shadow-2: 0px 10px 20px -5px rgba(39, 168, 223, 0.15), 0px 20px 65px -5px rgba(28, 34, 43, 0.05);
+  --shadow-3: 0px 25px 80px -12px rgba(39, 168, 223, 0.2);
+  --shadow-4: 0px 10px 20px -5px rgba(39, 168, 223, 0.1), 0px 20px 65px -5px rgba(28, 34, 43, 0.05);
+  --shadow-5: 0px 25px 80px -12px rgba(39, 168, 223, 0.15);
+  --shadow-6: 0px 44px 64px 0px rgba(39, 168, 223, 0.2);
+  --shadow-7: 0px 4px 6px -1px rgba(28, 34, 43, 0.1), 0px 2px 4px -1px rgba(28, 34, 43, 0.05);
+  --shadow-8: 0px 12.5px 40px -6px rgba(39, 168, 223, 0.12);
+  --shadow-9: 0px 1px 2px 0px rgba(28, 34, 43, 0.05);
+  --shadow-10: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --shadow-11: 0px 12px 20px rgba(39, 168, 223, 0.2);
+  --shadow-12: 0px 1px 2px 0px rgba(16, 24, 40, 0.26);
+  --shadow-13: 0 7.818px 15.637px -3.909px rgba(39, 168, 223, 0.08), 0 15.637px 50.819px -3.909px rgba(28, 34, 43, 0.05);
+  --shadow-14: 0 1px 2px 0 rgba(16, 24, 40, 0.06);
+  --shadow-15: 40px 28px 80px 0 rgba(0, 0, 0, 0.08);
+  --stack-cards-gap: 2rem;
+}
+
+.dark {
+  --color-split-text: #fcfcfc;
+}
