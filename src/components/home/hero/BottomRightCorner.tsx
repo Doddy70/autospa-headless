@@ -43,7 +43,7 @@ export default function BottomRightCorner() {
       </div>
 
       <div className="flex flex-col">
-        <Link href="/service/nano-ceramic-coating" className="text-[16px] md:text-[20px] font-normal text-white hover:text-primary-400 transition-colors">
+        <Link href="/services/nano-ceramic-coating" className="text-[16px] md:text-[20px] font-normal text-white hover:text-primary-400 transition-colors">
           Our Services
         </Link>
         <div className="flex items-center gap-1 text-white/60 cursor-pointer hover:text-white/80 transition-colors">

@@ -1,31 +1,26 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { ArrowRight, Shield, Sparkles, Car, Award } from 'lucide-react';
+import { ArrowRight, Car, Droplets, Lock, Shield, Sparkles, Wrench } from 'lucide-react';
 import Link from 'next/link';
 
-const SERVICES = [
-  {
-    name: 'Ceramic Coating',
-    icon: Shield,
-    description: 'Premium protection for your vehicle\'s paintwork.',
-  },
-  {
-    name: 'Premium Wash',
-    icon: Sparkles,
-    description: 'Professional hand wash with premium products.',
-  },
-  {
-    name: 'Detailing',
-    icon: Car,
-    description: 'Complete interior and exterior restoration.',
-  },
-  {
-    name: 'PPF',
-    icon: Award,
-    description: 'Invisible armor against scratches and debris.',
-  },
-];
+import { SERVICES as SERVICE_CATALOGUE, type ServiceIcon } from '@/data/services';
+
+const ICONS: Record<ServiceIcon, typeof Shield> = {
+  shield: Shield,
+  sparkles: Sparkles,
+  car: Car,
+  lock: Lock,
+  droplet: Droplets,
+  wrench: Wrench,
+};
+
+const SERVICES = SERVICE_CATALOGUE.map((service) => ({
+  name: service.title,
+  description: service.tagline,
+  href: `/services/${service.slug}`,
+  icon: ICONS[service.icon],
+}));
 
 export default function ServicesShowcase() {
   return (
@@ -85,7 +80,7 @@ export default function ServicesShowcase() {
               className="flex flex-wrap gap-4"
             >
               <Link
-                href="/service/nano-ceramic-coating"
+                href="/services"
                 className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-full font-medium transition-colors group"
               >
                 Explore Services
@@ -118,7 +113,7 @@ export default function ServicesShowcase() {
                       <service.icon className="w-6 h-6 text-primary-500" />
                     </div>
                     <h3 className="text-white font-semibold mb-2">{service.name}</h3>
-                    <p className="text-white/50 text-sm">{service.description}</p>
+                    <p className="text-white/50 text-sm line-clamp-3">{service.description}</p>
                   </div>
                 </motion.div>
               ))}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Footer from '@/components/shared/footer/Footer';
+import WhatsAppButton from '@/components/shared/WhatsAppButton';
 
 // Load Inter font with optimal settings for Core Web Vitals
 const inter = Inter({
@@ -65,7 +66,7 @@ export default function RootLayout({
       addressLocality: 'Jakarta',
       addressCountry: 'ID',
     },
-    telephone: '+62-21-1234-5678',
+    telephone: '+62-819-3777-3888',
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -90,6 +91,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background-8 text-white antialiased">
         <main>{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );

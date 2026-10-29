@@ -212,6 +212,7 @@ function LeadIntroCard({
 
 	return (
 		<motion.div
+			data-pallet-card="0"
 			style={cardShellStyle(hovered ? 30 : slot0.z, cardSize)}
 			initial={false}
 			animate={{
@@ -282,6 +283,7 @@ function FollowerIntroCard({
 
 	return (
 		<motion.div
+			data-pallet-card={index}
 			style={{
 				...cardShellStyle(hovered ? 30 : slot.z, cardSize),
 				x: cx,
@@ -360,6 +362,7 @@ function ScrollLinkedCard({
 
 	return (
 		<motion.div
+			data-pallet-card={index}
 			style={{
 				...cardShellStyle(hovered ? 30 : cascade.z, cardSize),
 				x,

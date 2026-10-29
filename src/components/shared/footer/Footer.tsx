@@ -4,10 +4,13 @@ const footerLinks = [
   {
     title: 'Services',
     links: [
-      { label: 'Nano Ceramic Coating', href: '/service/nano-ceramic-coating' },
-      { label: 'Premium Wash', href: '/service/premium-wash' },
-      { label: 'Premium Detailing', href: '/service/premium-detailing' },
-      { label: 'PPF', href: '/service/ppf-paint-protection-film' },
+      { label: 'Premium Wash', href: '/services/premium-wash' },
+      { label: 'Premium Detailing', href: '/services/premium-detailing' },
+      { label: 'Premium Coating', href: '/services/premium-coating' },
+      { label: 'Premium 360° PPF', href: '/services/premium-360-ppf' },
+      { label: 'Engine & Glass', href: '/services/engine-glass' },
+      { label: 'Rust Protection', href: '/services/rust-protection' },
+      { label: 'All Services', href: '/our-services' },
     ],
   },
   {
@@ -20,12 +23,16 @@ const footerLinks = [
     title: 'Company',
     links: [
       { label: 'About Us', href: '/about' },
+      { label: 'Our Team', href: '/team' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'FAQ', href: '/faq' },
     ],
   },
   {
     title: 'Contact',
     links: [
       { label: 'Book Now', href: '/contact' },
+      { label: 'Reservasi', href: '/reservasi' },
     ],
   },
 ];

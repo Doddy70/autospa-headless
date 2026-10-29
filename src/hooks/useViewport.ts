@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 
 export type Viewport = { w: number; h: number };
 
+/**
+ * Fixed fallback used for the server render AND the first client render.
+ * Reading `window` during render makes the first client markup differ from
+ * the server markup (hydration mismatch), so real dimensions are only
+ * applied inside the effect, after hydration has finished.
+ */
+const DEFAULT_VIEWPORT: Viewport = { w: 1280, h: 800 };
+
 /** Tracks the live viewport size, updating on resize. */
 export function useViewport(): Viewport {
-	const [vp, setVp] = useState<Viewport>(() => ({
-		w: typeof window === "undefined" ? 1280 : window.innerWidth,
-		h: typeof window === "undefined" ? 800 : window.innerHeight,
-	}));
+	const [vp, setVp] = useState<Viewport>(DEFAULT_VIEWPORT);
 
 	useEffect(() => {
 		const onResize = () =>

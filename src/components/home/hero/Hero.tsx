@@ -67,7 +67,7 @@ export default function Hero() {
               className="flex flex-col sm:flex-row items-center gap-4 mt-8"
             >
               <Link
-                href="/service/nano-ceramic-coating"
+                href="/services/nano-ceramic-coating"
                 className="flex items-center bg-primary-500 text-white rounded-full pl-3 pr-5 py-2.5 gap-2 hover:bg-primary-600 transition-colors group"
               >
                 <span className="text-sm font-medium">Explore Services</span>
