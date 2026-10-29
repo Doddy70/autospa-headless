@@ -20,5 +20,13 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "time-tracking", "creative-portfolio", "html_framer"]
+  "exclude": [
+    "node_modules",
+    "time-tracking",
+    "creative-portfolio",
+    "html_framer",
+    "_reference",
+    "agntix",
+    "magic-headless-wp-main"
+  ]
 }
