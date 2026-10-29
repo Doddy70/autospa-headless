@@ -2,9 +2,9 @@
 
 ## Project Status
 
-**Phase 2D.8: API Testing** — ✅ PASS
+**Phase 2E: Headless Content Sync & Article API** — ✅ PASS
 
-**Completed Phases:** 2D.1–2D.8 ✅
+**Completed Phases:** 2D.1–2D.8 ✅, 2E ✅
 
 Production is READ ONLY. All development happens on staging only.
 
@@ -49,6 +49,31 @@ php /www/server/php/82/bin/php /tmp/wp-cli.phar \
 | 2D.6 WPGraphQL ACF | ✅ | Nested structure verified |
 | 2D.7 Test Data Entry | ✅ | Complete business dataset |
 | **2D.8 API Testing** | **✅** | **20/20 tests PASS** |
+| **2E Content Sync** | **✅** | **16 static pages mirrored, article API (204 posts), 243 sitemap URLs** |
+
+## Phase 2E — Content Sync (local staging)
+
+The 19 published pages of `autospajakarta.com` are Elementor layouts and are shipped as
+snapshots; the articles are served from the WordPress REST API. Both origins are read
+only - nothing was deployed to production.
+
+```bash
+npm run dev              # http://localhost:3100
+npm run sync:content     # re-mirror pages, media, fonts, manifest (read-only)
+npm run sync:verify      # every referenced asset exists in public/
+npm run sync:compare     # rendered page vs mirrored source
+```
+
+| Route | Source |
+|-------|--------|
+| `/<slug>` (16 pages) | static snapshot, `src/app/[slug]/page.tsx` |
+| `/blog`, `/blog/<slug>`, `/blog/category/<slug>` | native React over the article API |
+| `/api/articles`, `/api/articles/<slug>`, `/api/categories` | read-only REST proxy |
+
+Env: `WORDPRESS_GRAPHQL_URL`, `WORDPRESS_REST_URL`, `WORDPRESS_SITE_URL`,
+`NEXT_PUBLIC_SITE_URL`, `WORDPRESS_REVALIDATE_SECONDS` (see `.env.example`).
+
+Details: `docs/phase-2e-headless-content-sync.md`.
 
 ## API Contract (Phase 2D.8 Results)
 
@@ -142,13 +167,16 @@ Testimonial:
 | Category consolidation | — | Scheduled for 2D.9 |
 | FAQ faqCategory not exposed | Low | Documented in 2D.8 report |
 | Project challenge/solution/result not exposed | Low | Documented in 2D.8 report |
+| Staging GraphQL `/graphql` returns 404, WPGraphQL unreachable | High | Open - content origin is production (read-only) |
 
 ## Documentation
 
-- **API Testing Report:** `docs/phase-2d8-api-testing-report.md` ← NEW
-- **Phase Reports:** `docs/phase-2d*-execution-report.md`
-- **Full Specs:** `docs/phase-2c-*.md`
-- **Content Model:** `docs/phase-2b-content-model.md`
+- **Content Sync (Phase 2E):** `docs/phase-2e-headless-content-sync.md`
+- **Security — Elementor Pro backdoor:** `docs/security-elementor-pro-nulled-backdoor.md`
+- **Architecture evaluation — Agntix:** `docs/agntix-standalone-evaluation.md`
+
+> The phase 1A–2D9 planning documents were retired in favour of the Phase 2E
+> architecture above. Their content now lives in the git history.
 
 ## Architecture
 
