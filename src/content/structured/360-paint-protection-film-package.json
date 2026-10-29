@@ -1,0 +1,159 @@
+{
+  "slug": "360-paint-protection-film-package",
+  "title": "360° Paint Protection Film Package",
+  "description": "wrapping the entire exterior of a vehicle with a clear, self-healing film to protect the paint from various types of damage Daily PPF Package 170 Micron Thickness & Self Curing SMALL IDR 15.000k MEDIUM IDR 20.000k LARGE IDR 25.000k X-LARGE IDR 30.000k SUPER IDR 35.000k Up to 2 years Membership Maint",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/07/about-icon-1.png",
+        "alt": "",
+        "width": 60,
+        "height": 65
+      },
+      "name": "Book Now!",
+      "role": "Don't miss out with our promos and offers"
+    }
+  ],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 5,
+      "text": "wrapping the entire exterior of a vehicle with a clear, self-healing film to protect the paint from various types of damage"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Daily PPF Package"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "170 Micron Thickness & Self Curing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "BOOKING NOW",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20untuk%20Daily%20PPF%20Packages"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium PPF Package"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "200 Micron Thickness & Self Curing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "BOOKING NOW",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20untuk%20Premium%20PPF%20Packages"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ultimate PPF Package"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "230 Micron Thickness & Self Curing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "BOOKING NOW",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20untuk%20Ultimate%20PPF%20Packages"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "All Package Include"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Full Body Car Detailing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "(Undercarriage, Machine, Interior, Body, Velg & Glass)"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Full Window Coating, Plastic Coating & Velg Coating"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Full Leather Coating & Interior Coating"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/choose-1.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/shape2.svg",
+          "alt": "",
+          "width": 186,
+          "height": 199
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/about-icon-1.png",
+          "alt": "",
+          "width": 60,
+          "height": 65
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Book Now!"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Don't miss out with our promos and offers"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Book Now",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20untuk%20Treatment%20PPF%20Packages"
+        }
+      ]
+    }
+  ]
+}

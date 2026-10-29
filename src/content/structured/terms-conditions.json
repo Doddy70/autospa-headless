@@ -1,0 +1,165 @@
+{
+  "slug": "terms-conditions",
+  "title": "Terms & Conditions",
+  "description": "Pages / Effective Date: June, 10 2025 Welcome to Auto Spa Jakarta! These Terms and Conditions (“Terms”) govern your use of our website, https://autospajakarta.com, and our services. By accessing or using our site, you agree to be bound by these Terms. Please read them carefully. 1. Use of the Websit",
+  "team": [],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "breadcrumbs"
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Effective Date: June, 10 2025"
+        },
+        {
+          "type": "paragraph",
+          "text": "Welcome to Auto Spa Jakarta! These Terms and Conditions (“Terms”) govern your use of our website, , and our services. By accessing or using our site, you agree to be bound by these Terms. Please read them carefully."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "1. Use of the Website"
+        },
+        {
+          "type": "paragraph",
+          "text": "You agree to use this website only for lawful purposes. You may not use it:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "To engage in any fraudulent, abusive, or illegal activity",
+            "To interfere with the website’s operation or attempt to gain unauthorized access",
+            "To submit false or misleading information through booking or contact forms"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "2. Services and Bookings"
+        },
+        {
+          "type": "paragraph",
+          "text": "Auto Spa Jakarta offers car detailing, coating, and maintenance services. Service appointments can be made via our online booking form, phone, or other approved channels."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "All bookings are subject to availability",
+            "We reserve the right to reschedule or cancel appointments in case of unforeseen circumstances",
+            "Prices and service details may change without prior notice"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "3. Payments and Refunds"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Payment can be made in person after service completion unless otherwise stated",
+            "Deposits may be required for certain services",
+            "Refunds are not provided for completed services unless there is a clear issue due to our negligence",
+            "If you cancel an appointment with short notice (less than 24 hours), a cancellation fee may apply"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "4. Customer Responsibilities"
+        },
+        {
+          "type": "paragraph",
+          "text": "Customers are responsible for:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Providing accurate vehicle and contact information",
+            "Informing us of any special conditions or issues with their vehicle",
+            "Removing valuables from the vehicle before service"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Auto Spa Jakarta is not liable for loss or damage to personal belongings left in the vehicle."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "5. Intellectual Property"
+        },
+        {
+          "type": "paragraph",
+          "text": "All content on this website, including text, images, logos, and design, is the property of Auto Spa Jakarta and is protected by copyright laws. You may not reproduce, modify, or distribute any content without our written permission."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "6. Limitation of Liability"
+        },
+        {
+          "type": "paragraph",
+          "text": "While we strive to provide the best possible care for your vehicle, Auto Spa Jakarta shall not be held liable for:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Minor cosmetic issues not caused by our direct action",
+            "Pre-existing damage to the vehicle",
+            "Delays due to weather, equipment failure, or other uncontrollable circumstances"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "7. Third-Party Links"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our website may contain links to third-party websites for convenience. We are not responsible for the content or practices of any third-party sites."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "8. Changes to Terms"
+        },
+        {
+          "type": "paragraph",
+          "text": "We reserve the right to update or modify these Terms at any time. Changes will be effective immediately upon posting on this page. Continued use of the site or services constitutes your acceptance of the revised Terms."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "9. Governing Law"
+        },
+        {
+          "type": "paragraph",
+          "text": "These Terms shall be governed by and construed in accordance with the laws of the Republic of Indonesia."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "10. Contact Us"
+        },
+        {
+          "type": "paragraph",
+          "text": "If you have any questions regarding these Terms and Conditions, please contact us at:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Auto Spa Jakarta Email: info@autospajakarta.com Website:"
+        }
+      ]
+    }
+  ]
+}

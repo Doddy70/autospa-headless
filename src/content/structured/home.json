@@ -1,0 +1,1070 @@
+{
+  "slug": "home",
+  "title": "Home",
+  "description": "Passion For Detail Car Detailing Service Our team of professionals ensure that each vehicle is done to perfection with no hurry Our Services Whether its a full detail or express wash, you can be sure that the quality and commitment of our services to you are always a top priority. see all services E",
+  "team": [],
+  "counters": [
+    {
+      "value": "01",
+      "label": "Premium Wash"
+    },
+    {
+      "value": "02",
+      "label": "Premium Detailing"
+    },
+    {
+      "value": "03",
+      "label": "Premium Coating"
+    },
+    {
+      "value": "04",
+      "label": "Premium 360° PPF"
+    },
+    {
+      "value": "05",
+      "label": "Engine & Glass"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Passion For Detail"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Car Detailing Service"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our team of professionals ensure that each vehicle is done to perfection with no hurry"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our Services"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Whether its a full detail or express wash, you can be sure that the quality and commitment of our services to you are always a top priority."
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "see all services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Exterior Detailing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Exterior Detailing",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/Ekterior-2.jpg",
+          "alt": "",
+          "width": 630,
+          "height": 630
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Interior Detailing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Interior Detailing",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/Interior-Detailing.jpg",
+          "alt": "",
+          "width": 630,
+          "height": 630
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Premium PPF"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Premium PPF",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/PPF.jpg",
+          "alt": "",
+          "width": 300,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Anti Rust"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Anti Rust",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/Anti-Rust-1.jpg",
+          "alt": "",
+          "width": 300,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Premium Wash"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Premium Wash",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/Premium-Wash.jpg",
+          "alt": "",
+          "width": 300,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Additional Services"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Additional Services",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Services",
+          "href": "https://autospajakarta.com/our-services/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/Engine-BAy.jpg",
+          "alt": "",
+          "width": 300,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/05/5-1.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/05/5-4.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/05/6_1.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/05/6-1.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/05/6-2.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/05/24.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "01"
+    },
+    {
+      "type": "heading",
+      "level": 5,
+      "text": "Premium Wash"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "a car wash service that uses high-quality products and procedures to thoroughly clean the car, both exterior and interior"
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Read More",
+          "href": "https://autospajakarta.com/premium-wash/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "02"
+    },
+    {
+      "type": "heading",
+      "level": 5,
+      "text": "Premium Detailing"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Experience a complete transformation inside and out. We meticulously restore your exterior paint's flawless gloss and perform a deep interior cleaning, leaving your vehicle looking and feeling brand new"
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Read More",
+          "href": "https://autospajakarta.com/premium-detailing/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "03"
+    },
+    {
+      "type": "heading",
+      "level": 5,
+      "text": "Premium Coating"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Add years of protection with hydrophobic ceramic coating. Shields against UV rays, dirt, and scratches—making your car easier to clean and stay glossy longer."
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Read More",
+          "href": "https://autospajakarta.com/premium-nano-ceramic-coating/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "04"
+    },
+    {
+      "type": "heading",
+      "level": 5,
+      "text": "Premium 360° PPF"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Our Premium 360° PPF provides the ultimate armor for your vehicle. We meticulously wrap the entire exterior with a high-gloss, self-healing transparent film, safeguarding your factory paint against rock chips, deep scratches, and harsh elements."
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Read More",
+          "href": "https://autospajakarta.com/service/premium-360-ppf-package/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "05"
+    },
+    {
+      "type": "heading",
+      "level": 5,
+      "text": "Engine & Glass"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Restore your visibility and under-hood aesthetics. We thoroughly remove stubborn water spots from all windows and meticulously degrease your engine bay, finishing with a premium dressing for a fresh, like-new look."
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Read More",
+          "href": "#0"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "https://lh3.googleusercontent.com/-ep2EBAoKOZw/AAAAAAAAAAI/AAAAAAAAAAA/ygVvhGBiA8w/s160-p-k-no-ns-nd/photo.jpg",
+          "alt": "AutoSpa - Passion for Detail",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocJ-nNMMDMpvgjeXbriMbPT7FjWK29HLrGIIaYwAXrLbX2HZ=w40-h40-c-rp-mo-br100",
+          "alt": "Yusra RN profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a-/ALV-UjX20s8tVc4ppiy0DWTIscHmdCcOqbx0NQa5Tym3FTYnUN-Q5PXk=w40-h40-c-rp-mo-ba2-br100",
+          "alt": "Asmo Wibowo profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a-/ALV-UjUIc7bgrJ7_wHwUIo9qJkSih102rrvQ488ieMy9Hi3UH5D2cl0=w40-h40-c-rp-mo-br100",
+          "alt": "mr Kom profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocLXDo65b0I4KLBg2RskGZ-nQavzIaf9kZ4MrwracR2r_ntroA=w40-h40-c-rp-mo-br100",
+          "alt": "Edwin Willian profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocKFoDLlM0i08wgw3cXsczlcLHoisq3Is10-Y16hCn5db1LK7g=w40-h40-c-rp-mo-br100",
+          "alt": "Ricky Yeni profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocLEfG0X9OrS_O6hQaw-aP96eZUjzioeyYN8aNKqUCr1lumIRw=w40-h40-c-rp-mo-br100",
+          "alt": "Lina T profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocL3_WiGeKfyHEx2F26_I5YrOg8QBYKXszrhw_VFH5Qf-b2q6Q=w40-h40-c-rp-mo-br100",
+          "alt": "Jason profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a-/ALV-UjWse4QeTZSS9NCeHx-lk6oMS0Eyf3q9m1Nd29S1c74fT_4K0VLD=w40-h40-c-rp-mo-br100",
+          "alt": "Harry Bass profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocKn9w61PobT_vIC1_Ns8XhrAXqxeRAGV5aZfpp8hIiHvn9VCQ=w40-h40-c-rp-mo-ba2-br100",
+          "alt": "Hans Jaya profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/icon.svg",
+          "alt": "Google",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "src": "https://lh3.googleusercontent.com/a/ACg8ocJAUgzDQyhAkc3FPL1o2lltSqUkxbF9PacaQKekyWJinPFBhg=w40-h40-c-rp-mo-br100",
+          "alt": "Micheline Natalia profile picture",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 1",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 2",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 3",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 4",
+          "width": 17,
+          "height": 17
+        },
+        {
+          "src": "https://cdn.trustindex.io/assets/platform/Google/star/f.svg",
+          "alt": "Google star 5",
+          "width": 17,
+          "height": 17
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Write a review",
+          "href": "https://admin.trustindex.io/api/googleWriteReview?place-id=ChIJVaH3Bagdai4Ro4jf-WMVt8o"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our Blogs"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "See All Articles",
+          "href": "https://autospajakarta.com/news-insight/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Pluit / Salon Mobil Jakarta / Tips & Insight"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/10/paket-perawatan-mobil-Jakarta.jpg",
+          "alt": "Paket Perawatan Mobil Jakarta: Dari Cuci, Detailing hingga Ceramic Coating",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/sites/4/2024/08/blog-arrow.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/10/auto-detailing-vs-cuci-mobil.jpg",
+          "alt": "Auto Detailing vs Cuci Mobil: Mana yang Dibutuhkan Mobil Anda?",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/sites/4/2024/08/blog-arrow.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/2026/10/detailing-mobil-terbaik-Jakarta.jpg",
+          "alt": "Detailing Mobil Terbaik Jakarta: Bagaimana Cara Menentukannya?",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/sites/4/2024/08/blog-arrow.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Autospa Pluit",
+          "href": "https://autospajakarta.com/category/autospa-pluit/"
+        },
+        {
+          "label": "Salon Mobil Jakarta",
+          "href": "https://autospajakarta.com/category/salon-mobil-jakarta/"
+        },
+        {
+          "label": "Tips & Insight",
+          "href": "https://autospajakarta.com/category/tips-and-insight/"
+        },
+        {
+          "label": "17/10/2026",
+          "href": "https://autospajakarta.com/2026/10/17/"
+        },
+        {
+          "label": "Paket Perawatan Mobil Jakarta: Dari Cuci, Detailing hingga Ceramic Coating",
+          "href": "https://autospajakarta.com/paket-perawatan-mobil-jakarta-dari-cuci-detailing-hingga-ceramic-coating/"
+        },
+        {
+          "label": "Auto Detailing",
+          "href": "https://autospajakarta.com/category/auto-detailing/"
+        },
+        {
+          "label": "Autospa Pluit",
+          "href": "https://autospajakarta.com/category/autospa-pluit/"
+        },
+        {
+          "label": "Tips & Insight",
+          "href": "https://autospajakarta.com/category/tips-and-insight/"
+        },
+        {
+          "label": "15/10/2026",
+          "href": "https://autospajakarta.com/2026/10/15/"
+        },
+        {
+          "label": "Auto Detailing vs Cuci Mobil: Mana yang Dibutuhkan Mobil Anda?",
+          "href": "https://autospajakarta.com/auto-detailing-vs-cuci-mobil-mana-yang-dibutuhkan-mobil-anda/"
+        },
+        {
+          "label": "Bengkel Detailing",
+          "href": "https://autospajakarta.com/category/bengkel-detailing/"
+        },
+        {
+          "label": "Auto Detailing",
+          "href": "https://autospajakarta.com/category/auto-detailing/"
+        },
+        {
+          "label": "Salon Mobil Jakarta",
+          "href": "https://autospajakarta.com/category/salon-mobil-jakarta/"
+        },
+        {
+          "label": "13/10/2026",
+          "href": "https://autospajakarta.com/2026/10/13/"
+        },
+        {
+          "label": "Detailing Mobil Terbaik Jakarta: Bagaimana Cara Menentukannya?",
+          "href": "https://autospajakarta.com/detailing-mobil-terbaik-jakarta-bagaimana-cara-menentukannya/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "check out"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Get In Touch"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Visit Us",
+          "href": "https://autospajakarta.com/contact/"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/autospajakarta/"
+        },
+        {
+          "label": "Facebook",
+          "href": "https://www.facebook.com/autospa.id.official"
+        },
+        {
+          "label": "Tiktok",
+          "href": "https://www.tiktok.com/@autospa.official"
+        },
+        {
+          "label": "Youtube",
+          "href": "https://www.youtube.com/@AutospaOfficial"
+        }
+      ]
+    }
+  ]
+}

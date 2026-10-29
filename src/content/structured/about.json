@@ -1,0 +1,449 @@
+{
+  "slug": "about",
+  "title": "About",
+  "description": "About Us About Us About Us About Us About Us About Us About Us About Us About Us About Us Autospa Jakarta was established 2014 in Jakarta Passion for Detail Perfected Since 2014 Established in 2014, AutoSpa was born from a simple yet ambitious vision: to set the gold standard in the automotive detai",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/05/Pungki.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Pungki Yuniawan",
+      "role": "Area Manager pluit pik2"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2026/01/Adit.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Adit",
+      "role": "Area manager kranji, cikupa, serpong"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/05/Sulis.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Sulis Setyaningsih",
+      "role": "Senior Adminstrator Autospa Pluit"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/05/Sule.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Kasim S. (Sule)",
+      "role": "Supervisor Autospa pluit"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2026/01/ABun.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Hadis Setiawan",
+      "role": "Supervisor Autospa Depok2"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/05/Ikin.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Sholichin (Ikin)",
+      "role": "Senior Techincian Autospa depok2"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2026/01/Amel.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Amelia",
+      "role": "Adminstrator/content creator autospa depok2"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2026/01/s1.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Dede Yuliana",
+      "role": "Senior Technician Autospa Serpong"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/05/1-Dhani.png",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Dhani",
+      "role": "Supervisor Autospa Bekasi"
+    }
+  ],
+  "counters": [
+    {
+      "value": "7k+",
+      "label": "Satisfaction Clients"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "About Us"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Autospa Jakarta was established 2014 in Jakarta"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Passion for Detail Perfected Since 2014 Established in 2014, AutoSpa was born from a simple yet ambitious vision: to set the gold standard in the automotive detailing and paint protection industry in Indonesia. Driven by an uncompromising dedication to quality, we have grown into a highly credible, multi-branch network trusted by thousands of loyal customers."
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "To us, a vehicle is more than just a mode of transportation; it is a masterpiece and a valuable investment that demands flawless preservation. The extraordinary trust we have earned over the years was not built overnight, but through our relentless consistency in delivering absolute perfection—with zero tolerance for even the slightest imperfections."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "A World-Class Arsenal"
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "We understand that premium vehicles require global-standard care. Therefore, AutoSpa exclusively collaborates with and utilizes flagship products from the pioneers of the global automotive care industry:"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "TAC System (South Korea): Industry-leading Nano Ceramic Quartz Coating technology that provides ultimate protection, a permanent wet-look finish, and superior hydrophobic properties."
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Contact Us",
+          "href": "https://autospajakarta.com/contact"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "About Us"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/06/Diamond-Package.jpg",
+          "alt": "Autospa Diamond Package",
+          "width": 1920,
+          "height": 1350
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "7k+"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Satisfaction Clients"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Let's see how we did it."
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Crystal Process (Japan): A masterpiece of Japanese precision engineering, specifically formulated to restore and lock in your vehicle’s original paint gloss at its absolute peak."
+        },
+        {
+          "type": "paragraph",
+          "text": "Buff and Shine Mfg. (USA): The world’s premium polishing pad system, ensuring that the paint correction process is executed flawlessly, safely, and without compromising the factory clear coat."
+        },
+        {
+          "type": "paragraph",
+          "text": "Avery Dennison (USA): Top-tier Paint Protection Film (PPF) and exterior materials offering unparalleled, extreme durability against scratches and road debris."
+        }
+      ]
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Buff and Shine Mfg. (USA): The world’s premium polishing pad system, ensuring that the paint correction process is executed flawlessly, safely, and without compromising the factory clear coat."
+        },
+        {
+          "type": "paragraph",
+          "text": "Avery Dennison (USA): Top-tier Paint Protection Film (PPF) and exterior materials offering unparalleled, extreme durability against scratches and road debris."
+        }
+      ]
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Handled by Certified Experts The world’s finest materials mean nothing without the masterful touch of the artists who apply them. At AutoSpa, your vehicle is entrusted solely to our Certified Team of professional detailers and technicians. Having undergone rigorous international-standard training and possessing extensive hands-on experience, they ensure that every curve of the bodywork, the interior, and the engine bay receives meticulous attention. This is the embodiment of our core philosophy: Passion for Detail."
+        }
+      ]
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "More than just an auto spa, we are the ultimate destination where automotive aesthetics, cutting-edge technology, and high-level craftsmanship converge. Entrust your prized investment to us, and experience the unparalleled pride of driving a pristine, showroom-quality vehicle every single day."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our Teams"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/05/Pungki.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pungki Yuniawan"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Area Manager pluit pik2"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/01/Adit.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Adit"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Area manager kranji, cikupa, serpong"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/05/Sulis.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sulis Setyaningsih"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Senior Adminstrator Autospa Pluit"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/05/Sule.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kasim S. (Sule)"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Supervisor Autospa pluit"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/01/ABun.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hadis Setiawan"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Supervisor Autospa Depok2"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/05/Ikin.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sholichin (Ikin)"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Senior Techincian Autospa depok2"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/01/Amel.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Amelia"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Adminstrator/content creator autospa depok2"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/01/s1.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dede Yuliana"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Senior Technician Autospa Serpong"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/05/1-Dhani.png",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dhani"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Supervisor Autospa Bekasi"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "LET’S TALK"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "STILL HAVE QUESTION?"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get in Touch",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20...."
+        }
+      ]
+    }
+  ]
+}

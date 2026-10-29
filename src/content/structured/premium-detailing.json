@@ -1,0 +1,180 @@
+{
+  "slug": "premium-detailing",
+  "title": "Premium Detailing",
+  "description": "Premium Detailing We provide a Premium Service & produce Premium Results Premium Detailing Interior Detailing View Pricing Premium Detailing Exterior Detailing View Pricing Premium Detailing Full Detailing View Pricing Premium Detailing FAQs What is auto detailing? Auto detailing is a thorough clean",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/2024/08/Slider-45.jpg",
+        "alt": "",
+        "width": 1080,
+        "height": 1080
+      },
+      "name": "Premium Detailing",
+      "role": "We provide a Premium Service & produce Premium Results"
+    }
+  ],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/08/Slider-3.jpg",
+          "alt": "",
+          "width": 1080,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/08/Slider-45.jpg",
+          "alt": "",
+          "width": 1080,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Detailing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "We provide a Premium Service & produce Premium Results"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Detailing"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Premium Detailing"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Interior Detailing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Detailing"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Premium Detailing"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exterior Detailing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Detailing"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Premium Detailing"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Full Detailing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Detailing FAQs"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "question": "What is auto detailing?",
+          "answer": "Auto detailing is a thorough cleaning and restoration of both the interior and exterior of your vehicle. It goes beyond a regular car wash and includes deep cleaning, polishing, and protecting your car’s surfaces."
+        },
+        {
+          "question": "How long does it typically take you to detail my vehicle?",
+          "answer": "That depends on a few things such as size of the vehicle, condition, package selection & any add on service you may choose. We will give you an estimate of how long it takes"
+        },
+        {
+          "question": "What is the difference between a car wash and a detailing?",
+          "answer": "A car wash typically involves a basic exterior wash and may include a quick cleaning of the interior. It’s a fast, surface-level clean meant to remove dirt and debris. A detailing, on the other hand, is a comprehensive cleaning and restoration process. It includes a deep clean of both the interior and exterior, such as paint correction, waxing, upholstery conditioning, and other services aimed at restoring your vehicle’s appearance and protecting its surfaces. Detailing goes beyond the standard car wash, providing long-term benefits and a more thorough clean."
+        },
+        {
+          "question": "How often should I get my car detailed?",
+          "answer": "It depends on how often you use your car and the conditions it’s exposed to. Typically, we recommend a thorough detailing every 3-6 months, but if you drive often or in harsh conditions, more frequent detailing may be necessary"
+        },
+        {
+          "question": "Are the products you use safe for my vehicle?",
+          "answer": "Yes, all of the products we use are high-quality, safe, and specifically designed for automotive use. We choose environmentally friendly and non-toxic options whenever possible."
+        },
+        {
+          "question": "Will detailing my car improve its resale value?",
+          "answer": "Yes! Regular detailing helps maintain your car’s appearance and condition, which can positively affect its resale value. A clean, well-maintained car is always more attractive to potential buyers."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "LET’S TALK"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "STILL HAVE QUESTION?"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get in Touch",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20...."
+        }
+      ]
+    }
+  ]
+}

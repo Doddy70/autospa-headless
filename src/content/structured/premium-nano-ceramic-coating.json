@@ -1,0 +1,190 @@
+{
+  "slug": "premium-nano-ceramic-coating",
+  "title": "Premium Nano Ceramic Coating",
+  "description": "Premium Nano Ceramic Coating We provide a Premium Service & produce Premium Results Light Package Double Layer Nano Ceramic Coating Package View Pricing Bronze Package Double Layer Nano Ceramic Coating Package View Pricing Silver Package Nano Ceramic Coating Triple Layer Package View Pricing Gold Pa",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/2024/08/Slider-45.jpg",
+        "alt": "",
+        "width": 1080,
+        "height": 1080
+      },
+      "name": "Premium Nano Ceramic Coating",
+      "role": "We provide a Premium Service & produce Premium Results"
+    }
+  ],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/08/Slider-3.jpg",
+          "alt": "",
+          "width": 1080,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/08/Slider-45.jpg",
+          "alt": "",
+          "width": 1080,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Nano Ceramic Coating"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "We provide a Premium Service & produce Premium Results"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Light Package"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Double Layer Nano Ceramic Coating Package"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Bronze Package"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Double Layer Nano Ceramic Coating Package"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Silver Package"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Nano Ceramic Coating Triple Layer Package"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Gold Package"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Nano Ceramic Coating 5 Layers package"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Diamond Package"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Nano Ceramic Coating 7 Layers package"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Platinum Package"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Nano Ceramic Coating 10 Layers package"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Make Your Reservation"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "LET’S TALK"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "STILL HAVE QUESTION?"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get in Touch",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20...."
+        }
+      ]
+    }
+  ]
+}

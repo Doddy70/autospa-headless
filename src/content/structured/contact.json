@@ -1,0 +1,114 @@
+{
+  "slug": "contact",
+  "title": "Contact",
+  "description": "Our Location Autospa Pluit Jl. Pluit Karang Ayu Barat No 16 Jakarta Utara, 14440 0877 1777 3888 / 0838 7011 4344 (Ferdy)⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣ Open Hours: Every day 08.30 – 18.00 WIB Autospa Depok 2 Jl. Kemakmuran Raya No.12, Mekar Jaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16411 0819-5888-7778 Open Hours: E",
+  "team": [],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our Location"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Pluit"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.30 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Depok 2"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Express Depok"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa PIK 2"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.30 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Ciledug"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 17.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "AutoSpa Bekasi"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Kranji Bekasi"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Bogor"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Serpong"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Autospa Cikupa"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Open Hours: Every day 08.00 - 18.00 WIB"
+    }
+  ]
+}

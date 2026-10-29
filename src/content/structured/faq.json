@@ -1,0 +1,90 @@
+{
+  "slug": "faq",
+  "title": "FAQ",
+  "description": "FAQS Pages / Questions & Answers Providing clarity on frequently asked questions What is auto detailing? Auto detailing is a comprehensive maintenance and cleaning process for vehicles, including cleaning, polishing, and maintaining the condition of the vehicle. It includes procedures such as washin",
+  "team": [],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "FAQS"
+    },
+    {
+      "type": "breadcrumbs"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions & Answers"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Providing clarity on frequently asked questions"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "question": "What is auto detailing?",
+          "answer": "Auto detailing is a comprehensive maintenance and cleaning process for vehicles, including cleaning, polishing, and maintaining the condition of the vehicle. It includes procedures such as washing, painting, rust removal, vehicle coating, and more."
+        },
+        {
+          "question": "What are the advantages of auto detailing?",
+          "answer": "Auto detailing can make your car look like new. It can also help protect the color and luster of your vehicle, and increase the resale value of your car."
+        },
+        {
+          "question": "How can I maintain the detailing results?",
+          "answer": "After detailing, you can maintain the results by washing your car regularly. This will help you remove dirt and dust, and prevent rust from forming. You should also use a coating to protect your car's paint and ensure the results last longer."
+        },
+        {
+          "question": "What is a paint protection film (PPF)?",
+          "answer": "Paint Protection Film (PPF) is a protective coating for your car's surface designed to protect against scratches, dirt and sun damage. It is applied precisely over the surface of your vehicle to protect the color from the effects of harsh weather and scratches."
+        },
+        {
+          "question": "How long does a paint protection film last?",
+          "answer": "The lifespan of a paint protection film depends on the weather conditions and the quality of the film. Generally, PPF lasts for 5-8 years"
+        },
+        {
+          "question": "How do I clean paint protection film?",
+          "answer": "You can clean the PPF by using car soap and water. Use a soft sponge and don't forget to moisten the sponge with water before cleaning the PPF. You can also use special products to maintain and clean the PPF."
+        },
+        {
+          "question": "What is a nano ceramic coating?",
+          "answer": "Nano ceramic coating is a special protective coating for vehicle surfaces made of nano-techno logical particles. It provides long-term protection from dirt, dust and contaminants, and enhances the appearance of your vehicle."
+        },
+        {
+          "question": "What does full car detailing mean?",
+          "answer": "Full car detailing is a process of cleaning and refreshing a vehicle that includes cleaning the outside of the car, cleaning the inside, changing the oil, changing the filters, and repainting. This process can result in a car that looks and feels like new."
+        },
+        {
+          "question": "How long does a full car detailing take?",
+          "answer": "The duration required to perform full car detailing varies depending on the condition of the car. Usually, this process can take between 4-7 hours."
+        },
+        {
+          "question": "What is Exterior Detailing?",
+          "answer": "Durasi yang diperlukan untuk melakukan full detailing mobil bervariasi tergantung pada kondisi mobil. Biasanya, proses ini bisa memakan waktu antara 4–7 jam."
+        },
+        {
+          "question": "What is Interior Detailing?",
+          "answer": "Interior detailing is a process that involves cleaning, removing dirt and maintaining the condition of a car's interior, including carpets, plastics and leather. It aims to restore the car's interior to a like-new condition."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Still Have Questions?"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Free Consultation",
+          "href": "https://autospajakarta.com/contact/"
+        }
+      ]
+    }
+  ]
+}

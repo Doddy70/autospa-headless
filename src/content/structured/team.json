@@ -1,0 +1,212 @@
+{
+  "slug": "team",
+  "title": "Team",
+  "description": "TEAM MEMBERS Thomas Tatum Web Developer Thomas Tatum Web Developer Thomas Tatum Web Developer Thomas Tatum Web Developer Thomas Tatum Web Developer Thomas Tatum Web Developer",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/sites/4/2024/11/avatar1.jpg",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Thomas Tatum",
+      "role": "Web Developer"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/sites/4/2024/11/avatar2.jpg",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Thomas Tatum",
+      "role": "Web Developer"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/sites/4/2024/11/avatar3.jpg",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Thomas Tatum",
+      "role": "Web Developer"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/sites/4/2024/11/avatar4.jpg",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Thomas Tatum",
+      "role": "Web Developer"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/sites/4/2024/11/avatar5.jpg",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Thomas Tatum",
+      "role": "Web Developer"
+    },
+    {
+      "image": {
+        "src": "/wp-content/uploads/sites/4/2024/11/avatar6.jpg",
+        "alt": "",
+        "width": null,
+        "height": null
+      },
+      "name": "Thomas Tatum",
+      "role": "Web Developer"
+    }
+  ],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "TEAM MEMBERS"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/1-1.jpg",
+          "alt": "",
+          "width": 2000,
+          "height": 1335
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar1.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thomas Tatum"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Web Developer"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar2.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thomas Tatum"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Web Developer"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar3.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thomas Tatum"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Web Developer"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar4.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thomas Tatum"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Web Developer"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar5.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thomas Tatum"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Web Developer"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar6.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thomas Tatum"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Web Developer"
+    }
+  ]
+}

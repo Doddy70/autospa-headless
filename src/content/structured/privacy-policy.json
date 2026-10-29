@@ -1,0 +1,171 @@
+{
+  "slug": "privacy-policy",
+  "title": "Privacy Policy",
+  "description": "Pages / Effective Date: June, 10 2025 At Auto Spa Jakarta (https://autospajakarta.com), we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website. 1. Information We C",
+  "team": [],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "breadcrumbs"
+    },
+    {
+      "type": "richText",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Effective Date: June, 10 2025"
+        },
+        {
+          "type": "paragraph",
+          "text": "At Auto Spa Jakarta ( ), we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "1. Information We Collect"
+        },
+        {
+          "type": "paragraph",
+          "text": "We may collect personal information that you voluntarily provide to us, including but not limited to:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Name",
+            "Email address",
+            "Phone number",
+            "Vehicle information",
+            "Appointment details",
+            "Location (if applicable)"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "We also collect non-personal information automatically, such as:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Browser type",
+            "IP address",
+            "Device type",
+            "Pages visited",
+            "Time and date of visits"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "2. How We Use Your Information"
+        },
+        {
+          "type": "paragraph",
+          "text": "Your information is used to:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Respond to inquiries and booking requests",
+            "Provide and improve our services",
+            "Send appointment confirmations and service reminders",
+            "Send promotional offers (only with your consent)",
+            "Analyze site usage and performance",
+            "Comply with legal requirements"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "3. Sharing Your Information"
+        },
+        {
+          "type": "paragraph",
+          "text": "We do not sell, rent, or lease your personal information to third parties. However, we may share your information with:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Trusted service providers who help us operate our website or manage customer communication",
+            "Legal authorities, if required by law or to protect our rights"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "4. Cookies and Tracking Technologies"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our website uses cookies and similar tracking tools to enhance your browsing experience and gather analytics data. You can manage cookie preferences through your browser settings."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "5. Data Security"
+        },
+        {
+          "type": "paragraph",
+          "text": "We implement reasonable administrative, technical, and physical measures to protect your personal information from unauthorized access, misuse, or disclosure."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "6. Your Rights and Choices"
+        },
+        {
+          "type": "paragraph",
+          "text": "You have the right to:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Access the personal information we hold about you",
+            "Request corrections or deletions",
+            "Withdraw your consent at any time",
+            "Opt out of marketing communications"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "To make any requests regarding your data, please contact us using the information provided below."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "7. Third-Party Links"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our website may contain links to external sites. We are not responsible for the privacy practices or content of those websites."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "8. Changes to This Privacy Policy"
+        },
+        {
+          "type": "paragraph",
+          "text": "We reserve the right to update or change this Privacy Policy at any time. Any updates will be posted on this page with the updated effective date."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "9. Contact Us"
+        },
+        {
+          "type": "paragraph",
+          "text": "If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Auto Spa Jakarta Email: info@autospajakarta.com Website:"
+        }
+      ]
+    }
+  ]
+}

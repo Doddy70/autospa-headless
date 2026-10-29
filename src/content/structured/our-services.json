@@ -1,0 +1,277 @@
+{
+  "slug": "our-services",
+  "title": "Our Services",
+  "description": "We always keep up with the times and use the best products for Indonesia weather providing a long-lasting protection that enhances the appearance and value of the car Our Services WHAT WE OFFER. Premium Wash a more thorough and detailed car wash service compared to a regular car wash View Services P",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/2025/07/shap-right-top.svg",
+        "alt": "",
+        "width": 11,
+        "height": 11
+      },
+      "name": "Our Services",
+      "role": "WHAT WE OFFER."
+    }
+  ],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/shap-right-top.svg",
+          "alt": "",
+          "width": 11,
+          "height": 11
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "We always keep up with the times and use the best products for Indonesia weather"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/shap-right-top.svg",
+          "alt": "",
+          "width": 11,
+          "height": 11
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "providing a long-lasting protection that enhances the appearance and value of the car"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/shap-right-top.svg",
+          "alt": "",
+          "width": 11,
+          "height": 11
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/shap-right-top.svg",
+          "alt": "",
+          "width": 11,
+          "height": 11
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our Services"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "WHAT WE OFFER."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Wash"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Premium Wash",
+          "href": "https://autospajakarta.com/service/premium-wash/"
+        }
+      ]
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "a more thorough and detailed car wash service compared to a regular car wash"
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Services",
+          "href": "https://autospajakarta.com/service/premium-wash/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Full Detailing"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Premium Full Detailing",
+          "href": "https://autospajakarta.com/service/premium-full-detailing/"
+        }
+      ]
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "a comprehensive car treatment that includes deep cleaning, polishing, and exterior and interior protection"
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Services",
+          "href": "https://autospajakarta.com/service/premium-full-detailing/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Nano Coating"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Premium Nano Coating",
+          "href": "https://autospajakarta.com/service/premium-nano-ceramic-coating/"
+        }
+      ]
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "a coating technology that uses nanoparticles to protect against scratches, stains, water, dust, UV rays, and other environmental elements"
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Services",
+          "href": "https://autospajakarta.com/service/premium-nano-ceramic-coating/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium 360° PPF"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Premium 360° PPF",
+          "href": "https://autospajakarta.com/service/premium-360-ppf-package/"
+        }
+      ]
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "clear protective coating that covers the entire surface of the car body, providing maximum protection against scratches, gravel, stains, and UV damage"
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Services",
+          "href": "https://autospajakarta.com/service/premium-360-ppf-package/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rust Protection"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Rust Protection",
+          "href": "https://autospajakarta.com/service/premium-360-ppf-package/"
+        }
+      ]
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Our rust protection uses a water-based rubber material—not Flintkote or asphalt—ensuring it is completely odor-free."
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Services",
+          "href": "https://autospajakarta.com/service/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Our Location"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "we provide premium materials designed to meet the highest standards of quality and durability."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Workshop"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "All Location",
+          "href": "https://autospajakarta.com/contact/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Still have a question? Just ask us Anything"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "info@autospajakarta.com",
+          "href": "mailto:info@autospajakarta.com"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Contact Us",
+          "href": "https://autospajakarta.com/contact/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjIwNTUiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D"
+        }
+      ]
+    }
+  ]
+}

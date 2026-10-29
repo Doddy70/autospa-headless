@@ -1,0 +1,204 @@
+{
+  "slug": "pricing",
+  "title": "Pricing",
+  "description": "Pricing Plan Basic pack $9.99 Per Month Adipiscing elit sed do. Eusmod tempor incididunt ut. labore et dolore magna. Get Started Standard pack $29.99 Per Month Adipiscing elit sed do. Eusmod tempor incididunt ut. labore et dolore magna. Get Started Premium pack $49.99 Per Month Adipiscing elit sed d",
+  "team": [],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pricing Plan"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Basic pack"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "$9.99"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Per Month"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get Started",
+          "href": "https://hubfolio.themescamp.com/digital-studio/pricing/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Standard pack"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "$29.99"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Per Month"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get Started",
+          "href": "https://hubfolio.themescamp.com/digital-studio/pricing/"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium pack"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "$49.99"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Per Month"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get Started",
+          "href": "https://hubfolio.themescamp.com/digital-studio/pricing/"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/Vector_Cricle_Text.svg",
+          "alt": "",
+          "width": 244,
+          "height": 244
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/vector_quote.svg",
+          "alt": "",
+          "width": 104,
+          "height": 80
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 6,
+      "text": "Bradley Gordon"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "CEO & Founder, Archin Studio",
+        "CEO & Founder, Archin Studio",
+        "CEO & Founder, Archin Studio"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar1.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar2.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        },
+        {
+          "src": "/wp-content/uploads/sites/4/2024/11/avatar3.jpg",
+          "alt": "",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Partner with +150 brands"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/1.svg",
+          "alt": "",
+          "width": 120,
+          "height": 40
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/2.svg",
+          "alt": "",
+          "width": 54,
+          "height": 52
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/3.svg",
+          "alt": "",
+          "width": 100,
+          "height": 45
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/4.svg",
+          "alt": "",
+          "width": 120,
+          "height": 37
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2024/11/5.svg",
+          "alt": "",
+          "width": 40,
+          "height": 40
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "reservasi",
+  "title": "Reservasi",
+  "description": "Form Reservasi",
+  "team": [],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/05/AUTO-SPA_FINAL-1.webp",
+          "alt": "",
+          "width": 260,
+          "height": 80
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Form Reservasi"
+    }
+  ]
+}

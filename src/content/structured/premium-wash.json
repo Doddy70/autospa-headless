@@ -1,0 +1,186 @@
+{
+  "slug": "premium-wash",
+  "title": "Premium Wash",
+  "description": "SERVICES Premium a car wash service that uses high-quality products and procedures to thoroughly clean the car, both exterior and interior Wash Premium Wash +Undercarriage Wash View Pricing Premium Wash Full Detox View Pricing Premium Wash Light Detox View Pricing Premium Wash FAQs How long does the",
+  "team": [
+    {
+      "image": {
+        "src": "/wp-content/uploads/2026/10/washme.jpg",
+        "alt": "",
+        "width": 1080,
+        "height": 460
+      },
+      "name": "Wash",
+      "role": "Premium Wash"
+    }
+  ],
+  "counters": [],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "SERVICES"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "a car wash service that uses high-quality products and procedures to thoroughly clean the car, both exterior and interior"
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2025/07/Premium-Car-Wash-Hero4.jpg",
+          "alt": "",
+          "width": 1080,
+          "height": 600
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        {
+          "src": "/wp-content/uploads/2026/10/washme.jpg",
+          "alt": "",
+          "width": 1080,
+          "height": 460
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Wash"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Wash"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Premium Wash"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "+Undercarriage Wash"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Wash"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Premium Wash"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Full Detox"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Wash"
+    },
+    {
+      "type": "paragraphs",
+      "items": [
+        "Premium Wash"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Light Detox"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "View Pricing",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Premium Wash FAQs"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "question": "How long does the wash process take?",
+          "answer": "The process typically takes between 30 to 60 minutes. This duration allows our team to meticulously clean your vehicle's exterior, including a thorough undercarriage cleaning, while still being highly efficient with your valuable time"
+        },
+        {
+          "question": "How often should I get a Premium Wash?",
+          "answer": "To maintain your car's pristine condition, we highly recommend a Premium Wash minimal every weekly. Regular washing is crucial to prevent dirt buildup, and it ensures your vehicle always looks fresh and glossy as if it just rolled out of the spa."
+        },
+        {
+          "question": "Can I customize the Premium Wash service?",
+          "answer": "Absolutely! While the Premium Wash focuses on a thorough exterior, interior and undercarriage refresh, you can easily upgrade your visit. We offer excellent add-ons such as interior and exterior detailing, window water-spot removal, or an express spray sealant application. Just ask our Service Advisor upon arrival!"
+        },
+        {
+          "question": "What’s the difference between the Premium Wash and a regular wash?",
+          "answer": "Unlike a standard street wash that often uses harsh detergents, our Premium Wash strictly utilizes a two-bucket wash method and a pH-balanced shampoo specially formulated to be 100% safe for ceramic-coated cars. Furthermore, our service includes a dedicated undercarriage cleaning, ensuring your vehicle is deeply refreshed from top to bottom without risking swirl marks or degrading your paint protection"
+        },
+        {
+          "question": "5. Is the Premium Wash worth the investment?",
+          "answer": "Definitely. Think of it as the ultimate routine maintenance for your vehicle. You get the absolute peace of mind knowing your car is washed using coating-safe chemicals, proper scratch-free techniques, and detailed attention to the undercarriage. It is the smartest and most affordable way to safely maintain your car's daily shine."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "LET’S TALK"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "STILL HAVE QUESTION?"
+    },
+    {
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Get in Touch",
+          "href": "https://wa.me/6281937773888?text=halo%20admin%20saya%20mau%20booking%20...."
+        }
+      ]
+    }
+  ]
+}
