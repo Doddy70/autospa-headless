@@ -2,6 +2,45 @@
  * Helpers for the mirrored WordPress markup.
  */
 
+/** The entities a `wysiwyg` field produces. */
+const ENTITIES: Record<string, string> = {
+	amp: '&',
+	lt: '<',
+	gt: '>',
+	quot: '"',
+	apos: "'",
+	nbsp: ' ',
+	hellip: '…',
+	mdash: '—',
+	ndash: '–',
+	lsquo: '‘',
+	rsquo: '’',
+	ldquo: '“',
+	rdquo: '”',
+};
+
+/**
+ * The plain text of a `wysiwyg` field.
+ *
+ * The ACF fields of the CMS carry HTML - a FAQ answer is a `<p>` with the
+ * text in it - while the presentation layer prints plain text. The tags are
+ * dropped, the block level ones become a line break, and the entities are
+ * decoded, so `<p>Use a soft sponge</p>` becomes `Use a soft sponge`.
+ */
+export function toPlainText(html: string): string {
+	return html
+		.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, '')
+		.replace(/<br\s*\/?>/gi, '\n')
+		.replace(/<\/(p|div|li|h[1-6]|tr)\s*>/gi, '\n')
+		.replace(/<[^>]+>/g, '')
+		.replace(/&#(\d+);/g, (_match, code: string) => String.fromCodePoint(Number(code)))
+		.replace(/&#x([0-9a-f]+);/gi, (_match, code: string) => String.fromCodePoint(parseInt(code, 16)))
+		.replace(/&([a-z]+);/gi, (match, name: string) => ENTITIES[name.toLowerCase()] ?? match)
+		.replace(/[ \t]+/g, ' ')
+		.replace(/\s*\n\s*/g, '\n')
+		.trim();
+}
+
 /** Elements that never carry a closing tag. */
 const VOID_ELEMENTS = new Set([
 	'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta',

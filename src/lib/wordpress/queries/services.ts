@@ -10,10 +10,11 @@
  *   - relationship connections expose `ContentNode`, so `title`/`slug` need an
  *     inline fragment on the concrete type
  *
- * `benefits` and `process` are requested even though their resolvers currently
- * throw. GraphQL returns the rest of the payload alongside a per-path error, so
- * asking for them costs nothing and the sections light up automatically once
- * the stored meta is repaired - no frontend change needed.
+ * `benefits` and `process` are requested even though `process` resolves to
+ * null on the current content. GraphQL answers that with the rest of the
+ * payload, so asking for them costs nothing and the sections light up
+ * automatically once the stored meta carries them - no frontend change
+ * needed.
  */
 
 const IMAGE_FIELDS = `
@@ -86,7 +87,19 @@ export const SERVICE_BY_SLUG = /* GraphQL */ `
           nodes { __typename databaseId uri ... on Project { slug title } }
         }
         relatedFaqs {
-          nodes { __typename databaseId uri ... on FAQ { slug title } }
+          nodes {
+            __typename
+            databaseId
+            uri
+            ... on FAQ {
+              slug
+              title
+              fAQContent {
+                faqQuestion
+                faqAnswer
+              }
+            }
+          }
         }
       }
       serviceSEO {

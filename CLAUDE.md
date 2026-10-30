@@ -103,10 +103,78 @@ src/components/showcase/        the reused Agntix blocks (headline, rows, hero)
 
 Rules: the catalogue is read on the server, WordPress wins per field, the
 static mirror (`src/data/services.ts`) fills the gaps, and the catalogue is
-never empty. The GraphQL endpoint in production does not expose the service
-queries yet, so the mirror currently carries the content.
+never empty. The service CPT is registered on the staging origin and carries
+the six services, so the CMS answers and the mirror only fills the fields the
+CMS does not carry yet (the header clip).
+
+The CMS stores its prose as HTML (`wysiwyg`), the presentation layer prints
+plain text - `toPlainText()` in `src/lib/wordpress/html.ts` is the boundary.
+
+The media library holds a trap: an attachment inherits the visibility of its
+parent post, and a parent of a type the schema does not expose makes the
+attachment invisible to GraphQL - the ACF image field then resolves to null
+even though the file is on disk. `acf-json/repair-media-parents.php` detaches
+those attachments.
+
+## Branch Directory (Lokasi)
+
+The ten workshops are the `location` CPT. The directory is read on the
+server, WordPress wins per field, and the branch directory in
+`src/data/contact.ts` fills the gaps - it still carries the second phone
+number of a branch, for instance.
+
+```bash
+src/lib/locations/catalog.ts              listLocationCards() / getLocationCard(slug)
+src/lib/wordpress/repositories/locations.ts   the Location CPT -> the model
+src/data/contact.ts                       the branch directory (the fallback)
+```
+
+| Route | Source |
+|-------|--------|
+| `/contact` | the branch directory, with the map embeds |
+| `/locations` | the directory, from the CMS |
+
+The slug of a branch is the same in the CMS and in the branch directory
+(`pluit`, `depok-2`, `express-depok`, `pik-2`, `ciledug`, `bekasi`,
+`kranji-bekasi`, `bogor`, `serpong`, `cikupa`), so the booking wizard and the
+CMS address the same branch by the same name.
+
+The CMS records are written by `acf-json/seed-locations.php` - idempotent,
+and every string comes from the published contact page.
 
 Details: `docs/service-architecture.md`.
+
+## Booking Wizard (Reservasi)
+
+The reservation wizard is a dialog that is mounted once in the root layout.
+Every call to action that asks for a booking opens it - there is no separate
+booking page any more.
+
+```bash
+src/lib/booking/            the domain: types, validation, summary, schedule, vehicles
+src/components/booking/     the wizard, the modal, the trigger, the steps
+src/context/BookingContext.tsx  the state of the dialog
+src/app/api/services/       the catalogue as JSON for the dialog
+```
+
+Steps: service, branch, vehicle size, vehicle (skipped unless the service is
+cut per model), arrival, customer, review. The arrival step asks how soon the
+customer wants to come first (secepatnya / minggu ini / minggu depan / masih
+konsultasi), then the day from a calendar and the time from the slots of the
+branch.
+
+The submission is handed over to **the WhatsApp number of the chosen branch**
+(`branchWhatsapp()` in `src/data/contact.ts`), not to the central number.
+There is no booking API: the request is a preference until the team confirms
+it, and the wizard never claims otherwise.
+
+Details: `docs/booking-wizard.md`.
+
+Checks:
+
+```bash
+node scripts/perf/check-booking-wizard.mjs http://localhost:3200
+```
 
 ## API Contract (Phase 2D.8 Results)
 
@@ -201,7 +269,8 @@ Testimonial:
 | FAQ faqCategory not exposed | Low | Documented in 2D.8 report |
 | Project challenge/solution/result not exposed | Low | Documented in 2D.8 report |
 | Staging GraphQL `/graphql` returns 404 | High | Worked around - the endpoint is `index.php?graphql`; the content origin is now the staging install |
-| Staging exposes no custom post types in GraphQL | High | `services`/`serviceBy`/`projects`/`locations` are absent from the schema, so the service catalogue falls back to the static mirror |
+| A WPGraphQL image field of a `wysiwyg`/`textarea` field needs the markup stripped | Medium | Fixed - `toPlainText()` in `src/lib/wordpress/html.ts`; the CMS stores HTML, the presentation layer prints text |
+| An attachment inherits the visibility of its parent | Medium | If the parent is of a type the schema does not expose, the attachment is invisible to GraphQL and every ACF image field that points at it resolves to null - see `acf-json/repair-media-parents.php` |
 
 ## Documentation
 
@@ -211,6 +280,7 @@ Testimonial:
 - **Architecture evaluation — Agntix:** `docs/agntix-standalone-evaluation.md`
 - **Agntix "Projects" architecture:** `docs/agntix-projects-architecture.md`
 - **Service architecture (Layanan):** `docs/service-architecture.md`
+- **Booking wizard (reservation modal):** `docs/booking-wizard.md`
 
 > The phase 1A–2D9 planning documents were retired in favour of the Phase 2E
 > architecture above. Their content now lives in the git history.
@@ -229,10 +299,3 @@ Next.js 15 (App Router) + TypeScript + Tailwind
 - 2D.10: Media Migration
 - 2D.11: Redirect Implementation
 - 2D.12: Migration QA
-
-## Known Issues
-
-| Issue | Severity | Status |
-|-------|----------|--------|
-| WordPress 7.0.4 anomaly | Medium | Documented |
-| Category consolidation | — | Scheduled for 2D.9 |

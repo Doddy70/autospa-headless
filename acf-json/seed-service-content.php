@@ -199,35 +199,9 @@ $services = [
     ],
 ];
 
-/**
- * The one branch the production site publishes.
- *
- * Source: the production contact page (mirrored in `src/data/contact.ts`).
+/*
+ * The branches are not seeded here - `acf-json/seed-locations.php` owns them.
  */
-$location = [
-    'slug'        => 'autosp-jakarta',
-    'title'       => 'AutoSPA Jakarta',
-    'status'      => 'active',
-    'phone'       => '0877-1777-3888',
-    'whatsapp'    => '628177773888',
-    'email'       => 'info@autospajakarta.com',
-    'street'      => 'Jl. Pluit Karang Ayu Barat No.16',
-    'district'    => 'Pluit',
-    'city'        => 'Jakarta Utara',
-    'province'    => 'DKI Jakarta',
-    'postal_code' => '14440',
-    'country'     => 'Indonesia',
-    'tagline'     => 'Premium car detailing & paint protection in Jakarta',
-    'hours'       => [
-        ['monday', '08:00', '18:00', false],
-        ['tuesday', '08:00', '18:00', false],
-        ['wednesday', '08:00', '18:00', false],
-        ['thursday', '08:00', '18:00', false],
-        ['friday', '08:00', '18:00', false],
-        ['saturday', '08:00', '18:00', false],
-        ['sunday', '08:00', '18:00', false],
-    ],
-];
 
 /* ------------------------------------------------------------- helpers ---- */
 
@@ -370,35 +344,23 @@ function seed_field($post_id, $field, $value) {
 
 /* ------------------------------------------------------------- seeding ---- */
 
-echo "--- Location ---\n";
-$location_id = seed_post('location', $location['slug'], $location['title']);
+/*
+ * The branches.
+ *
+ * The ten branches are written by `acf-json/seed-locations.php`, which is the
+ * single place that knows their addresses, their phone numbers and their
+ * opening hours. This script only reads them, so a service relates to every
+ * branch and a re-run never cuts the relation down to one.
+ */
+$published_location_ids = get_posts([
+    'post_type'      => 'location',
+    'post_status'    => 'publish',
+    'posts_per_page' => -1,
+    'fields'         => 'ids',
+]);
 
-if ($location_id) {
-    seed_field($location_id, 'location_status', $location['status']);
-    seed_field($location_id, 'location_phone', $location['phone']);
-    seed_field($location_id, 'location_whatsapp', $location['whatsapp']);
-    seed_field($location_id, 'location_email', $location['email']);
-
-    seed_field($location_id, 'address_street', $location['street']);
-    seed_field($location_id, 'address_district', $location['district']);
-    seed_field($location_id, 'address_city', $location['city']);
-    seed_field($location_id, 'address_province', $location['province']);
-    seed_field($location_id, 'address_postal_code', $location['postal_code']);
-    seed_field($location_id, 'address_country', $location['country']);
-
-    seed_field($location_id, 'location_tagline', $location['tagline']);
-
-    $hours = [];
-    foreach ($location['hours'] as $hour) {
-        $hours[] = [
-            'day_name'  => $hour[0],
-            'is_closed' => $hour[3],
-            'open_time' => $hour[1],
-            'close_time' => $hour[2],
-        ];
-    }
-    seed_repeater($location_id, 'opening_hours', $hours);
-}
+echo "--- Locations ---\n";
+echo "    " . count($published_location_ids) . " published branch(es)\n";
 
 $service_ids = [];
 $faq_ids     = [];
@@ -434,9 +396,13 @@ foreach ($services as $service) {
     /* Relationships */
     seed_field($service_id, 'service_category', $service['category']);
 
-    if ($location_id) {
-        write_relation($service_id, 'related_locations', [$location_id]);
-    }
+    /*
+     * Every branch offers the whole service lineup, so a service relates to
+     * every location - not only to the one this script creates. Reading the
+     * published locations keeps a re-run of this script from cutting nine
+     * branches off the relation.
+     */
+    write_relation($service_id, 'related_locations', $published_location_ids);
 
     /* Packages */
     $package_rows = [];
@@ -495,9 +461,7 @@ foreach ($services as $service) {
         seed_field($faq_id, 'faq_category', 'general');
 
         write_relation($faq_id, 'faq_service', [$service_id]);
-        if ($location_id) {
-            write_relation($faq_id, 'faq_location', [$location_id]);
-        }
+        write_relation($faq_id, 'faq_location', $published_location_ids);
     }
 
     /* The service points back at its own FAQs. */
@@ -514,10 +478,28 @@ foreach ($services as $service) {
     }
 }
 
+/*
+ * Each service relates to the other services of the catalogue.
+ *
+ * The production site publishes the six services as one catalogue and every
+ * service page links to the others, so the relation is the catalogue minus
+ * the service itself. It is written after the loop, because the ids of all
+ * six services are only known then.
+ */
+$all_service_ids = array_values($service_ids);
+
+foreach ($services as $service) {
+    $service_id = $service_ids[$service['slug']] ?? 0;
+    if (!$service_id) continue;
+
+    $others = array_values(array_diff($all_service_ids, [$service_id]));
+    write_relation($service_id, 'related_services', $others);
+}
+
 echo "\n=================================================\n";
 echo "Services: " . count($service_ids) . "\n";
 echo "FAQs:     " . count($faq_ids) . "\n";
-echo "Location: " . ($location_id ?: 0) . "\n";
+echo "Locations: " . count($published_location_ids) . "\n";
 echo "=================================================\n";
 
 if (AUTOSP_SEED_DRY) {

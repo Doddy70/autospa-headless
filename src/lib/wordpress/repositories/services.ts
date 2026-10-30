@@ -13,6 +13,7 @@
  */
 
 import { wpQuery } from '../client';
+import { toPlainText } from '../html';
 import {
   PACKAGE_TIER_LABELS,
   SERVICE_CATEGORY_LABELS,
@@ -38,6 +39,7 @@ import type {
   RelatedEntity,
   Service,
   ServiceBenefit,
+  ServiceFaq,
   ServiceGalleryItem,
   ServiceImage,
   ServiceProcessStep,
@@ -189,6 +191,24 @@ function toRelated(connection: RawConnection | null | undefined): RelatedEntity[
   }));
 }
 
+/**
+ * The FAQs of a service, with their body.
+ *
+ * The CMS stores the answer as HTML (a `wysiwyg` field); the presentation
+ * layer prints plain text, so the markup is stripped here. The question of
+ * the post is the fallback, for a relation that carries no content.
+ */
+function toFaqs(connection: RawConnection | null | undefined): ServiceFaq[] {
+  return asArray(connection?.nodes)
+    .map((node) => ({
+      databaseId: node.databaseId,
+      slug: asText(node.slug),
+      question: asText(node.fAQContent?.faqQuestion) ?? asText(node.title) ?? '',
+      answer: toPlainText(asText(node.fAQContent?.faqAnswer) ?? ''),
+    }))
+    .filter((faq) => faq.question.length > 0);
+}
+
 function toSeo(raw: RawServiceNode['serviceSEO']): ServiceSeo {
   return {
     title: asText(raw?.seoTitle),
@@ -314,7 +334,7 @@ function mapService(
         relationships?.relatedFaqs,
         at('serviceRelationships.relatedFaqs'),
         unavailable,
-        toRelated,
+        toFaqs,
       ),
     },
 

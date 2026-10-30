@@ -2,12 +2,40 @@
 
 **Tanggal verifikasi:** 2026-10-30
 **Target:** `https://backend.autospajakarta.com` (staging)
-**Status:** ⛔ belum dijalankan — butuh akses admin WP / shell
+**Status:** ✅ **sudah dijalankan** — plugin CPT terpasang, 24 field group
+terimpor, 6 service + 10 FAQ + 10 location ter-seed (lihat "Hasil eksekusi"
+di bawah)
 
 Dokumen ini adalah hasil audit terhadap staging pada 2026-10-30 memakai WordPress
 MCP server (`mcp__wordpress__` → `backend.autospajakarta.com`) dan probe langsung
 ke GraphQL/REST. Semua artefak yang dibutuhkan sudah ada di repo ini — yang hilang
 adalah **pendaftaran**-nya di WordPress.
+
+---
+
+## Hasil eksekusi (2026-10-30)
+
+| Langkah | Hasil |
+|---|---|
+| Plugin CPT, 5 CPT terdaftar | ✅ `service`, `location`, `project`, `faq`, `testimonial` |
+| Import 24 field group (109 field) | ✅ `acf-json/import-field-groups.php` |
+| Nama GraphQL + exposure | ✅ `acf-json/fix-graphql-group-names.php` |
+| Seed 6 service + 10 FAQ | ✅ `acf-json/seed-service-content.php` |
+| Seed 10 location | ✅ `acf-json/seed-locations.php` (branch Pluit mewarisi record `autosp-jakarta`) |
+| Perbaikan media library | ✅ `acf-json/repair-media-parents.php` (56 attachment dilepas dari parent bertipe tak terdaftar) |
+
+GraphQL staging kini menjawab `services`, `serviceBy`, `locations`, `locationBy`,
+`fAQs`. Yang sudah lengkap: `heroImage` 6/6 service, `relatedServices`,
+`relatedLocations` (10 cabang), `relatedFaqs` beserta jawabannya.
+
+### Jebakan media library
+
+Attachment mewarisi visibilitas parent-nya. Kalau parent-nya bertipe yang tidak
+diekspos di schema (`portfolio`, `tcg_teb`, `metform-form`, `elementor_library`
+- sisa tema lama), attachment-nya tidak terlihat oleh WPGraphQL: `mediaItem`
+jawabannya null dan setiap field gambar ACF yang menunjuk ke sana ikut null,
+walau filenya ada di disk. `acf-json/repair-media-parents.php` melepas
+attachment-itu (`post_parent` jadi 0).
 
 ---
 
@@ -276,12 +304,29 @@ di `docs/service-architecture.md`).
 
 ## 6. Dampak ke frontend setelah CMS hidup
 
-Tidak ada perubahan kode frontend yang diperlukan:
+Katalog memang sudah didesain untuk "WordPress menang per field, mirror mengisi
+kekosongan" — repository yang ada mengambil alih otomatis begitu
+`services`/`serviceBy` menjawab. Yang perlu penyesuaian manual adalah
+beberapa hal berikut, yang sudah dikerjakan:
 
-- `src/lib/services/catalog.ts` sudah didesain untuk "WordPress menang per field,
-  mirror mengisi kekosongan" — begitu `services`/`serviceBy` menjawab, repository
-  yang ada akan mengambil alih secara otomatis.
-- Field `video` (clip pembuka halaman layanan) tetap berasal dari mirror
-  `src/data/services.ts` — file lokal `public/videos`, bukan aset CMS.
-- `revalidate = 300` di `src/app/(inner)/services/[slug]/page.tsx` → katalog
-  mengikuti CMS maksimal 5 menit.
+- `src/lib/services/adapters.ts` — `buildDetail()` memakai FAQ dari CMS
+  (`relatedFaqs` + `fAQContent.faqAnswer`), bukan dari mirror.
+- `src/lib/wordpress/html.ts` — `toPlainText()` mengubah HTML `wysiwyg` CMS
+  jadi teks biasa. Tanpa itu halaman layanan menampilkan tag `<p>` mentah
+  (terjadi di produksi saat origin pindah ke staging).
+- `src/lib/wordpress/queries/services.ts` — `relatedFaqs` kini meminta
+  `fAQContent { faqQuestion faqAnswer }`.
+- `src/lib/locations/` — direktori cabang (katalog + repository), dipakai
+  `/locations`.
+
+Yang tetap berasal dari mirror, dengan sengaja:
+
+- Field `video` (clip pembuka halaman layanan) — file lokal `public/videos`,
+  bukan aset CMS.
+- Foto kartu katalog — crop di `public/assets/autospa-cards`, yang lebih bagus
+  di baris lebar Agntix daripada foto hero CMS.
+- Urutan katalog dan blok "other services" — urutan publikasi produksi
+  ("01".."06"), bukan urutan `relatedServices` yang tidak berurutan.
+
+`revalidate = 300` di `src/app/(inner)/services/[slug]/page.tsx` → katalog
+mengikuti CMS maksimal 5 menit.

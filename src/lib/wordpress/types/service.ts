@@ -98,6 +98,11 @@ export interface RawConnection {
         uri: string | null;
         slug?: string | null;
         title?: string | null;
+        /** The FAQ body - only the `FAQ` type carries it. */
+        fAQContent?: {
+          faqQuestion: string | null;
+          faqAnswer: string | null;
+        } | null;
       }[]
     | null;
 }
@@ -159,6 +164,16 @@ export interface RelatedEntity {
   uri: string | null;
 }
 
+/** A question of the service FAQ, as the CMS stores it. */
+export interface ServiceFaq {
+  databaseId: number;
+  slug: string | null;
+  /** The question, as published. */
+  question: string;
+  /** The answer, as plain text - the CMS stores it as HTML. */
+  answer: string;
+}
+
 export interface ServiceSeo {
   title: string | null;
   description: string | null;
@@ -197,7 +212,7 @@ export interface Service {
     services: FieldState<RelatedEntity[]>;
     locations: FieldState<RelatedEntity[]>;
     projects: FieldState<RelatedEntity[]>;
-    faqs: FieldState<RelatedEntity[]>;
+    faqs: FieldState<ServiceFaq[]>;
   };
 
   seo: ServiceSeo;

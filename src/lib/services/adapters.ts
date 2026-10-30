@@ -11,6 +11,7 @@
  */
 
 import type { Service as StaticService } from '@/data/services';
+import { toPlainText } from '@/lib/wordpress/html';
 import type {
 	Service as WpService,
 	ServiceSummary as WpServiceSummary,
@@ -272,13 +273,27 @@ export function buildDetail(
 
 	const heroDescription =
 		service?.hero.description.status === 'ok' ? service.hero.description.value : null;
+	/*
+	 * The description is a `wysiwyg` field, so the CMS carries it as HTML.
+	 * The presentation layer prints plain text, so the markup is stripped -
+	 * otherwise the page shows the `<p>` tags literally.
+	 */
 	const longDescription =
-		service?.description.status === 'ok' ? service.description.value : null;
+		service?.description.status === 'ok' && service.description.value
+			? toPlainText(service.description.value)
+			: null;
 	const shortDescription =
 		service?.shortDescription.status === 'ok' ? service.shortDescription.value : null;
 
 	const wpPackages = service ? packagesFromWordPress(service) : [];
 	const wpGallery = service ? galleryFromWordPress(service) : [];
+	const wpFaqs =
+		service?.related.faqs.status === 'ok' && service.related.faqs.value
+			? service.related.faqs.value.map((faq) => ({
+					question: faq.question,
+					answer: faq.answer,
+				}))
+			: [];
 	const wpBenefits =
 		service?.benefits.status === 'ok' && service.benefits.value
 			? service.benefits.value.map((benefit) => ({
@@ -293,7 +308,7 @@ export function buildDetail(
 		description: longDescription ?? mirror?.description ?? '',
 		highlights: mirror?.highlights ?? [],
 		packages: wpPackages.length > 0 ? wpPackages : mirror ? packagesFromStatic(mirror) : [],
-		faqs: mirror ? faqsFromStatic(mirror) : [],
+		faqs: wpFaqs.length > 0 ? wpFaqs : mirror ? faqsFromStatic(mirror) : [],
 		gallery: wpGallery.length > 0 ? wpGallery : mirror ? galleryFromStatic(mirror) : [],
 		benefits: wpBenefits,
 		related: relatedCards,

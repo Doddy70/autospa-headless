@@ -4,10 +4,10 @@
  * Phase 1C RULE 7: GraphQL is never called from a UI component. This module is
  * imported only by `lib/wordpress/repositories/*`.
  *
- * The staging schema currently has resolvers that throw on some optional ACF
- * repeaters (`serviceContent.benefits`, `serviceContent.process`). GraphQL
- * answers those with BOTH a partial `data` payload AND a per-path entry in
- * `errors` - the field comes back null while every sibling resolves normally.
+ * The staging schema answers some optional ACF repeaters with null, and it
+ * used to throw on others. GraphQL answers those with BOTH a partial `data`
+ * payload AND a per-path entry in `errors` - the field comes back null while
+ * every sibling resolves normally.
  *
  * So this client deliberately does NOT throw on `errors`. It converts them
  * into a set of dotted field paths (`service.serviceContent.benefits`) that the

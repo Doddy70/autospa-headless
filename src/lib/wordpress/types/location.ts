@@ -1,5 +1,16 @@
 /** Minimal Location model - only what CTAs, header and footer need. */
 
+/** One row of the `opening_hours` repeater. */
+export interface RawOpeningHour {
+  /** The weekday, as the ACF select key ("monday"). */
+  dayName: string[] | null;
+  isClosed: boolean | null;
+  /** "HH:MM". */
+  openTime: string | null;
+  /** "HH:MM". */
+  closeTime: string | null;
+}
+
 export interface LocationContact {
   databaseId: number;
   slug: string;
@@ -14,6 +25,12 @@ export interface LocationContact {
   addressLine: string | null;
   city: string | null;
   mapsUrl: string | null;
+  /** The opening hours of the branch, as one line. */
+  hours: string | null;
+  /** The first opening time, "HH:MM". */
+  openTime: string | null;
+  /** The closing time, "HH:MM". */
+  closeTime: string | null;
 }
 
 export interface RawLocationNode {
@@ -41,5 +58,8 @@ export interface RawLocationNode {
   } | null;
   locationContent?: {
     locationTagline: string | null;
+  } | null;
+  businessHours?: {
+    openingHours: RawOpeningHour[] | null;
   } | null;
 }
