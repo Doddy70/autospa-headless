@@ -1,0 +1,127 @@
+name: Deploy
+
+# The production deployment of the AutoSPA frontend.
+#
+# The runner does the checking, the server does the building:
+#
+#   1. the workflow checks the code (typecheck),
+#   2. it pushes the checkout into a new release directory on the server,
+#   3. `scripts/deploy/deploy.sh` builds that release, verifies it, switches
+#      `current` to it and restarts pm2 - and rolls back if the site does
+#      not come up,
+#   4. `scripts/deploy/verify-deploy.sh` checks the public site.
+#
+# The live site is never built over: every deploy gets its own release
+# directory and the previous one stays on disk as the rollback.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'The branch or tag to deploy (empty = the commit of the workflow)'
+        required: false
+        default: ''
+
+concurrency:
+  # One deployment at a time - a second one waits for the first.
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check the code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+
+  deploy:
+    name: Deploy to production
+    needs: check
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          # The full history is not needed - the server receives the files.
+          fetch-depth: 1
+
+      - name: Set up the SSH key
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${DEPLOY_SSH_PORT:-22}" "${DEPLOY_SSH_HOST}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Build the release name
+        id: release
+        run: |
+          SHA="$(git rev-parse --short HEAD)"
+          STAMP="$(date +%Y%m%d-%H%M%S)"
+          echo "name=${STAMP}-${SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Push the code into the new release
+        env:
+          DEPLOY_SSH_HOST: ${{ vars.DEPLOY_SSH_HOST }}
+          DEPLOY_SSH_USER: ${{ vars.DEPLOY_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.DEPLOY_SSH_PORT }}
+          APP_ROOT: ${{ vars.APP_ROOT }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${DEPLOY_SSH_PORT:-22}" \
+            "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}" \
+            "mkdir -p '${APP_ROOT}/releases/${{ steps.release.outputs.name }}'"
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p ${DEPLOY_SSH_PORT:-22}" \
+            --exclude '.git' \
+            --exclude 'node_modules' \
+            --exclude '.next' \
+            --exclude '.next-*' \
+            --exclude '.cache' \
+            --exclude '.remember' \
+            --exclude 'test-results' \
+            --exclude 'playwright-report' \
+            --exclude 'tsconfig.tsbuildinfo' \
+            --exclude '*.tar.gz' \
+            ./ "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}:${APP_ROOT}/releases/${{ steps.release.outputs.name }}/"
+
+      - name: Build, verify and switch the release
+        env:
+          DEPLOY_SSH_HOST: ${{ vars.DEPLOY_SSH_HOST }}
+          DEPLOY_SSH_USER: ${{ vars.DEPLOY_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.DEPLOY_SSH_PORT }}
+          APP_ROOT: ${{ vars.APP_ROOT }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${DEPLOY_SSH_PORT:-22}" \
+            "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}" \
+            "bash '${APP_ROOT}/releases/${{ steps.release.outputs.name }}/scripts/deploy/deploy.sh' '${{ steps.release.outputs.name }}'"
+
+      - name: Check the public site
+        env:
+          DEPLOY_SSH_HOST: ${{ vars.DEPLOY_SSH_HOST }}
+          DEPLOY_SSH_USER: ${{ vars.DEPLOY_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.DEPLOY_SSH_PORT }}
+          APP_ROOT: ${{ vars.APP_ROOT }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${DEPLOY_SSH_PORT:-22}" \
+            "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}" \
+            "bash '${APP_ROOT}/releases/${{ steps.release.outputs.name }}/scripts/deploy/verify-deploy.sh'"
+
+      - name: Report
+        if: always()
+        run: |
+          {
+            echo "### Deployment ${{ steps.release.outputs.name }}"
+            echo ""
+            echo "- commit: \`$(git rev-parse HEAD)\`"
+            echo "- branch: \`$(git rev-parse --abbrev-ref HEAD)\`"
+          } >> "$GITHUB_STEP_SUMMARY"
