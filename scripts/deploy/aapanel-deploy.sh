@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 #
-# The deploy script of the AutoSPA frontend.
+# The deploy script of the AutoSPA frontend for aaPanel.
 #
 # The aaPanel webhook plugin runs it (the URL of the hook is registered as a
 # webhook of the GitHub repository, so a push to `main` lands here):
 #
 #   1. it pulls the repository - the directory of the site is the clone,
-#   2. it restores the files that are not in git (the environment of the
-#      production and the mirror of the CMS),
-#   3. it builds the new version next to the live one, so the site keeps
-#      serving the old build while the new one is built,
-#   4. it checks the build before it is allowed to go live,
-#   5. it swaps the two builds and restarts the application,
-#   6. if the site does not come up, it swaps them back.
+#   2. it hands the clone over to the deploy engine, which builds it, checks
+#      it and puts it live (and rolls it back if the site does not come up).
+#
+# The engine is `scripts/deploy/deploy.sh` - the same one the GitHub
+# Actions pipeline uses, so both ways of deploying produce the same result.
 #
 # The path of the repository is taken from the first argument, or from the
 # current directory.
@@ -36,23 +34,6 @@ else
 fi
 cd "$SITE_DIR" || { echo "[deploy] ERROR: $SITE_DIR does not exist" >&2; exit 1; }
 
-NODE_BIN=/www/server/nodejs/v20.20.2/bin
-PM2_BIN=/www/server/nodejs/v22.23.3/bin
-
-# The files that are not in git. The backup of them is made outside the
-# repository, so a fresh clone does not lose them.
-BACKUP_DIR=/www/backup/autospa-frontend/20261030-pre-gitreset
-
-# The markers the built pages have to carry. A build without them is a
-# build of the wrong code - it never goes live.
-REQUIRED_MARKERS=(
-	'footer-big-text'
-	'Quick links'
-)
-
-# The port the application listens on (the nginx vhost proxies to it).
-APP_PORT=8089
-
 log() { printf '[deploy] %s\n' "$*"; }
 fail() { printf '[deploy] ERROR: %s\n' "$*" >&2; exit 1; }
 
@@ -68,100 +49,15 @@ COMMIT="$(su -s /bin/bash www -c "cd '$SITE_DIR' && git rev-parse --short HEAD")
 log "the commit is $COMMIT"
 
 # ───────────────────────────────────────────────
-# 2. The files that are not in git.
+# 2. The build, the check and the switch.
 # ───────────────────────────────────────────────
-if [ ! -f .env.production ] && [ -f "$BACKUP_DIR/.env.production" ]; then
-	log "restoring the environment of the production"
-	cp -a "$BACKUP_DIR/.env.production" .env.production
-fi
-[ -f .env.production ] || fail "there is no .env.production and no backup of it"
+# The engine copies the clone into a release directory of its own, builds it
+# and swaps it with the live one. The live site keeps serving the old build
+# while the new one is made.
+ENGINE="$SITE_DIR/scripts/deploy/deploy.sh"
+[ -f "$ENGINE" ] || fail "the deploy engine $ENGINE does not exist"
 
-if [ ! -d public/wp-content ] && [ -d "$BACKUP_DIR/wp-content" ]; then
-	log "restoring the mirror of the CMS"
-	cp -a "$BACKUP_DIR/wp-content" public/wp-content
-fi
+bash "$ENGINE" "$SITE_DIR" "$(date +%Y%m%d-%H%M%S)-$COMMIT" || fail "the deployment of $COMMIT failed"
 
-# The files of the pull and the ones that were restored belong to the user
-# of the application.
-chown -R www:www . 2>/dev/null || true
-chown www:www .env.production 2>/dev/null || true
-
-# ───────────────────────────────────────────────
-# 3. The build - next to the live one.
-# ───────────────────────────────────────────────
-log "installing the dependencies"
-su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$NODE_BIN:\$PATH && npm ci" || fail "npm ci failed"
-
-log "building the new version (about two minutes)"
-rm -rf .next.new
-su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$NODE_BIN:\$PATH && NEXT_DIST_DIR=.next.new NODE_OPTIONS=--max-old-space-size=2048 nice -n 15 npm run build" || fail "the build failed - the live version keeps running"
-
-[ -f .next.new/BUILD_ID ] || fail "the build did not produce a BUILD_ID"
-
-# ───────────────────────────────────────────────
-# 4. The check.
-# ───────────────────────────────────────────────
-INDEX_HTML="$SITE_DIR/.next.new/server/app/index.html"
-[ -f "$INDEX_HTML" ] || fail "the build did not produce the homepage"
-
-for marker in "${REQUIRED_MARKERS[@]}"; do
-	grep -q "$marker" "$INDEX_HTML" || fail "the homepage does not carry '$marker' - the build is not the expected code"
-done
-log "the build carries every marker"
-
-# ───────────────────────────────────────────────
-# 5. The swap - the new build goes live.
-# ───────────────────────────────────────────────
-log "swapping the build"
-rm -rf .next.prev
-if [ -d .next ]; then mv .next .next.prev; fi
-mv .next.new .next
-chown -R www:www .next
-
-# The pm2 application - it is created when it does not exist yet, and it is
-# replaced when it still points at the old directory (the reset).
-PM2_EXISTS=0
-if su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" >/dev/null 2>&1; then
-	PM2_EXISTS=1
-fi
-
-PM2_SCRIPT="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" 2>/dev/null | sed -n 's/.*script path.*: \(.*\)$/\1/p' | head -1)"
-
-if [ "$PM2_EXISTS" = "1" ] && [ -n "$PM2_SCRIPT" ] && [ ! -f "$PM2_SCRIPT" ]; then
-	log "the application still points at $PM2_SCRIPT - it is removed"
-	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 delete autospa-web"
-	PM2_EXISTS=0
-fi
-
-if [ "$PM2_EXISTS" = "1" ]; then
-	log "restarting the application"
-	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web" || fail "pm2 could not be restarted"
-else
-	log "creating the application in $SITE_DIR"
-	su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$PM2_BIN:\$PATH && pm2 start ./start.sh --name autospa-web --interpreter /bin/bash && pm2 save" || fail "the application could not be started"
-fi
-
-# ───────────────────────────────────────────────
-# 6. The health check - and the way back.
-# ───────────────────────────────────────────────
-log "waiting for the site to answer"
-OK=0
-for _ in $(seq 1 30); do
-	sleep 2
-	CODE="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$APP_PORT/" || true)"
-	if [ "$CODE" = "200" ]; then OK=1; break; fi
-done
-
-if [ "$OK" != "1" ]; then
-	log "the site did not answer - the previous build goes back"
-	rm -rf .next
-	if [ -d .next.prev ]; then mv .next.prev .next; chown -R www:www .next; fi
-	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web"
-	sleep 5
-	fail "the new build did not come up"
-fi
-log "the site answers with 200"
-
-rm -rf .next.prev
 log "the deployment of $COMMIT is done"
 log "status: success"

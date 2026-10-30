@@ -1,33 +1,49 @@
 #!/usr/bin/env bash
 #
-# Deploy the AutoSPA frontend on the production server.
+# The deploy engine of the AutoSPA frontend.
 #
-# The code is pushed into a release directory (by the GitHub Actions runner
-# or by hand), and this script turns that release into the live one:
+# It turns a directory that holds the source of the site into the live
+# release:
 #
 #   1. it takes the deploy lock, so two deploys never overlap,
-#   2. it installs the dependencies and builds the release,
-#   3. it checks the build before it is allowed to go live,
-#   4. it switches `current` to the new release (atomically),
-#   5. it restarts pm2 and watches the site come back up,
-#   6. if the site does not answer, it switches back to the old release.
+#   2. it copies the source into a release directory of its own (a source
+#      that already lives under `releases/` is used where it is),
+#   3. it puts the files that are not in git back - the environment of the
+#      production and the mirror of the CMS,
+#   4. it installs the dependencies and builds the release,
+#   5. it checks the build before it is allowed to go live,
+#   6. it switches `current` to the new release (atomically) and restarts
+#      pm2,
+#   7. if the site does not answer, it switches back to the old release.
 #
 # The live site is never built over: every deploy gets its own directory
 # under `releases/`, and the old one stays on disk as the rollback.
 #
+# The two callers of this engine:
+#
+#   - `.github/workflows/deploy.yml` (the push to `main`),
+#   - `scripts/deploy/aapanel-deploy.sh` (the webhook of aaPanel, or a
+#     deployment by hand).
+#
 # Usage:
-#   bash scripts/deploy/deploy.sh <release-directory>
+#   bash scripts/deploy/deploy.sh <source-directory> [release-name]
 #
 # Example:
-#   bash scripts/deploy/deploy.sh 20261030-201500-a1b2c3d
+#   bash scripts/deploy/deploy.sh /www/wwwroot/autospajakarta.com
+#   bash scripts/deploy/deploy.sh /tmp/autospa-frontend 20261030-201500-a1b2c3d
 
 set -euo pipefail
 
-APP_ROOT=/www/wwwroot/autospa-frontend
+# The root of the deployment on the server. Everything else hangs under it.
+APP_ROOT="${APP_ROOT:-/www/wwwroot/autospa-frontend}"
 RELEASES_DIR="$APP_ROOT/releases"
 SHARED_DIR="$APP_ROOT/shared"
 CURRENT_LINK="$APP_ROOT/current"
 LOCK_FILE="$APP_ROOT/.deploy.lock"
+
+# The launcher of pm2. It is a stable path - the release underneath it is
+# swapped, not the path itself.
+RUN_SCRIPT="$APP_ROOT/run.sh"
 
 NODE_BIN=/www/server/nodejs/v20.20.2/bin
 PM2_BIN=/www/server/nodejs/v22.23.3/bin
@@ -48,19 +64,25 @@ REQUIRED_MARKERS=(
 log() { printf '[deploy] %s\n' "$*"; }
 fail() { printf '[deploy] ERROR: %s\n' "$*" >&2; exit 1; }
 
-RELEASE_NAME="${1:-}"
-[ -n "$RELEASE_NAME" ] || fail "usage: bash scripts/deploy/deploy.sh <release-directory>"
+SOURCE_DIR="${1:-}"
+[ -n "$SOURCE_DIR" ] || fail "usage: bash scripts/deploy/deploy.sh <source-directory> [release-name]"
+SOURCE_DIR="$(cd "$SOURCE_DIR" 2>/dev/null && pwd -P)" || fail "the source $SOURCE_DIR does not exist"
+[ -f "$SOURCE_DIR/package.json" ] || fail "$SOURCE_DIR is not an application"
+
+# ───────────────────────────────────────────────
+# 1. The name of the release and the lock.
+# ───────────────────────────────────────────────
+if [ -n "${2:-}" ]; then
+	RELEASE_NAME="$2"
+else
+	COMMIT="$(cd "$SOURCE_DIR" && git rev-parse --short HEAD 2>/dev/null || echo nogit)"
+	RELEASE_NAME="$(date +%Y%m%d-%H%M%S)-$COMMIT"
+fi
 case "$RELEASE_NAME" in
 	*/* | *..*) fail "the release name may not contain a path" ;;
 esac
 
-RELEASE_DIR="$RELEASES_DIR/$RELEASE_NAME"
-[ -d "$RELEASE_DIR" ] || fail "the release $RELEASE_NAME does not exist"
-[ -f "$RELEASE_DIR/package.json" ] || fail "$RELEASE_NAME is not an application"
-
-# ───────────────────────────────────────────────
-# 1. The lock.
-# ───────────────────────────────────────────────
+mkdir -p "$APP_ROOT"
 exec 9>"$LOCK_FILE"
 if ! flock -n 9; then
 	fail "another deploy is running - the lock $LOCK_FILE is held"
@@ -68,7 +90,6 @@ fi
 log "the deploy lock is taken"
 
 mkdir -p "$RELEASES_DIR" "$SHARED_DIR"
-
 # The release that is live right now - it is the fallback if anything goes
 # wrong further down.
 PREVIOUS_RELEASE=""
@@ -78,36 +99,87 @@ fi
 log "the live release is ${PREVIOUS_RELEASE:-none}"
 
 # ───────────────────────────────────────────────
-# 2. The dependencies.
+# 2. The release directory.
 # ───────────────────────────────────────────────
-log "installing the dependencies"
-su -s /bin/bash www -c "cd '$RELEASE_DIR' && export PATH=$NODE_BIN:\$PATH && npm ci"
+RELEASE_DIR="$RELEASES_DIR/$RELEASE_NAME"
 
-# The mirror of the CMS (the fonts, the uploads and the theme assets of the
-# WordPress pages) is not in git - it is copied from the shared directory,
-# so a fresh release serves the mirrored pages as well.
+case "$SOURCE_DIR/" in
+	"$RELEASES_DIR"/*)
+		# The source is already a release (the runner pushed it into place) -
+		# it is used where it is.
+		RELEASE_DIR="$SOURCE_DIR"
+		log "the release directory is $RELEASE_DIR (the source is already a release)"
+		;;
+	*)
+		log "copying the source into the release $RELEASE_NAME"
+		mkdir -p "$RELEASE_DIR"
+		rsync -a --delete \
+		--exclude '.git' \
+		--exclude 'node_modules' \
+		--exclude '.next' \
+		--exclude '.next-*' \
+		--exclude '.cache' \
+		--exclude '.remember' \
+		--exclude '.claude' \
+		--exclude 'tmp' \
+		--exclude 'test-results' \
+		--exclude 'playwright-report' \
+		--exclude 'tsconfig.tsbuildinfo' \
+		--exclude '.env.local' \
+		--exclude '.env.production' \
+		--exclude '*.tar.gz' \
+		"$SOURCE_DIR/" "$RELEASE_DIR/"
+		;;
+esac
+chown -R www:www "$RELEASE_DIR"
+
+# ───────────────────────────────────────────────
+# 3. The files that are not in git.
+# ───────────────────────────────────────────────
+# The environment of the production and the mirror of the CMS live in the
+# shared directory, so they survive a fresh clone of the repository.
+if [ ! -f "$SHARED_DIR/.env.production" ] && [ -f "$SOURCE_DIR/.env.production" ]; then
+	log "taking the environment of the production from the source"
+	cp -a "$SOURCE_DIR/.env.production" "$SHARED_DIR/.env.production"
+fi
+if [ ! -f "$SHARED_DIR/.env.production" ] && [ -f "$PREVIOUS_RELEASE/.env.production" ]; then
+	log "taking the environment of the production from the live release"
+	cp -a "$PREVIOUS_RELEASE/.env.production" "$SHARED_DIR/.env.production"
+fi
+[ -f "$SHARED_DIR/.env.production" ] || fail "there is no .env.production in $SHARED_DIR and no source of it"
+
+if [ ! -d "$SHARED_DIR/public/wp-content" ] && [ -d "$SOURCE_DIR/public/wp-content" ]; then
+	log "taking the mirror of the CMS from the source"
+	mkdir -p "$SHARED_DIR/public"
+	cp -a "$SOURCE_DIR/public/wp-content" "$SHARED_DIR/public/wp-content"
+fi
+
+cp -a "$SHARED_DIR/.env.production" "$RELEASE_DIR/.env.production"
 if [ -d "$SHARED_DIR/public/wp-content" ]; then
-	log "copying the CMS mirror"
 	rm -rf "$RELEASE_DIR/public/wp-content"
 	mkdir -p "$RELEASE_DIR/public"
 	cp -a "$SHARED_DIR/public/wp-content" "$RELEASE_DIR/public/wp-content"
 elif [ -d "$PREVIOUS_RELEASE/public/wp-content" ]; then
-	log "copying the CMS mirror from the previous release"
+	log "copying the mirror of the CMS from the previous release"
 	cp -a "$PREVIOUS_RELEASE/public/wp-content" "$RELEASE_DIR/public/wp-content"
 else
-	log "WARNING: there is no CMS mirror - the mirrored pages will miss their assets"
+	log "WARNING: there is no mirror of the CMS - the mirrored pages will miss their assets"
 fi
+chown -R www:www "$RELEASE_DIR"
 
 # ───────────────────────────────────────────────
-# 3. The build.
+# 4. The dependencies and the build.
 # ───────────────────────────────────────────────
+log "installing the dependencies"
+su -s /bin/bash www -c "cd '$RELEASE_DIR' && export PATH=$NODE_BIN:\$PATH && npm ci"
+
 log "building the release (this takes about two minutes)"
 su -s /bin/bash www -c "cd '$RELEASE_DIR' && export PATH=$NODE_BIN:\$PATH && NODE_OPTIONS=--max-old-space-size=2048 nice -n 15 npm run build"
 
 [ -f "$RELEASE_DIR/.next/BUILD_ID" ] || fail "the build did not produce a BUILD_ID"
 
 # ───────────────────────────────────────────────
-# 4. The check - the build has to carry the new code.
+# 5. The check - the build has to carry the new code.
 # ───────────────────────────────────────────────
 log "checking the build"
 INDEX_HTML="$RELEASE_DIR/.next/server/app/index.html"
@@ -121,17 +193,55 @@ done
 log "the build carries every marker"
 
 # ───────────────────────────────────────────────
-# 5. The switch - the release goes live.
+# 6. The switch - the release goes live.
 # ───────────────────────────────────────────────
 ln -sfn "$RELEASE_DIR" "$CURRENT_LINK.new"
 mv -Tf "$CURRENT_LINK.new" "$CURRENT_LINK"
 log "current now points at $RELEASE_DIR"
 
 # ───────────────────────────────────────────────
-# 6. The restart and the health check.
+# 7. The application.
 # ───────────────────────────────────────────────
-su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web"
+# pm2 runs a stable launcher, which enters the release that `current` points
+# at. The release is swapped under it, the path of the process is not.
+if [ -f "$RELEASE_DIR/start.sh" ]; then
+	{
+		printf '#!/usr/bin/env bash\n'
+		printf '# The launcher of the application - it enters the release that is live.\n'
+		printf 'exec "%s/current/start.sh" "$@"\n' "$APP_ROOT"
+	} > "$RUN_SCRIPT"
+	chmod 755 "$RUN_SCRIPT"
+	chmod 755 "$RELEASE_DIR/start.sh"
+fi
 
+# The path the application is started from. It is read from pm2 itself, so a
+# change of the launcher is noticed.
+PM2_SCRIPT="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" 2>/dev/null \
+	| grep 'script path' | awk -F'│' '{print $NF}' | head -1 \
+	| sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' || true)"
+case "$PM2_SCRIPT" in
+	/*) ;;
+	*) PM2_SCRIPT="" ;;
+esac
+
+if [ -n "$PM2_SCRIPT" ] && [ "$PM2_SCRIPT" != "$RUN_SCRIPT" ]; then
+	log "the application still points at $PM2_SCRIPT - it is replaced by $RUN_SCRIPT"
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 delete autospa-web"
+	PM2_SCRIPT=""
+fi
+
+if [ -z "$PM2_SCRIPT" ]; then
+	log "starting the application"
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 start '$RUN_SCRIPT' --name autospa-web --interpreter /bin/bash && pm2 save" \
+		|| fail "the application could not be started"
+else
+	log "restarting the application"
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web && pm2 save" || fail "pm2 could not be restarted"
+fi
+
+# ───────────────────────────────────────────────
+# 8. The health check - and the way back.
+# ───────────────────────────────────────────────
 log "waiting for the site to answer"
 OK=0
 for _ in $(seq 1 30); do
@@ -145,7 +255,7 @@ done
 
 if [ "$OK" != "1" ]; then
 	log "the site did not answer - rolling back to the previous release"
-	if [ -n "$PREVIOUS_RELEASE" ]; then
+	if [ -n "$PREVIOUS_RELEASE" ] && [ -d "$PREVIOUS_RELEASE" ]; then
 		ln -sfn "$PREVIOUS_RELEASE" "$CURRENT_LINK.new"
 		mv -Tf "$CURRENT_LINK.new" "$CURRENT_LINK"
 		su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web"
@@ -156,14 +266,17 @@ fi
 log "the site answers with 200"
 
 # ───────────────────────────────────────────────
-# 7. The cleanup - the old releases are pruned.
+# 9. The cleanup - the old releases are pruned.
 # ───────────────────────────────────────────────
 log "pruning the old releases"
 cd "$RELEASES_DIR"
-ls -1dt */ 2>/dev/null | tail -n "+$KEEP_RELEASES" | while read -r old; do
-	[ "$old" = "$(basename "$RELEASE_DIR")/" ] && continue
+for old in $(ls -1dt */ 2>/dev/null | tail -n "+$((KEEP_RELEASES + 1))"); do
+	OLD_DIR="$RELEASES_DIR/${old%/}"
+	[ "$OLD_DIR" = "$RELEASE_DIR" ] && continue
+	[ "$OLD_DIR" = "$PREVIOUS_RELEASE" ] && continue
 	log "removing the release $old"
-	rm -rf "$RELEASES_DIR/$old"
+	rm -rf "$OLD_DIR"
 done
 
 log "the deployment of $RELEASE_NAME is done"
+log "status: success"

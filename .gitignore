@@ -88,6 +88,9 @@ node_modules/
 .next-dev/
 .next-ba/
 .next-deploy/
+.next.new/
+.next.prev/
+releases/
 out/
 next-env.d.ts
 test-results/
