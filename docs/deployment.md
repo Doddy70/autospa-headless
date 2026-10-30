@@ -3,43 +3,22 @@
 The headless frontend (Next.js 15, App Router) over the WordPress backend.
 It runs on the server `83.147.38.178` and serves `https://autospajakarta.com`.
 
-Since the reset the deployment runs through **GitHub Actions**: a push to
-`main` builds a release on the server, checks it and switches it live. The
-manual method (bundle -> upload -> build -> pm2 restart) is kept at the end
-of this document for the times the pipeline is not available.
-
-## The pipeline
-
-```
-push to main
-   |
-   v
-GitHub Actions (.github/workflows/deploy.yml)
-   |-- npm run typecheck                     the code is checked
-   |-- rsync the checkout into              /www/wwwroot/autospa-frontend/releases/<stamp>-<sha>
-   |  the new release directory
-   |-- scripts/deploy/deploy.sh              build, check, switch, restart, health check
-   `-- scripts/deploy/verify-deploy.sh       the public site
-```
-
-The runner never builds and the server never builds over the live
-application: every deploy gets its own release directory, and the one that
-is live is only a symlink away.
+The deployment runs through the **Git Manager of aaPanel**: the panel clones
+the repository of GitHub into the directory of the site, and a deploy script
+builds the new version, checks it and puts it live. A push to `main` does
+the same thing through the webhook of the panel.
 
 ## The layout on the server
 
 ```
-/www/wwwroot/autospa-frontend/
-├── current -> releases/20261030-201500-a1b2c3d   the live release
-├── releases/                                     the releases (the old ones are the rollback)
-│   └── 20261030-201500-a1b2c3d/
-│       ├── .next/                                the build
-│       ├── node_modules/                         the dependencies
-│       ├── public/                               the static assets, the videos
-│       └── start.sh, package.json, src/, ...
-├── shared/public/wp-content/                    the mirror of the CMS (not in git)
-├── start.sh                                      the start script (pm2 runs it)
-└── .deploy.lock                                  the deploy lock
+/www/wwwroot/autospajakarta.com/     the site of aaPanel (the repository lives here)
+├── .git/                            the clone of the repository
+├── .next/                           the build that is live
+├── .next.new/                       the build that is being made
+├── node_modules/                    the dependencies
+├── public/                          the static assets, the videos, the mirror of the CMS
+├── .env.production                  the WordPress origin and the public origin
+└── start.sh                         the start script (pm2 runs it, port 8089)
 ```
 
 The process runs under pm2 as the user `www`, the same user as the other
@@ -60,81 +39,78 @@ The original vhost (the WordPress one, without a docroot) is kept in
 
 ## The deploy script
 
-`scripts/deploy/deploy.sh <release-directory>` runs on the server and does
-the whole cutover:
+`scripts/deploy/aapanel-deploy.sh` is the script the panel runs after it
+pulls the repository:
 
-1. it takes the deploy lock (`flock`), so two deploys never overlap,
+1. it restores the files that are not in git - the environment of the
+   production (`.env.production`) and the mirror of the CMS
+   (`public/wp-content`); the backup of them is in
+   `/www/backup/autospa-frontend/20261030-pre-gitreset/`,
 2. it installs the dependencies (`npm ci`, without `--omit=dev` - the
    `next.config.ts` is TypeScript and the build needs `typescript`),
-3. it copies the mirror of the CMS (`public/wp-content`) into the release,
-4. it builds (`nice -n 15`, 2 GB of heap - the box serves a dozen other
-   sites),
-5. it **checks the build**: the homepage has to carry the markers of the
-   new code, otherwise the release does not go live,
-6. it switches `current` to the new release (the symlink is replaced
-   atomically),
-7. it restarts pm2 and waits for the site to answer,
-8. if the site does not answer within a minute, it **switches back** to the
-   previous release and restarts pm2 again,
-9. it prunes the old releases (three are kept).
+3. it builds the new version **next to** the live one (`NEXT_DIST_DIR=.next.new`),
+   so the site keeps serving the old build while the new one is built,
+4. it **checks the build**: the homepage has to carry the markers of the new
+   code, otherwise the release does not go live,
+5. it swaps the two builds and restarts pm2 (the application is created when
+   it does not exist yet),
+6. if the site does not answer within a minute, it swaps the builds back.
 
-## What the pipeline needs
+A build on the server takes about two minutes and up to 2 GB of memory. The
+box also serves a dozen other sites, so the build is worth running with a
+lower priority.
 
-**Repository variables** (Settings -> Secrets and variables -> Actions ->
-Variables):
+## The panel
 
-| Name | Value |
-|------|-------|
-| `DEPLOY_SSH_HOST` | `83.147.38.178` |
-| `DEPLOY_SSH_USER` | `root` |
-| `DEPLOY_SSH_PORT` | `22` |
-| `APP_ROOT` | `/www/wwwroot/autospa-frontend` |
+**The repository** (Site -> autospajakarta.com -> Config -> Git):
 
-**Repository secret** (Settings -> Secrets and variables -> Actions ->
-Secrets):
+| Field | Value |
+|-------|-------|
+| Repository | `https://github.com/Doddy70/autospa-headless.git` |
+| Branch | `main` |
+| Authentication | GitHub (the OAuth of the panel) |
+| Deploy mode | merge (the files that are not in git are kept) |
 
-| Name | Value |
-|------|-------|
-| `DEPLOY_SSH_KEY` | the private key of the deploy key (see below) |
+The first connection clones the repository into the directory of the site
+and injects the `.git` into it - the deploys after that pull the
+repository in place.
 
-The deploy key is a key of its own, not the personal one: it lives in
-`~/.ssh/deploy_key` on the runner and its public half is in
-`/root/.ssh/authorized_keys` of the server.
+**The script** (Site -> autospajakarta.com -> Config -> Git -> Script):
 
-## The first deployment (the migration)
+| Field | Value |
+|-------|-------|
+| Alias | `deploy` |
+| Path | `/www/wwwroot/autospajakarta.com/scripts/deploy/aapanel-deploy.sh` |
 
-The site that is live was deployed by hand and lived directly in
-`/www/wwwroot/autospa-frontend`. The migration moves it into the release
-structure and lets the pipeline take over:
+The script is bound to the repository in the Repository tab, and the panel
+writes the webhook of the site:
 
-```bash
-# on the server
-cd /www/wwwroot/autospa-frontend
-mkdir -p releases shared
-STAMP=$(date +%Y%m%d-%H%M%S)-baseline
-mkdir "releases/$STAMP"
-# everything that is not the release structure itself moves into the release
-for item in .next node_modules public src scripts docs acf-json cpt data \
-             package.json package-lock.json next.config.ts tsconfig.json \
-             postcss.config.mjs .npmrc .env.production next-env.d.ts \
-             playwright.config.ts README.md CLAUDE.md; do
-    [ -e "$item" ] && mv "$item" "releases/$STAMP/"
-done
-ln -sfn "$PWD/releases/$STAMP" current
-# the start script now runs the release behind `current`
-cat > start.sh <<'SH'
-#!/bin/bash
-export PATH=/www/server/nodejs/v20.20.2/bin:$PATH
-cd /www/wwwroot/autospa-frontend/current
-export NODE_OPTIONS=--max-old-space-size=1024
-exec node_modules/.bin/next start -p "${PORT:-8089}"
-SH
-chmod +x start.sh
-chown -R www:www .
-su -s /bin/bash www -c 'export PATH=/www/server/nodejs/v22.23.3/bin:$PATH; pm2 restart autospa-web'
+```
+/www/server/panel/plugin/webhook/script/<access_key>
 ```
 
-After that the first push to `main` deploys through the pipeline.
+**The webhook** (GitHub -> the repository -> Settings -> Webhooks):
+
+| Field | Value |
+|-------|-------|
+| Payload URL | the webhook URL of the site (Git -> Repository -> copy) |
+| Content type | `application/json` |
+| SSL verification | Disable |
+| Events | push |
+
+## The files that are not in git
+
+| File | Where it comes from |
+|------|---------------------|
+| `.env.production` | the backup - the environment of the production |
+| `public/wp-content` | the backup, or `npm run sync:content` in a release |
+
+`.env.production` holds the WordPress origin
+(`https://backend.autospajakarta.com`), the public origin
+(`https://autospajakarta.com`) and the Beauty Care popout switch.
+
+`POPUP_ENABLED=false` takes the popout off the site for every visitor -
+the switch is read on the server at runtime, so a restart is enough.
 
 ## Checking a deployment
 
@@ -145,33 +121,19 @@ curl -I https://autospajakarta.com/contact
 su -s /bin/bash www -c 'export PATH=/www/server/nodejs/v22.23.3/bin:$PATH; pm2 logs autospa-web --lines 30 --nostream'
 ```
 
-## The environment
-
-`.env.production` holds the WordPress origin
-(`https://backend.autospajakarta.com`), the public origin
-(`https://autospajakarta.com`) and the Beauty Care popout switch. It is
-**not** in git - the file lives on the server and is copied into every
-release by the migration.
-
-`POPUP_ENABLED=false` takes the popout off the site for every visitor -
-the switch is read on the server at runtime, so a restart is enough.
-
-## The mirror of the CMS
-
-`public/wp-content` (the fonts, the uploads and the theme assets of the
-mirrored WordPress pages) is regenerated from the WordPress origin and is
-not in git. The deploy script copies it from `shared/public/wp-content`
-into every release.
+The check scripts of the repository run against the live site as well:
 
 ```bash
-npm run sync:content     # on the server, inside a release
+node scripts/perf/check-booking-wizard.mjs https://autospajakarta.com
+node scripts/perf/check-before-after.mjs https://autospajakarta.com
+BASE_URL=https://autospajakarta.com node scripts/sync/check-inner-nav.mjs /about /services
 ```
 
 ## The manual method (the fallback)
 
-The pipeline is not available, the deployment can be done by hand. The
-bundle is built from the working tree (never the secrets and never the
-build output), uploaded and extracted over the application directory:
+The panel is not available, the deployment can be done by hand. The bundle
+is built from the working tree (never the secrets and never the build
+output), uploaded and extracted over the site directory:
 
 ```bash
 # locally
@@ -181,7 +143,7 @@ tar --exclude='./node_modules' --exclude='./.next*' --exclude='./.git' \
 scp -P 22 /tmp/autospa-frontend.tar.gz root@83.147.38.178:/tmp/
 
 # on the server
-cd /www/wwwroot/autospa-frontend
+cd /www/wwwroot/autospajakarta.com
 tar -xzf /tmp/autospa-frontend.tar.gz -C . --no-same-owner
 chown -R www:www .
 su -s /bin/bash www -c 'export PATH=/www/server/nodejs/v20.20.2/bin:$PATH && npm ci'
@@ -189,4 +151,9 @@ su -s /bin/bash www -c 'export PATH=/www/server/nodejs/v20.20.2/bin:$PATH && NOD
 su -s /bin/bash www -c 'export PATH=/www/server/nodejs/v22.23.3/bin:$PATH; pm2 restart autospa-web'
 ```
 
-A build on the server takes about two minutes and up to 2 GB of memory.
+## The pipeline of GitHub Actions (the plan that was not used)
+
+The workflow `.github/workflows/deploy.yml` and `scripts/deploy/deploy.sh`
+build a release in a directory of its own and switch a symlink to it. It
+is not wired up - the deployment goes through the panel of aaPanel. The
+files stay in the repository as the plan of the release directories.
