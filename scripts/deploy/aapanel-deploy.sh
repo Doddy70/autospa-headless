@@ -89,7 +89,15 @@ if [ -d .next ]; then mv .next .next.prev; fi
 mv .next.new .next
 chown -R www:www .next
 
-su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web" || fail "pm2 could not be restarted"
+# The pm2 application - it is created when it does not exist yet (the first
+# deployment after the reset).
+if su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" >/dev/null 2>&1; then
+	log "restarting the application"
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web" || fail "pm2 could not be restarted"
+else
+	log "creating the application"
+	su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$PM2_BIN:\$PATH && pm2 start ./start.sh --name autospa-web --interpreter /bin/bash && pm2 save" || fail "the application could not be started"
+fi
 
 # ───────────────────────────────────────────────
 # 5. The health check - and the way back.
