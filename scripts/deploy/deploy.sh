@@ -215,16 +215,33 @@ if [ -f "$RELEASE_DIR/start.sh" ]; then
 fi
 
 # The path the application is started from. It is read from pm2 itself, so a
-# change of the launcher is noticed.
+# change of the launcher is noticed. The table of pm2 ends every line with a
+# separator, so the path is the field that looks like a path.
 PM2_SCRIPT="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" 2>/dev/null \
-	| grep 'script path' | awk -F'│' '{print $NF}' | head -1 \
-	| sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' || true)"
+	| awk -F'│' '/script path/ {
+		for (i = 1; i <= NF; i++) {
+			gsub(/^[ \t]+|[ \t]+$/, "", $i)
+			if ($i ~ /^\//) { print $i; exit }
+		}
+	}' || true)"
 case "$PM2_SCRIPT" in
 	/*) ;;
 	*) PM2_SCRIPT="" ;;
 esac
 
-if [ -n "$PM2_SCRIPT" ] && [ "$PM2_SCRIPT" != "$RUN_SCRIPT" ]; then
+# How many processes carry the name. Two of them would fight over the port,
+# so the duplicates are removed before the application is started.
+PM2_COUNT="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 jlist" 2>/dev/null \
+	| grep -o '"name":"autospa-web"' | wc -l | tr -d ' ' || true)"
+case "$PM2_COUNT" in
+	'' | *[!0-9]*) PM2_COUNT=0 ;;
+esac
+
+if [ "$PM2_COUNT" -gt 1 ]; then
+	log "there are $PM2_COUNT processes named autospa-web - the duplicates are removed"
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 delete autospa-web"
+	PM2_SCRIPT=""
+elif [ -n "$PM2_SCRIPT" ] && [ "$PM2_SCRIPT" != "$RUN_SCRIPT" ]; then
 	log "the application still points at $PM2_SCRIPT - it is replaced by $RUN_SCRIPT"
 	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 delete autospa-web"
 	PM2_SCRIPT=""
@@ -264,6 +281,29 @@ if [ "$OK" != "1" ]; then
 	fail "the new release did not come up"
 fi
 log "the site answers with 200"
+
+# The answer has to come from the application that was just started - a
+# process that still holds the port from the release before would answer
+# just as well.
+PORT_PID="$(ss -lntp 2>/dev/null | grep ":$APP_PORT " | sed -n 's/.*pid=\([0-9]\{1,\}\).*/\1/p' | head -1)"
+PM2_PIDS="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 pid autospa-web" 2>/dev/null | tr -d ' ' || true)"
+if [ -n "$PORT_PID" ] && [ -n "$PM2_PIDS" ]; then
+	case " $PM2_PIDS " in
+		*" $PORT_PID "*)
+			log "the port $APP_PORT is held by the application (pid $PORT_PID)"
+			;;
+		*)
+			log "the port $APP_PORT is held by another process (pid $PORT_PID, the application is $PM2_PIDS)"
+			if [ -n "$PREVIOUS_RELEASE" ] && [ -d "$PREVIOUS_RELEASE" ]; then
+				ln -sfn "$PREVIOUS_RELEASE" "$CURRENT_LINK.new"
+				mv -Tf "$CURRENT_LINK.new" "$CURRENT_LINK"
+				su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web"
+				sleep 5
+			fi
+			fail "the release did not take over the port $APP_PORT"
+			;;
+	esac
+fi
 
 # ───────────────────────────────────────────────
 # 9. The cleanup - the old releases are pruned.
