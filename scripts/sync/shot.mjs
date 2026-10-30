@@ -12,7 +12,7 @@ for (const target of targets) {
     if (message.type() === 'error') errors.push(message.text());
   });
 
-  const response = await page.goto(`http://localhost:3100${path}`, {
+  const response = await page.goto(`http://localhost:3200${path}`, {
     waitUntil: 'networkidle',
     timeout: 60000,
   });

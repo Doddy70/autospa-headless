@@ -36,13 +36,21 @@ import type { ServiceCard, ServiceDetail } from './types';
 let wordPressUnavailable = false;
 
 /**
+ * How long the CMS has to answer before the mirror takes over.
+ *
+ * The reservation dialog reads the catalogue when it opens; a stalled origin
+ * must not hold the customer on a loading screen.
+ */
+const WORDPRESS_TIMEOUT_MS = 8000;
+
+/**
  * The published services, or null when WordPress cannot answer.
  */
 async function listWordPressServices(): Promise<WpServiceSummary[] | null> {
 	if (wordPressUnavailable) return null;
 
 	try {
-		const services = await getWordPressServices();
+		const services = await getWordPressServices(WORDPRESS_TIMEOUT_MS);
 
 		if (!services.length) {
 			wordPressUnavailable = true;

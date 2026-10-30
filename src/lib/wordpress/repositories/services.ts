@@ -381,10 +381,10 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 }
 
 /** Published services, test-dataset entries excluded. */
-export async function getServices(): Promise<ServiceSummary[]> {
+export async function getServices(timeoutMs?: number): Promise<ServiceSummary[]> {
   const { data } = await wpQuery<{ services: { nodes: RawServiceNode[] | null } | null }>(
     SERVICES_LIST,
-    { variables: { first: 100 }, tags: [CACHE_TAG] },
+    { variables: { first: 100 }, tags: [CACHE_TAG], timeoutMs },
   );
 
   return asArray(data?.services?.nodes)

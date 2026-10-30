@@ -1,0 +1,87 @@
+/* The frame of the before/after comparison.
+ *
+ * The divider is one number - `--ba-split`, the percentage of the frame that
+ * shows the photo from before the work. The clipped photo and the handle
+ * both follow it, so a resize of the window needs no recalculation.
+ */
+.frame {
+	position: relative;
+	overflow: hidden;
+	cursor: ew-resize;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+/* The photo from after the work - it covers the first one and is clipped to
+   the part of the frame that is on the right of the divider. */
+.after {
+	clip-path: inset(0 calc(100% - var(--ba-split)) 0 0);
+}
+
+/* The divider itself. */
+.handle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: var(--ba-split);
+	width: 3rem;
+	transform: translateX(-50%);
+	cursor: ew-resize;
+	z-index: 10;
+	touch-action: none;
+}
+
+/* The thin line of the divider. */
+.handle::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	width: 2px;
+	transform: translateX(-50%);
+	background: rgb(255 255 255 / 80%);
+	box-shadow: 0 0 12px rgb(0 0 0 / 45%);
+}
+
+/* The round grip in the middle of the divider. */
+.grip {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: grid;
+	width: 2.75rem;
+	height: 2.75rem;
+	place-items: center;
+	transform: translate(-50%, -50%);
+	border-radius: 9999px;
+	background: #fff;
+	color: var(--color-secondary, #111);
+	box-shadow: 0 10px 25px rgb(0 0 0 / 35%);
+}
+
+/* The keyboard has to show where it is. */
+.handle:focus-visible {
+	outline: none;
+}
+
+.handle:focus-visible .grip {
+	box-shadow:
+		0 0 0 3px var(--color-primary-500, #7ed321),
+		0 10px 25px rgb(0 0 0 / 35%);
+}
+
+/* The divider grows a little while it is held down. */
+.frame:active .grip {
+	transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* The motion of the divider is a courtesy - it is dropped when the visitor
+   asked for less movement. */
+@media (prefers-reduced-motion: reduce) {
+	.frame,
+	.grip {
+		transition: none !important;
+	}
+}

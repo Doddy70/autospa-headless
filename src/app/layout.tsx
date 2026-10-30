@@ -4,7 +4,9 @@ import './globals.css';
 import Footer from '@/components/shared/footer/Footer';
 import Header from '@/components/layout/Header';
 import BeautyCarePopup from '@/components/layout/BeautyCarePopup';
+import BookingModalHost from '@/components/booking/BookingModalHost';
 import { resolvePopupMasterEnabled } from '@/config/popup';
+import { BookingProvider } from '@/context/BookingContext';
 import { PopupProvider } from '@/context/PopupContext';
 
 // Load Inter font with optimal settings for Core Web Vitals
@@ -28,6 +30,9 @@ export const metadata: Metadata = {
     'Premium automotive detailing and car wash services in Jakarta. Engineered for the enthusiast.',
   keywords: ['auto detailing', 'car wash', 'ceramic coating', 'Jakarta', 'PPF', 'paint protection'],
   authors: [{ name: 'AutoSPA Jakarta' }],
+  // Without it the images of the social cards are resolved against the
+  // development origin instead of the public one.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://autospajakarta.com'),
   openGraph: {
     title: 'AutoSPA Jakarta | Premium Automotive Detailing',
     description: 'Premium automotive detailing and car wash services in Jakarta.',
@@ -97,10 +102,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-background-8 text-white antialiased">
         <PopupProvider masterEnabled={popupEnabled}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <BeautyCarePopup />
+          <BookingProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <BeautyCarePopup />
+            {/* The reservation dialog of the whole site. */}
+            <BookingModalHost />
+          </BookingProvider>
         </PopupProvider>
       </body>
     </html>

@@ -11,17 +11,20 @@
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { ChevronDown, X } from 'lucide-react';
+import { ChevronDown, Search, X } from 'lucide-react';
 
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { NAVIGATION } from '@/config/navigation';
 import { usePopup } from '@/context/PopupContext';
 
 interface MobileMenuPanelProps {
 	open: boolean;
 	onClose: () => void;
+	/** Called when the visitor asks for the search overlay. */
+	onSearch?: () => void;
 }
 
-export default function MobileMenuPanel({ open, onClose }: MobileMenuPanelProps) {
+export default function MobileMenuPanel({ open, onClose, onSearch }: MobileMenuPanelProps) {
 	// Lock the page scroll while the panel is open.
 	useEffect(() => {
 		if (!open) return;
@@ -80,7 +83,25 @@ export default function MobileMenuPanel({ open, onClose }: MobileMenuPanelProps)
 							</button>
 						</div>
 
-						<ul className="mt-8 flex flex-col gap-1">
+						<div className="mt-8">
+						{/* The search button of the header is hidden on a phone,
+						    so the panel carries its own entry. */}
+						<button
+							type="button"
+							onClick={() => {
+								onClose();
+								onSearch?.();
+							}}
+							aria-label="Search"
+							data-testid="mobile-search"
+							className="flex w-full items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-base font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-primary-500"
+						>
+							<Search className="size-5" aria-hidden="true" />
+							Cari di AutoSPA
+						</button>
+					</div>
+
+					<ul className="mt-6 flex flex-col gap-1">
 							{NAVIGATION.map((item) => (
 								<li key={item.label}>
 									<Link
@@ -117,14 +138,13 @@ export default function MobileMenuPanel({ open, onClose }: MobileMenuPanelProps)
 
 						<div className="mt-auto pt-8">
 							<PopupSwitch />
-							<Link
-								href="/contact"
-								prefetch={false}
-								onClick={onClose}
+							{/* The menu closes with the dialog - the reservation
+							    form has the whole screen. */}
+							<BookingTrigger
+								label="Book Sekarang"
 								className="flex w-full items-center justify-center rounded-full bg-primary-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-600"
-							>
-								Book Sekarang
-							</Link>
+								onOpen={onClose}
+							/>
 						</div>
 					</motion.aside>
 				</>

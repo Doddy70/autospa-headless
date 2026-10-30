@@ -126,7 +126,7 @@ export default function ShowcaseHeadline({
 			<div className="grid items-end gap-y-10 lg:grid-cols-12">
 				<div className="lg:col-span-9">
 					<h2 className="design-project-title-box" aria-label={label}>
-						<span className="tp-section-title-dirtyline block text-[80px] font-normal leading-[0.8] tracking-[-0.02em] text-white lg:text-[130px] xl:text-[160px] 2xl:text-[200px]">
+						<span className="tp-section-title-dirtyline block text-[60px] font-normal leading-[0.8] tracking-[-0.02em] text-white lg:text-[120px] xl:text-[140px] 2xl:text-[170px]">
 							<span
 								className={`tp-text-right-scroll tp_text_invert_2 ${styles.invert} inline-block`}
 							>

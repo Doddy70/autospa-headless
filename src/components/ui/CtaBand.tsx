@@ -1,7 +1,9 @@
 import { ArrowRight, Phone } from 'lucide-react';
 import Link from 'next/link';
 
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { CONTACT } from '@/data/contact';
+import { isBookingLabel } from '@/lib/booking/labels';
 
 /**
  * CTA band - the closing call-to-action of a page.
@@ -56,18 +58,32 @@ export function CtaBand({
 				) : null}
 
 				<div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-					<Link href={primaryHref} className="btn btn-lg btn-primary group">
-						{primaryLabel}
-						<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-					</Link>
+					{/* A call to action that asks for a booking opens the
+					    reservation dialog instead of a page.
+
+					    The buttons are flex containers on purpose: the tailwind
+					    preflight makes every svg a block, so inside a plain
+					    block the icon drops onto a line of its own and ends up
+					    overlapping the label. */}
+					{isBookingLabel(primaryLabel) ? (
+						<BookingTrigger label={primaryLabel} className="btn btn-lg btn-primary group inline-flex items-center gap-2">
+							<span>{primaryLabel}</span>
+							<ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+						</BookingTrigger>
+					) : (
+						<Link href={primaryHref} className="btn btn-lg btn-primary group inline-flex items-center gap-2">
+							<span>{primaryLabel}</span>
+							<ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+						</Link>
+					)}
 
 					{!hidePhone ? (
 						<a
 							href={`tel:+${CONTACT.whatsapp}`}
-							className="btn btn-lg border border-stroke-6 bg-transparent text-white hover:bg-white/10"
+							className="btn btn-lg group inline-flex items-center gap-2 border border-stroke-6 bg-transparent text-white hover:bg-white/10"
 						>
-							<Phone className="mr-2 size-5" />
-							{CONTACT.phone}
+							<Phone className="size-5" />
+							<span>{CONTACT.phone}</span>
 						</a>
 					) : null}
 				</div>

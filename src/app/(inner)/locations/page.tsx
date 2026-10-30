@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Clock, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Link from 'next/link';
 
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { whatsappLink } from '@/data/contact';
 import { listLocationCards } from '@/lib/locations/catalog';
 
@@ -96,12 +97,10 @@ export default async function LocationsPage() {
 									</a>
 								)}
 
-								<Link
-									href="/contact"
+								<BookingTrigger
+									label="Book Appointment"
 									className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-primary-500 py-3 text-center text-sm font-semibold text-primary-500 transition-colors hover:bg-primary-500 hover:text-white"
-								>
-									Book Appointment
-								</Link>
+								/>
 							</article>
 						))}
 					</div>

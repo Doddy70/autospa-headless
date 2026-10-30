@@ -15,7 +15,7 @@ page.on('console', (message) => {
   }
 });
 
-await page.goto(`http://localhost:3100${path}`, { waitUntil: 'networkidle', timeout: 60000 });
+await page.goto(`http://localhost:3200${path}`, { waitUntil: 'networkidle', timeout: 60000 });
 
 const report = await page.evaluate(() => {
   const style = (selector) => {

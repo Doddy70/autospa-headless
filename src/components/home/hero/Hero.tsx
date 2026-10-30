@@ -74,12 +74,12 @@ export default function Hero() {
               </div>
               <div className="w-px h-8 bg-white/20" />
               <div className="text-center">
-                <p className="text-2xl font-bold text-white">5+</p>
+                <p className="text-2xl font-bold text-white">15+</p>
                 <p className="text-xs text-white/50 uppercase tracking-wider">Years</p>
               </div>
               <div className="w-px h-8 bg-white/20" />
               <div className="text-center">
-                <p className="text-2xl font-bold text-white">3</p>
+                <p className="text-2xl font-bold text-white">13</p>
                 <p className="text-xs text-white/50 uppercase tracking-wider">Locations</p>
               </div>
             </div>

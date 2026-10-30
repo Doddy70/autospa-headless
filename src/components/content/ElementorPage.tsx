@@ -1,6 +1,7 @@
 import ElementorScripts, { type ScriptAsset } from '@/components/content/ElementorScripts';
 import type { PageAsset } from '@/lib/wordpress/pages';
 import { balanceInlineTags } from '@/lib/wordpress/html';
+import { rewritePublishedOrigin } from '@/lib/wordpress/origin';
 
 /**
  * Renders a WordPress page snapshot (Elementor markup) inside the Next.js
@@ -42,7 +43,15 @@ export default function ElementorPage({
         return type === '' || type === 'text/javascript' || type === 'application/javascript';
       }
       return true;
-    });
+    })
+    /* The inline configuration of Elementor points its asset loader at the
+       host the page was published on. That host serves the frontend now, so
+       the URLs are rewritten to the origin the frontend reads from. */
+    .map((asset) =>
+      asset.kind === 'inline' && asset.code
+        ? { ...asset, code: rewritePublishedOrigin(asset.code) }
+        : asset,
+    );
 
   // Templates stay in the DOM so the plugin that owns them can read them.
   const templates = assets.filter(

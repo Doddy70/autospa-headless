@@ -8,6 +8,10 @@ import { chromium } from '@playwright/test';
  * overflow horizontally on a phone-sized viewport.
  */
 
+/* The base URL of the site. It defaults to the dev server of the project;
+   BASE_URL points the check at another instance. */
+const BASE = process.env.BASE_URL ?? 'http://localhost:3200';
+
 const paths = process.argv.slice(2);
 if (!paths.length) {
 	console.error('usage: node scripts/sync/check-inner-nav.mjs /about /faq ...');
@@ -29,7 +33,7 @@ for (const path of paths) {
 	const errors = [];
 	page.on('pageerror', (error) => errors.push(String(error)));
 
-	await page.goto(`http://localhost:3100${path}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+	await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
 	await page.waitForSelector('header nav', { timeout: 30000 }).catch(() => {});
 
 	// The page transition starts at `opacity: 0`; wait until it settled.
@@ -48,19 +52,21 @@ for (const path of paths) {
 		const header = document.querySelector('header');
 		const heading = document.querySelector('h1');
 
+		// The booking call to action of the header opens the reservation
+		// dialog, so it carries a test id instead of a link. Only the one in
+		// the header is counted - the page may carry more of them.
+		const bookingCtas = header
+			? header.querySelectorAll('[data-testid="booking-cta"]')
+			: document.querySelectorAll('[data-testid="booking-cta"]');
+
 		return {
 			// The breadcrumb of a page hero is a <nav> as well, so the main
-			// navigation is counted by the "Booking Now" link it carries.
+			// navigation is counted by the booking call to action it carries.
 			mainNavs: [...document.querySelectorAll('nav')].filter(
-				(element) =>
-					[...element.querySelectorAll('a')].some(
-						(link) => link.textContent?.trim() === 'Booking Now',
-					),
+				(element) => element.querySelector('[data-testid="booking-cta"]') !== null,
 			).length,
 			navs: document.querySelectorAll('nav').length,
-			bookings: [...document.querySelectorAll('a')].filter(
-				(link) => link.textContent?.trim() === 'Booking Now',
-			).length,
+			bookings: bookingCtas.length,
 			headerHeight: header ? Math.round(header.getBoundingClientRect().height) : 0,
 			headerTop: header ? Math.round(header.getBoundingClientRect().top) : null,
 			headingTop: heading ? Math.round(heading.getBoundingClientRect().top) : null,
@@ -130,7 +136,9 @@ for (const path of paths) {
 
 	const problems = [];
 	if (report.mainNavs !== 1) problems.push(`expected 1 main navigation, found ${report.mainNavs}`);
-	if (report.bookings !== 1) problems.push(`expected 1 "Booking Now" link, found ${report.bookings}`);
+	if (report.bookings !== 1) {
+		problems.push(`expected 1 booking call to action, found ${report.bookings}`);
+	}
 	if (!report.navVisible) problems.push('the navigation has no height');
 	if (report.headingTop !== null && report.headingTop < report.headerHeight) {
 		problems.push(`h1 (top ${report.headingTop}px) sits under the header (${report.headerHeight}px)`);

@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Sparkles, Shield, Zap, Car, Award, Wrench } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import styles from './AutoSpaFeaturesSection.module.css';
 
 /* ── Marquee items ── */
@@ -257,10 +257,13 @@ function BookingCard() {
         </p>
 
         {/* CTA Button */}
-        <Link href="/contact" className={styles['autospa-features__booking-cta']}>
+        <BookingTrigger
+          label="Book an Appointment"
+          className={styles['autospa-features__booking-cta']}
+        >
           Book an Appointment
           <ArrowUpRight className={styles['autospa-features__booking-cta-icon']} strokeWidth={2} />
-        </Link>
+        </BookingTrigger>
       </div>
     </div>
   );

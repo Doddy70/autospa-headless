@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import ShowcaseHeadline from '@/components/showcase/ShowcaseHeadline';
 import ShowcaseRows from '@/components/showcase/ShowcaseRows';
 import type { ServiceCard } from '@/lib/services/types';
@@ -29,12 +29,10 @@ export default function ServiceShowcase({ items }: { items: ServiceCard[] }) {
 					description="we provide premium materials designed to meet the highest standards of quality and durability."
 					aside={
 						<div className="flex flex-wrap gap-3 lg:justify-end lg:pb-[50px]">
-							<Link
-								href="/reservasi"
+							<BookingTrigger
+								label="Book Now"
 								className="inline-block rounded-full border-[1.5px] border-primary-500/60 px-8 py-3.5 text-sm font-semibold leading-none tracking-[-0.02em] text-primary-300 transition-colors duration-300 hover:bg-primary-500 hover:text-white"
-							>
-								Book Now
-							</Link>
+							/>
 						</div>
 					}
 				/>

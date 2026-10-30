@@ -1,5 +1,7 @@
 import { Check } from 'lucide-react';
 import Link from 'next/link';
+import { BookingTrigger } from '@/components/booking/ReservationModal';
+import { isBookingLabel } from '@/lib/booking/labels';
 
 /**
  * Package card - one service package with its included items.
@@ -71,12 +73,21 @@ export function PackageCard({
 				<div className="flex-1" />
 			)}
 
-			<Link
-				href={ctaHref}
-				className={`btn mt-8 w-full ${featured ? 'btn-primary' : 'border border-stroke-6 text-white hover:bg-white/10'}`}
-			>
-				{ctaLabel}
-			</Link>
+			{/* A package that asks for a booking opens the reservation
+			    dialog instead of a page. */}
+			{isBookingLabel(ctaLabel) ? (
+				<BookingTrigger
+					label={ctaLabel}
+					className={`btn mt-8 w-full ${featured ? 'btn-primary' : 'border border-stroke-6 text-white hover:bg-white/10'}`}
+				/>
+			) : (
+				<Link
+					href={ctaHref}
+					className={`btn mt-8 w-full ${featured ? 'btn-primary' : 'border border-stroke-6 text-white hover:bg-white/10'}`}
+				>
+					{ctaLabel}
+				</Link>
+			)}
 		</article>
 	);
 }

@@ -14,7 +14,7 @@ import { readFile } from 'node:fs/promises';
 
 const slug = process.argv[2] ?? 'about';
 const prodUrl = process.argv[3] ?? `${process.env.WORDPRESS_SITE_URL ?? 'https://backend.autospajakarta.com'}/${slug}/`;
-const localUrl = process.argv[4] ?? `http://localhost:3100/${slug}`;
+const localUrl = process.argv[4] ?? `http://localhost:3200/${slug}`;
 
 const decode = (value) =>
 	value

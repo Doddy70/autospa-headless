@@ -176,6 +176,44 @@ Checks:
 node scripts/perf/check-booking-wizard.mjs http://localhost:3200
 ```
 
+## Before & After (the comparison slider)
+
+The gallery shows the same detail of a vehicle before the work and after it.
+The visitor drags the divider and compares the two photos.
+
+```bash
+src/data/before-after.ts                 the pairs - id, title, caption, photos
+src/hooks/useBeforeAfterImageSlider.ts   the drag of the divider
+src/components/ui/BeforeAfterSlider.tsx  one comparison (the frame and the divider)
+src/components/ui/BeforeAfterCarousel.tsx  the card slider around it
+src/components/home/sections/BeforeAfterSection.tsx  the section on the homepage
+```
+
+| Route | Source |
+|-------|--------|
+| `/` (section "Before & After") | `BeforeAfterSection` over the pairs |
+| `/before-after` | the pairs, with the call to action |
+
+The divider is one number - the percentage of the frame that shows the photo
+from before the work. The hook keeps it and the component hands it to the
+frame as the CSS variable `--ba-split`, so a resize of the window keeps the
+divider where the visitor put it. The drag runs on the pointer events (mouse,
+finger and pen take the same path) and the divider is a `slider` for the
+screen readers.
+
+The gallery is a card slider: three cards on a wide screen, two on a tablet,
+one on a phone. The photos live in `public/images/before-after/` and are
+served by the frontend itself - they are not in the WordPress media library
+yet.
+
+Details: `docs/before-after-gallery.md`.
+
+Checks:
+
+```bash
+node scripts/perf/check-before-after.mjs http://localhost:3200
+```
+
 ## API Contract (Phase 2D.8 Results)
 
 ### Query Names (Verified)
@@ -281,6 +319,7 @@ Testimonial:
 - **Agntix "Projects" architecture:** `docs/agntix-projects-architecture.md`
 - **Service architecture (Layanan):** `docs/service-architecture.md`
 - **Booking wizard (reservation modal):** `docs/booking-wizard.md`
+- **Before & After (comparison slider):** `docs/before-after-gallery.md`
 
 > The phase 1A–2D9 planning documents were retired in favour of the Phase 2E
 > architecture above. Their content now lives in the git history.

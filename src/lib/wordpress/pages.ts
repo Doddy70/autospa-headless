@@ -56,13 +56,16 @@ export const pages = manifest as PageAsset[];
  * content extracted from production (`src/content/structured/`), using the
  * reusable UI kit in `src/components/ui/`.
  *
- * `about` is deliberately NOT in this list: the production page carries the
- * full company story, the brand partners, the counter and the team roster.
- * As long as there is no native route with that exact content, the page is
- * served from the mirrored production markup so the copy and the images stay
- * identical to autospajakarta.com.
+ * `about` is a native route as well: it is rebuilt on the architecture of
+ * the Agntix template (`about-us`), with the wording of the production page
+ * and the photos of the WordPress media library. Serving it from the
+ * mirrored production markup would load the theme stylesheets of WordPress
+ * into the whole page, and those stylesheets reach the header and the footer
+ * of this app - the navigation loses its colour and the buttons lose their
+ * shape.
  */
 export const NATIVE_SLUGS = new Set([
+  'about',
   'contact',
   'services',
   'locations',

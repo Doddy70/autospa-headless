@@ -85,8 +85,8 @@ function ShowcaseRow({ item, index }: { item: ServiceCard; index: number }) {
 						<Image
 							src={item.image}
 							alt={item.alt}
-							width={900}
-							height={600}
+							width={652}
+							height={449}
 							className="h-auto w-full rounded-[30px] will-change-transform"
 						/>
 					</div>
@@ -113,7 +113,7 @@ function ShowcaseRow({ item, index }: { item: ServiceCard; index: number }) {
 							href={item.href}
 							className="tp-btn-sky-border mt-8 inline-block rounded-full border-[1.5px] border-primary-500/60 px-9 py-4 text-base font-semibold leading-none tracking-[-0.02em] text-primary-300 transition-colors duration-300 hover:bg-primary-500 hover:text-white lg:mt-11"
 						>
-							Lihat Layanan
+							See Detail
 						</Link>
 					</div>
 				</div>

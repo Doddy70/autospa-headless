@@ -11,7 +11,7 @@ import { chromium } from '@playwright/test';
  *   node scripts/perf/check-booking-wizard.mjs [baseUrl]
  */
 
-const BASE = process.argv[2] ?? 'http://localhost:3100';
+const BASE = process.argv[2] ?? 'http://localhost:3200';
 
 let failures = 0;
 
@@ -44,14 +44,18 @@ const run = async () => {
 	await page.waitForLoadState('networkidle');
 	await page.waitForTimeout(1000);
 
-	/* --- The modal --- */
-	await page.getByRole('button', { name: /Buat Reservasi/ }).click();
+	/* --- The modal, opened from the call to action of the header --- */
+	await page.locator('header [data-testid="booking-cta"]').click();
 	await page.waitForSelector('[role="dialog"]');
 
 	check(
 		(await page.locator('[role="dialog"]').count()) === 1,
-		'the reservation modal opens',
+		'the reservation modal opens from the header',
 	);
+
+	/* The service rows are read when the dialog opens, so the wizard itself
+	   appears a moment later. */
+	await page.waitForSelector('[role="dialog"] [role="radiogroup"]', { timeout: 30000 });
 
 	/* --- Step 1: the service --- */
 	check(
@@ -213,19 +217,28 @@ const run = async () => {
 		`another branch goes to its own number (${(ciledugLink ?? '').slice(0, 40)})`,
 	);
 
-	/* --- The modal closes --- */
+	/* --- The modal closes ---
+	   The dialog is animated out, so it stays in the document until the exit
+	   animation is over. Waiting for the removal is the honest check - a
+	   fixed sleep is either too short on a production build or too long on a
+	   dev build. */
 	await page.keyboard.press('Escape');
-	await page.waitForTimeout(500);
-	check(
-		(await page.locator('[role="dialog"][aria-label*="reservasi"]').count()) === 0,
-		'the Escape key closes the modal',
-	);
+
+	const closed = await page
+		.waitForSelector('[role="dialog"][aria-label*="reservasi"]', {
+			state: 'detached',
+			timeout: 10000,
+		})
+		.then(() => true)
+		.catch(() => false);
+
+	check(closed, 'the Escape key closes the modal');
 
 	/* --- A service without the model specific step skips it --- */
 	await page.goto(`${BASE}/reservasi`, { waitUntil: 'domcontentloaded' });
 	await page.waitForLoadState('networkidle');
 	await page.waitForTimeout(1000);
-	await page.getByRole('button', { name: /Buat Reservasi/ }).click();
+	await page.locator('header [data-testid="booking-cta"]').click();
 	await page.waitForSelector('[role="dialog"]');
 
 	await page.getByRole('radio', { name: /Premium Wash/ }).click();
@@ -251,12 +264,59 @@ const run = async () => {
 		'an empty step does not continue',
 	);
 
+	/* --- The hand over of a service without the model specific step ---
+	   The skipped step is not a missing answer: the request of a wash has to
+	   reach the number of its branch just like the request of a coating. */
+	await page.getByRole('radio', { name: /Secepatnya/ }).click();
+	await page.waitForTimeout(300);
+	await page.getByRole('button', { name: 'Lanjut' }).click();
+	await page.fill('#booking-name', 'Sari Wijaya');
+	await page.fill('#booking-phone', '0812 3456 7890');
+	await page.getByRole('button', { name: 'Lanjut' }).click();
+	await page.waitForTimeout(700);
+
+	check(
+		(await page.locator('text=Langkah 7 dari 7').count()) === 1,
+		'a wash reaches the review step',
+	);
+
+	const washPopup = page.waitForEvent('popup', { timeout: 15000 }).catch(() => null);
+	await page.getByRole('button', { name: /Kirim lewat WhatsApp/ }).click();
+	const washTab = await washPopup;
+	await page.waitForTimeout(500);
+
+	const washLink = await page
+		.locator('a:has-text("Buka WhatsApp")')
+		.getAttribute('href')
+		.catch(() => null);
+
+	check(
+		(washLink ?? '').startsWith('https://wa.me/6287717773888'),
+		`the request of a wash goes to the number of its branch (${(washLink ?? '').slice(0, 40)})`,
+	);
+
+	if (washTab) {
+		check(
+			(washTab.url() ?? '').includes('6287717773888'),
+			'the WhatsApp tab of a wash carries the branch number',
+		);
+		await washTab.close();
+	}
+
+	check(
+		!/ASPA--/.test(await page.locator('[role="dialog"]').innerText()),
+		'the request number of a booking without a day is not empty',
+	);
+
 	/* --- The layout on a phone --- */
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.reload({ waitUntil: 'domcontentloaded' });
 	await page.waitForLoadState('networkidle');
 	await page.waitForTimeout(1000);
-	await page.getByRole('button', { name: /Buat Reservasi/ }).click();
+	/* On a phone the call to action lives in the burger menu. */
+	await page.locator('[data-testid="mobile-menu-toggle"]').click();
+	await page.waitForTimeout(600);
+	await page.locator('[data-testid="mobile-menu"] [data-testid="booking-cta"]').click();
 	await page.waitForSelector('[role="dialog"]');
 
 	const overflow = await page.evaluate(() => {

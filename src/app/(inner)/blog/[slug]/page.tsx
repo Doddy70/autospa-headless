@@ -141,7 +141,7 @@ export default async function ArticlePage({ params }: Params) {
     publisher: {
       '@type': 'Organization',
       name: 'AutoSPA Jakarta',
-      url: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3100',
+      url: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3200',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

@@ -77,13 +77,21 @@ export interface WpQueryOptions {
   /** Cache tags for on-demand revalidation (Phase 1C section 7). */
   tags?: string[];
   revalidate?: number;
+  /**
+   * How long the endpoint has to answer, in milliseconds.
+   *
+   * The origin is read-only and either answers or it does not. Without a
+   * deadline a stalled request holds the page - and the reservation dialog -
+   * for as long as the network takes.
+   */
+  timeoutMs?: number;
 }
 
 export async function wpQuery<T>(
   query: string,
   options: WpQueryOptions = {},
 ): Promise<WpQueryResult<T>> {
-  const { variables, tags = [], revalidate } = options;
+  const { variables, tags = [], revalidate, timeoutMs } = options;
 
   let response: Response;
   try {
@@ -91,6 +99,7 @@ export async function wpQuery<T>(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
+      signal: timeoutMs ? AbortSignal.timeout(timeoutMs) : undefined,
       next: {
         revalidate: revalidate ?? revalidateSeconds(),
         tags: ['wordpress', ...tags],

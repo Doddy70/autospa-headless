@@ -47,6 +47,17 @@ Common Styles all over the sites
   @apply transition-transform duration-300 hover:-translate-y-1;
 }
 
+/* The oversized wordmark of the copyright bar.
+   The Agntix `tp-copyright-big-text` - the brand name across the full
+   width of the footer, on one line. The size is computed from the width of
+   the bar, so the wordmark fills the line on every screen and keeps the
+   proportion of the mobile view. */
+.footer-big-text {
+  font-size: min(calc((100vw - 60px) / 7.3), 202px);
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+}
+
 /* ===========Animation Flipping Card =========== */
 .flipper {
   @apply relative h-full w-full transition-transform duration-[900ms] [transform-style:preserve-3d];
@@ -414,16 +425,4 @@ Common Styles all over the sites
   #theme-toggle::after {
     @apply bg-radial-[circle_at_0_100%,transparent_6px,#ffffff_7px];
   }
-}
-
-/*==========IMG BEFORE AFTER SLIDER========== */
-.after {
-  clip-path: inset(0 50% 0 0);
-}
-
-.slider-handle.no-transition {
-  transition: none !important;
-}
-.slider-handle.no-transition .handle-circle {
-  transition: none !important;
 }

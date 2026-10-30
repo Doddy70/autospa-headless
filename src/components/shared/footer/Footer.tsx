@@ -1,102 +1,187 @@
-import Link from 'next/link';
+'use client';
 
-const footerLinks = [
-  {
-    title: 'Services',
-    links: [
-      { label: 'Premium Wash', href: '/services/premium-wash' },
-      { label: 'Premium Detailing', href: '/services/premium-detailing' },
-      { label: 'Premium Coating', href: '/services/premium-coating' },
-      { label: 'Premium 360° PPF', href: '/services/premium-360-ppf' },
-      { label: 'Engine & Glass', href: '/services/engine-glass' },
-      { label: 'Rust Protection', href: '/services/rust-protection' },
-      { label: 'All Services', href: '/services' },
-    ],
-  },
-  {
-    title: 'Locations',
-    links: [
-      { label: 'All Locations', href: '/locations' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Our Team', href: '/team' },
-      { label: 'Pricing', href: '/pricing' },
-      { label: 'FAQ', href: '/faq' },
-    ],
-  },
-  {
-    title: 'Contact',
-    links: [
-      { label: 'Book Now', href: '/contact' },
-      { label: 'Reservasi', href: '/reservasi' },
-    ],
-  },
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRef } from 'react';
+
+import { BRANCHES, CONTACT, whatsappLink } from '@/data/contact';
+
+import CreativeAgencyCopyright from './subComponents/CreativeAgencyCopyright';
+import { FooterSocialIcons } from './subComponents/FooterSocialIcons';
+import FooterLink from './FooterLink';
+
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * The footer of the site.
+ *
+ * Cloned from the Agntix `CreativeAgencyFooter` - the variant of the
+ * contact page (`src/pages/contacts/contact-us/ContactUsMain.tsx`):
+ *
+ *   - the brand on the left, with the oversized title and the social marks,
+ *   - the quick links as a menu of pills in the middle,
+ *   - the contact details on the right,
+ *   - the copyright bar with the oversized wordmark under it.
+ *
+ * The Agntix template is Bootstrap, AutoSPA is Tailwind, so the layout is
+ * written in Tailwind - the classes of the template (`tp-footer-widget`,
+ * `tp-footer-widget-menu`, ...) are kept as the names of the parts, not as
+ * the markup.
+ *
+ * The brand is AutoSPA Jakarta: the logo of the site replaces the wordmark
+ * of the template.
+ */
+
+const BG_COLOR = '#1B1B1D';
+
+/** The pill of the quick links menu -  `tp-footer-widget-menu`. */
+const PILL =
+	'inline-block rounded-full bg-white/[0.06] px-5 py-[13px] text-[14px] font-medium uppercase leading-none tracking-[-0.02em] text-white transition-colors duration-300 hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500';
+
+const QUICK_LINKS = [
+	{ label: 'About', href: '/about' },
+	{ label: 'Our Team', href: '/team' },
+	{ label: 'Services', href: '/services' },
+	{ label: 'Locations', href: '/locations' },
+	{ label: 'Before & After', href: '/before-after' },
+	{ label: 'Blog', href: '/blog' },
+	{ label: 'Pricing', href: '/pricing' },
+	{ label: 'FAQ', href: '/faq' },
+	{ label: 'Contact Us', href: '/contact' },
 ];
 
-const Footer = () => {
-  return (
-    <footer className="bg-background-8 py-16">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
-          {/* Brand */}
-          <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className="text-2xl font-bold text-white">
-              Auto<span className="text-primary-500">SPA</span>
-            </Link>
-            <p className="mt-4 max-w-[250px] text-sm text-white/60">
-              Premium automotive detailing and car wash services in Jakarta. Engineered for the enthusiast.
-            </p>
+/** The branch that carries the address of the site - Pluit. */
+const HEADQUARTERS = BRANCHES.find((branch) => branch.slug === 'pluit');
 
-            {/* Social Links */}
-            <div className="mt-6 flex gap-3">
-              <a href="#" className="footer-social-link">
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </a>
-              <a href="#" className="footer-social-link">
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                </svg>
-              </a>
-              <a href="#" className="footer-social-link">
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
+export default function Footer() {
+	const rootRef = useRef<HTMLDivElement>(null);
 
-          {/* Links */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <h4 className="text-sm font-semibold text-white">{section.title}</h4>
-              <ul className="mt-4 space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="footer-link text-sm">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+	useGSAP(
+		() => {
+			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        {/* Bottom */}
-        <div className="mt-12 border-t border-white/10 pt-8 text-center">
-          <p className="text-sm text-white/60">
-            Copyright &copy; {new Date().getFullYear()} AutoSPA Jakarta – Premium Automotive Detailing
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-};
+			gsap.utils.toArray<HTMLElement>('[data-footer-fade]').forEach((element) => {
+				gsap.from(element, {
+					opacity: 0,
+					y: 30,
+					duration: 0.9,
+					ease: 'power2.out',
+					scrollTrigger: {
+						trigger: element,
+						start: 'top 88%',
+						once: true,
+					},
+				});
+			});
+		},
+		{ scope: rootRef },
+	);
 
-export default Footer;
+	return (
+		<div ref={rootRef}>
+			<footer className="tp-footer-area tp-footer-style-6 pt-20 pb-9 md:pt-28 lg:pt-[120px]" style={{ backgroundColor: BG_COLOR }}>
+				<div className="mx-auto w-full max-w-[1536px] px-6 md:px-10">
+					<div className="grid items-start gap-y-12 lg:grid-cols-12">
+						{/* The brand - the Agntix `tp-footer-col-1`. */}
+						<div className="lg:col-span-4" data-footer-fade>
+							<Link
+								href="/"
+								aria-label="AutoSPA Jakarta"
+								className="inline-block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+							>
+								<Image
+									src="/assets/auto-logo.png"
+									alt="AutoSPA Jakarta"
+									width={180}
+									height={60}
+									className="h-12 w-auto object-contain"
+								/>
+							</Link>
+
+							<h2 className="mt-8 text-[44px] font-bold leading-[1.05] tracking-[-0.06em] text-white sm:text-[56px] lg:text-[64px] xl:text-[80px]">
+								Passion for
+								<br />
+								Detail.
+							</h2>
+
+							<p className="mt-6 max-w-[320px] text-base leading-[1.6] text-white/60">
+								Premium automotive detailing and car wash services in Jakarta. Engineered
+								for the enthusiast.
+							</p>
+
+							<div className="mt-8">
+								<FooterSocialIcons className="flex flex-wrap items-center gap-3" />
+							</div>
+						</div>
+
+						{/* The quick links - the Agntix `tp-footer-col-2`. */}
+						<div className="lg:col-span-5 lg:pl-0 lg:pr-0 xl:pl-[110px] xl:pr-[50px]" data-footer-fade>
+							<h3 className="mb-6 flex items-center gap-2 text-lg font-semibold tracking-[-0.02em] text-white">
+								<span className="size-2 shrink-0 rounded-full bg-primary-500" aria-hidden="true" />
+								Quick links
+							</h3>
+
+							<ul className="flex flex-wrap gap-2">
+								{QUICK_LINKS.map((link) => (
+									<li key={link.href}>
+										<FooterLink href={link.href} label={link.label} className={PILL} />
+									</li>
+								))}
+								<li>
+									<FooterLink href="/reservasi" label="Book Now" className={PILL} />
+								</li>
+							</ul>
+						</div>
+
+						{/* The contact - the Agntix `tp-footer-col-3`. */}
+						<div className="lg:col-span-3 lg:pl-5" data-footer-fade>
+							<h3 className="mb-5 flex items-center gap-2 text-lg font-semibold tracking-[-0.02em] text-white">
+								<span className="size-2 shrink-0 rounded-full bg-primary-500" aria-hidden="true" />
+								Contact
+							</h3>
+
+							<div className="space-y-2.5">
+								<Link
+									href={`mailto:${CONTACT.email}`}
+									className="block text-base leading-[1.5] tracking-[-0.02em] text-white transition-colors hover:text-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+								>
+									{CONTACT.email}
+								</Link>
+								<Link
+									href={`tel:${CONTACT.phone.replace(/[^+\d]/g, '')}`}
+									className="block text-base leading-[1.5] tracking-[-0.02em] text-white transition-colors hover:text-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+								>
+									{CONTACT.phone}
+								</Link>
+								<a
+									href={whatsappLink('Halo AutoSPA Jakarta, saya ingin membuat reservasi.')}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="block text-base leading-[1.5] tracking-[-0.02em] text-white transition-colors hover:text-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+								>
+									WhatsApp
+								</a>
+							</div>
+
+							<div className="mt-6">
+								<p className="text-base leading-[1.5] tracking-[-0.02em] text-white/60">
+									{CONTACT.hours}
+								</p>
+								{HEADQUARTERS?.address ? (
+									<p className="mt-2 max-w-[280px] text-sm leading-[1.6] text-white/40">
+										{HEADQUARTERS.name} - {HEADQUARTERS.address}
+									</p>
+								) : null}
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+			<CreativeAgencyCopyright bgColor={BG_COLOR} />
+		</div>
+	);
+}

@@ -1,4 +1,5 @@
 import AutoSpaFeaturesSection from '@/components/home/sections/AutoSpaFeaturesSection';
+import BeforeAfterSection from '@/components/home/sections/BeforeAfterSection';
 import DesignAgencyVideo from '@/components/home/sections/DesignAgencyVideo';
 import GalleryBanner from '@/components/home/sections/GalleryBanner';
 import Hero from '@/components/home/hero/Hero';
@@ -42,6 +43,9 @@ export default async function HomePage() {
 
         {/* AutoSpa Features Section */}
         <AutoSpaFeaturesSection />
+
+        {/* Before & After gallery */}
+        <BeforeAfterSection />
 
         {/* Service catalogue */}
         <ServiceShowcase items={services} />

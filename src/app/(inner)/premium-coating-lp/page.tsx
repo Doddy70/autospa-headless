@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { TestimonialSlider } from '@/components/ui/TestimonialSlider';
 import lpContent from '@/content/structured/premium-coating-lp.json';
@@ -48,10 +48,13 @@ export default function PremiumCoatingLpPage() {
 						<p className="mt-5 text-lg text-white/70">Passion For Detail</p>
 
 						<div className="mt-9 flex flex-col gap-3 sm:flex-row">
-							<Link href="/reservasi" className="btn btn-lg btn-primary group">
+							<BookingTrigger
+								label="Book Now"
+								className="btn btn-lg btn-primary group"
+							>
 								Book Now
 								<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-							</Link>
+							</BookingTrigger>
 						</div>
 					</div>
 
@@ -150,10 +153,10 @@ export default function PremiumCoatingLpPage() {
 						</h3>
 						<p className="mt-2 text-lg text-primary-500">BOOK NOW AND GET THE PROMO!</p>
 
-						<Link href="/reservasi" className="btn btn-lg btn-primary group mt-8">
+						<BookingTrigger label="Book Now" className="btn btn-lg btn-primary group mt-8">
 							Book Now
 							<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-						</Link>
+						</BookingTrigger>
 					</div>
 				</div>
 			</section>

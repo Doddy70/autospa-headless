@@ -156,12 +156,17 @@ export function BookingWizard({
 	 * The vehicle step is skipped for the services that are not cut per
 	 * model. The numbering does not change - the step keeps its number and
 	 * is shown as skipped, the way a paper form does.
+	 *
+	 * The step is only marked as skipped once a service is chosen. Before
+	 * that the customer does not know yet whether the model of the vehicle
+	 * is needed, so a crossed out "Kendaraan" on the first step was a
+	 * statement about a service nobody had picked.
 	 */
 	const skippedIds = useMemo(() => {
 		const skipped: string[] = [];
 
 		if (
-			!state.serviceSlug ||
+			state.serviceSlug &&
 			!MODEL_SPECIFIC_SERVICES.includes(state.serviceSlug)
 		) {
 			skipped.push('vehicle');
@@ -269,20 +274,34 @@ export function BookingWizard({
 	);
 
 	const handleSubmit = useCallback(() => {
-		/* The last check: every step of the flow has to be complete. */
-		const incomplete = steps.some(
-			(item) => item.id !== 'review' && Object.keys(validateStep(item.id, state)).length > 0,
+		/*
+		 * The last check: every step of the flow has to be complete.
+		 *
+		 * The steps that are skipped are left out. A wash does not need the
+		 * model of the vehicle, so an empty vehicle step is not a missing
+		 * answer - counting it made the hand over to WhatsApp impossible for
+		 * every service that is not cut per model.
+		 *
+		 * The first step that is still missing is shown, so the customer sees
+		 * what to fill in instead of pressing a button that does nothing.
+		 */
+		const missing = steps.find(
+			(item) =>
+				item.id !== 'review' &&
+				!skippedIds.includes(item.id) &&
+				Object.keys(validateStep(item.id, state)).length > 0,
 		);
 
-		if (incomplete) {
+		if (missing) {
 			setShowErrors(true);
+			goTo(missing.id);
 			return;
 		}
 
 		window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 		setSubmitted(true);
 		onSubmitted?.(booking.reference);
-	}, [booking.reference, onSubmitted, state, steps, whatsappUrl]);
+	}, [booking.reference, goTo, onSubmitted, skippedIds, state, steps, whatsappUrl]);
 
 	const handleCopy = useCallback(async () => {
 		try {

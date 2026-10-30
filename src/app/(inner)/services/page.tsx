@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import ShowcaseHeadline from '@/components/showcase/ShowcaseHeadline';
 import ShowcaseRows from '@/components/showcase/ShowcaseRows';
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { CtaBand } from '@/components/ui/CtaBand';
 import { SectionTitle, PageHero } from '@/components/ui/SectionTitle';
 import { PACKAGES } from '@/data/packages';
@@ -108,12 +108,10 @@ export default async function ServicesPage() {
 										</p>
 									) : null}
 
-									<Link
-										href="/reservasi"
+									<BookingTrigger
+										label="Cek harga"
 										className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-500 hover:underline"
-									>
-										Cek harga
-									</Link>
+									/>
 								</div>
 							</article>
 						))}

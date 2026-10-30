@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -73,6 +73,21 @@ export function DatePicker({ value, onChange, minDate, maxDate, error }: DatePic
 		return new Date(base.getFullYear(), base.getMonth(), 1);
 	});
 
+	/*
+	 * The month follows the range as well. Switching the arrival from "this
+	 * week" to "next week" moves the range into the next month, and the
+	 * calendar has to move with it - otherwise the customer is looking at a
+	 * month in which every day is greyed out.
+	 */
+	const rangeKey = `${minDate ?? ''}|${maxDate ?? ''}`;
+
+	useEffect(() => {
+		const target = minDate ? fromISO(minDate) : null;
+		if (!target) return;
+
+		setMonth(new Date(target.getFullYear(), target.getMonth(), 1));
+	}, [rangeKey]);
+
 	const days = useMemo(() => {
 		const first = new Date(month.getFullYear(), month.getMonth(), 1);
 
@@ -91,6 +106,25 @@ export function DatePicker({ value, onChange, minDate, maxDate, error }: DatePic
 
 	const isPast = (date: Date) => date.getTime() < minimum.getTime();
 	const isTooLate = (date: Date) => maximum !== null && date.getTime() > maximum.getTime();
+
+	/**
+	 * The label of the shortcut.
+	 *
+	 * The shortcut always picks the first day that can be chosen. For "this
+	 * week" that is today, but for "next week" it is the Monday of next week
+	 * - calling that "today" sent the customer to the wrong day.
+	 */
+	const shortcutLabel = useMemo(() => {
+		const todayIso = toISO(minimum);
+
+		if (todayIso === toISO(today)) return 'Hari ini';
+
+		return minimum.toLocaleDateString('id-ID', {
+			weekday: 'short',
+			day: 'numeric',
+			month: 'short',
+		});
+	}, [minimum, today]);
 
 	return (
 		<div>
@@ -169,7 +203,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, error }: DatePic
 					}}
 					className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/70 transition-colors hover:border-primary-500 hover:text-primary-400"
 				>
-					Hari ini
+					{shortcutLabel}
 				</button>
 
 				<p className="text-xs text-white/40">

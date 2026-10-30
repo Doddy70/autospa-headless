@@ -1,276 +1,152 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from 'react';
 
-interface UseBeforeAfterImageSliderOptions {
-  // Optional callback when slider position changes
-  onPositionChange?: (percentage: number) => void;
-  // Initial position (0-100)
-  initialPosition?: number;
-  // Enable/disable keyboard navigation
-  enableKeyboard?: boolean;
-  // Enable/disable click to position
-  enableClickToPosition?: boolean;
+export interface UseBeforeAfterImageSliderOptions {
+	/** Where the divider starts, in percent (0 = all before, 100 = all after). */
+	initialPosition?: number;
+	/** Called every time the divider moves, with the new percentage. */
+	onPositionChange?: (percentage: number) => void;
+	/** The size of one keyboard step, in percent. */
+	step?: number;
 }
 
-export const useBeforeAfterImageSlider = (options: UseBeforeAfterImageSliderOptions = {}) => {
-  const { onPositionChange, initialPosition = 50, enableKeyboard = true, enableClickToPosition = true } = options;
+/**
+ * The drag of the before/after divider.
+ *
+ * The divider is a single number - the percentage of the frame that shows the
+ * photo from before the work. The component puts that number into a CSS
+ * variable (`--ba-split`), so the frame, the clipped photo and the handle
+ * all follow it, and a resize of the window needs no recalculation at all.
+ *
+ * The drag is driven by the pointer events, so a mouse, a finger and a pen
+ * all take the same path.
+ */
+export function useBeforeAfterImageSlider(
+	options: UseBeforeAfterImageSliderOptions = {},
+) {
+	const { initialPosition = 50, onPositionChange, step = 5 } = options;
 
-  // Refs for DOM elements
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
-  const afterImageRef = useRef<HTMLImageElement>(null);
+	const [position, setPosition] = useState(initialPosition);
 
-  // State refs for dragging
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const startLeftRef = useRef(0);
+	/** The frame the divider lives in. */
+	const frameRef = useRef<HTMLDivElement>(null);
+	/** The divider itself - it is the element the keyboard talks to. */
+	const handleRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const slider = sliderRef.current;
-    const handle = handleRef.current;
-    const afterImg = afterImageRef.current;
+	/** True while the visitor holds the divider down. */
+	const draggingRef = useRef(false);
+	/** The callback of the caller, kept in a ref so it never restarts the drag. */
+	const onChangeRef = useRef(onPositionChange);
 
-    if (!slider || !handle || !afterImg) {
-      return;
-    }
+	useEffect(() => {
+		onChangeRef.current = onPositionChange;
+	}, [onPositionChange]);
 
-    // Initialize slider position
-    const initSlider = () => {
-      const sliderRect = slider.getBoundingClientRect();
-      const position = (initialPosition / 100) * sliderRect.width;
-      handle.style.left = `${position}px`;
-      updateClipPath(position);
-    };
+	/** Move the divider and tell the caller about it. */
+	const apply = useCallback((next: number) => {
+		const clamped = Math.min(100, Math.max(0, next));
+		setPosition(clamped);
+		onChangeRef.current?.(clamped);
+	}, []);
 
-    // Update the clip path for the after image
-    const updateClipPath = (position: number) => {
-      const sliderRect = slider.getBoundingClientRect();
-      const percentage = (position / sliderRect.width) * 100;
-      afterImg.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+	/** The percentage of the frame the given screen position stands for. */
+	const percentageAt = useCallback((clientX: number) => {
+		const frame = frameRef.current;
+		if (!frame) return null;
+		const rect = frame.getBoundingClientRect();
+		if (rect.width === 0) return null;
+		return ((clientX - rect.left) / rect.width) * 100;
+	}, []);
 
-      // Call the callback if provided
-      if (onPositionChange) {
-        onPositionChange(percentage);
-      }
-    };
+	// The pointer goes down: the divider jumps to the finger and follows it.
+	const onPointerDown = useCallback(
+		(event: ReactPointerEvent<HTMLDivElement>) => {
+			// Only the main button of the mouse drags the divider.
+			if (event.pointerType === 'mouse' && event.button !== 0) return;
 
-    // Handle mouse down
-    const handleMouseDown = (e: MouseEvent) => {
-      e.preventDefault();
-      isDraggingRef.current = true;
-      startXRef.current = e.clientX;
-      startLeftRef.current = parseInt(handle.style.left) || slider.offsetWidth / 2;
+			const next = percentageAt(event.clientX);
+			if (next === null) return;
 
-      // Disable transitions during dragging for instant movement
-      handle.classList.add('no-transition');
+			draggingRef.current = true;
+			// The pointer is captured, so the drag survives a finger that
+			// leaves the frame - and the page does not scroll under it.
+			event.currentTarget.setPointerCapture?.(event.pointerId);
+			apply(next);
+		},
+		[apply, percentageAt],
+	);
 
-      // Change cursor to ew-resize during dragging
-      document.body.style.cursor = 'ew-resize';
-      document.body.style.userSelect = 'none';
-      handle.style.cursor = 'ew-resize';
+	const onPointerMove = useCallback(
+		(event: ReactPointerEvent<HTMLDivElement>) => {
+			if (!draggingRef.current) return;
+			const next = percentageAt(event.clientX);
+			if (next === null) return;
+			apply(next);
+		},
+		[apply, percentageAt],
+	);
 
-      // Add active class for visual feedback
-      handle.classList.add('active');
-    };
+	const endDrag = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+		if (!draggingRef.current) return;
+		draggingRef.current = false;
+		if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+			event.currentTarget.releasePointerCapture(event.pointerId);
+		}
+	}, []);
 
-    // Handle mouse up
-    const handleMouseUp = () => {
-      if (isDraggingRef.current) {
-        isDraggingRef.current = false;
+	// The keyboard moves the divider as well.
+	const onKeyDown = useCallback(
+		(event: KeyboardEvent<HTMLDivElement>) => {
+			let next: number | null = null;
 
-        // Re-enable transitions after dragging stops
-        handle.classList.remove('no-transition');
+			switch (event.key) {
+				case 'ArrowLeft':
+				case 'ArrowDown':
+					next = position - step;
+					break;
+				case 'ArrowRight':
+				case 'ArrowUp':
+					next = position + step;
+					break;
+				case 'PageDown':
+					next = position - step * 2;
+					break;
+				case 'PageUp':
+					next = position + step * 2;
+					break;
+				case 'Home':
+					next = 0;
+					break;
+				case 'End':
+					next = 100;
+					break;
+				default:
+					return;
+			}
 
-        // Reset cursor to default when dragging stops
-        document.body.style.cursor = 'default';
-        document.body.style.userSelect = '';
-        handle.style.cursor = 'ew-resize';
-        handle.classList.remove('active');
-      }
-    };
+			event.preventDefault();
+			apply(next);
+		},
+		[apply, position, step],
+	);
 
-    // Handle mouse move
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isDraggingRef.current) {
-        const sliderRect = slider.getBoundingClientRect();
-        const deltaX = e.clientX - startXRef.current;
-        const newPosition = startLeftRef.current + deltaX;
+	return {
+		/** The percentage the divider stands at. */
+		position,
+		/** The frame - the element that carries the pointer events. */
+		frameRef,
+		/** The divider - the element that takes the keyboard. */
+		handleRef,
+		onPointerDown,
+		onPointerMove,
+		onPointerUp: endDrag,
+		onPointerCancel: endDrag,
+		onKeyDown,
+		/** Put the divider back where it started. */
+		reset: useCallback(() => apply(initialPosition), [apply, initialPosition]),
+	};
+}
 
-        // Constrain to slider bounds
-        const constrainedPosition = Math.max(0, Math.min(sliderRect.width, newPosition));
-
-        handle.style.left = `${constrainedPosition}px`;
-        updateClipPath(constrainedPosition);
-
-        // Ensure cursor stays ew-resize during movement
-        document.body.style.cursor = 'ew-resize';
-        handle.style.cursor = 'ew-resize';
-      }
-    };
-
-    // Handle touch events for mobile
-    const handleTouchStart = (e: TouchEvent) => {
-      e.preventDefault();
-      isDraggingRef.current = true;
-      startXRef.current = e.touches[0]!.clientX;
-      startLeftRef.current = parseInt(handle.style.left) || slider.offsetWidth / 2;
-
-      // Disable transitions during dragging for instant movement
-      handle.classList.add('no-transition');
-
-      // Change cursor for touch devices
-      handle.style.cursor = 'ew-resize';
-      handle.classList.add('active');
-    };
-
-    const handleTouchEnd = () => {
-      if (isDraggingRef.current) {
-        isDraggingRef.current = false;
-
-        // Re-enable transitions after dragging stops
-        handle.classList.remove('no-transition');
-
-        // Reset cursor after touch drag
-        handle.style.cursor = 'ew-resize';
-        handle.classList.remove('active');
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (isDraggingRef.current) {
-        e.preventDefault();
-        const sliderRect = slider.getBoundingClientRect();
-        const deltaX = e.touches[0]!.clientX - startXRef.current;
-        const newPosition = startLeftRef.current + deltaX;
-
-        const constrainedPosition = Math.max(0, Math.min(sliderRect.width, newPosition));
-
-        handle.style.left = `${constrainedPosition}px`;
-        updateClipPath(constrainedPosition);
-
-        // Ensure cursor stays ew-resize during touch movement
-        handle.style.cursor = 'ew-resize';
-      }
-    };
-
-    // Handle click on slider to move handle
-    const handleSliderClick = (e: MouseEvent) => {
-      if (!isDraggingRef.current && enableClickToPosition) {
-        const sliderRect = slider.getBoundingClientRect();
-        const clickX = e.clientX - sliderRect.left;
-        const constrainedPosition = Math.max(0, Math.min(sliderRect.width, clickX));
-
-        handle.style.left = `${constrainedPosition}px`;
-        updateClipPath(constrainedPosition);
-      }
-    };
-
-    // Handle keyboard support
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!enableKeyboard) {
-        return;
-      }
-
-      const sliderRect = slider.getBoundingClientRect();
-      const currentPosition = parseInt(handle.style.left) || sliderRect.width / 2;
-      const step = sliderRect.width / 20; // 5% steps
-
-      let newPosition = currentPosition;
-
-      switch (e.key) {
-        case 'ArrowLeft':
-          newPosition = Math.max(0, currentPosition - step);
-          break;
-        case 'ArrowRight':
-          newPosition = Math.min(sliderRect.width, currentPosition + step);
-          break;
-        case 'Home':
-          newPosition = 0;
-          break;
-        case 'End':
-          newPosition = sliderRect.width;
-          break;
-        default:
-          return;
-      }
-
-      e.preventDefault();
-      handle.style.left = `${newPosition}px`;
-      updateClipPath(newPosition);
-    };
-
-    // Handle window resize
-    const handleResize = () => {
-      initSlider();
-    };
-
-    // Add event listeners
-    handle.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mousemove', handleMouseMove);
-    handle.addEventListener('touchstart', handleTouchStart, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd);
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    slider.addEventListener('click', handleSliderClick);
-    handle.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('resize', handleResize);
-
-    // Make handle focusable for keyboard navigation
-    handle.setAttribute('tabindex', '0');
-    handle.setAttribute('role', 'slider');
-    handle.setAttribute('aria-label', 'Before and after image slider');
-    handle.setAttribute('aria-valuemin', '0');
-    handle.setAttribute('aria-valuemax', '100');
-    handle.setAttribute('aria-valuenow', initialPosition.toString());
-
-    // Initialize slider
-    initSlider();
-
-    // Cleanup event listeners on unmount
-    return () => {
-      handle.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mousemove', handleMouseMove);
-      handle.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd);
-      document.removeEventListener('touchmove', handleTouchMove);
-      slider.removeEventListener('click', handleSliderClick);
-      handle.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [initialPosition, onPositionChange, enableKeyboard, enableClickToPosition]);
-
-  // Return refs and utility functions
-  return {
-    sliderRef,
-    handleRef,
-    afterImageRef,
-    // Utility function to programmatically set position (0-100)
-    setPosition: (percentage: number) => {
-      const slider = sliderRef.current;
-      const handle = handleRef.current;
-      const afterImg = afterImageRef.current;
-
-      if (slider && handle && afterImg) {
-        const sliderRect = slider.getBoundingClientRect();
-        const position = (percentage / 100) * sliderRect.width;
-        handle.style.left = `${position}px`;
-        afterImg.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
-      }
-    },
-    // Reset to initial position
-    reset: () => {
-      const slider = sliderRef.current;
-      const handle = handleRef.current;
-      const afterImg = afterImageRef.current;
-
-      if (slider && handle && afterImg) {
-        const sliderRect = slider.getBoundingClientRect();
-        const position = (initialPosition / 100) * sliderRect.width;
-        handle.style.left = `${position}px`;
-        afterImg.style.clipPath = `inset(0 ${100 - initialPosition}% 0 0)`;
-      }
-    },
-  };
-};
+export default useBeforeAfterImageSlider;

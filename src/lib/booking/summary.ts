@@ -10,7 +10,7 @@
 import { BRANCHES, type ContactBranch } from '@/data/contact';
 import type { ServiceCard } from '@/lib/services/types';
 
-import { formatDate, getArrivalOption, weekdayOf } from './schedule';
+import { formatDate, getArrivalOption, toISODate, weekdayOf } from './schedule';
 import { toInternationalPhone } from './validation';
 import { getCarSize, OTHER_BRAND, type CarSize } from './vehicles';
 import type { BookingState } from './types';
@@ -37,10 +37,12 @@ export interface ResolvedBooking {
  *
  * The date of the requested visit is part of it, so the number is recognisable
  * in the conversation, and four random characters keep two requests of the
- * same day apart.
+ * same day apart. A request without a day - "as soon as possible" or "still
+ * asking questions" - carries the day it was made, so the number never ends
+ * up with an empty part.
  */
 export function bookingReference(date: string): string {
-	const stamp = date ? date.replaceAll('-', '').slice(2) : '';
+	const stamp = (date || toISODate(new Date())).replaceAll('-', '').slice(2);
 	const random = Math.random().toString(36).slice(2, 6).toUpperCase();
 
 	return `ASPA-${stamp}-${random}`;

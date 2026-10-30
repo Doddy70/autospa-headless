@@ -5,9 +5,9 @@ import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 
 import PackageRows from '@/components/showcase/PackageRows';
 import ServiceVideoSection from '@/components/showcase/ServiceVideoSection';
-import { ReservationModal } from '@/components/booking/ReservationModal';
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { CtaBand } from '@/components/ui/CtaBand';
-import { getServiceDetail, listServiceCards, listServiceSlugs } from '@/lib/services/catalog';
+import { getServiceDetail, listServiceSlugs } from '@/lib/services/catalog';
 
 export const revalidate = 300;
 
@@ -76,10 +76,6 @@ export default async function ServicePage({
 
 	const { card, related, prev, next } = service;
 
-	/* The rows of the wizard - the customer can switch the service inside
-	   the dialog. */
-	const cards = await listServiceCards();
-
 	const jsonLd = {
 		'@context': 'https://schema.org',
 		'@type': 'Service',
@@ -90,7 +86,7 @@ export default async function ServicePage({
 		provider: {
 			'@type': 'AutoRepairShop',
 			name: 'AutoSPA Jakarta',
-			url: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3100',
+			url: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3200',
 			telephone: '+62-819-3777-3888',
 		},
 		areaServed: 'Jakarta, Indonesia',
@@ -132,16 +128,13 @@ export default async function ServicePage({
 				{/* Call to action - the booking wizard opens with this service
 				    already chosen. */}
 				<div className="flex flex-col gap-3 border-b border-white/10 py-10 sm:flex-row">
-					<ReservationModal
-						services={cards}
-						initialServiceSlug={card.slug}
-						trigger={
-							<button type="button" className="btn btn-lg btn-primary group">
-								Book Sekarang
-								<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-							</button>
-						}
-					/>
+					<BookingTrigger
+						serviceSlug={card.slug}
+						className="btn btn-lg btn-primary group"
+					>
+						Book Sekarang
+						<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+					</BookingTrigger>
 				</div>
 
 				{/* Benefits and highlights */}

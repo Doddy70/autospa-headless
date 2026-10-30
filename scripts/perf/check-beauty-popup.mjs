@@ -1,6 +1,6 @@
 import { chromium, devices } from '@playwright/test';
 
-const BASE = 'http://localhost:3100';
+const BASE = 'http://localhost:3200';
 
 const run = async () => {
 	const browser = await chromium.launch();

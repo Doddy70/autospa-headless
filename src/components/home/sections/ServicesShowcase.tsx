@@ -43,7 +43,7 @@ export default function ServicesShowcase() {
             </motion.div>
 
             {/* Animated Heading */}
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-white mb-8">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white mb-8">
               {['Protection', '&', 'Precision.', 'Engineered', 'for', 'Excellence.'].map((word, i) => (
                 <motion.span
                   key={i}

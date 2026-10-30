@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { CalendarCheck, Check } from 'lucide-react';
 
-import { ReservationModal } from '@/components/booking/ReservationModal';
+import { BookingTrigger } from '@/components/booking/ReservationModal';
 import { PageHero, SectionTitle } from '@/components/ui/SectionTitle';
 import { CONTACT } from '@/data/contact';
-import { listServiceCards } from '@/lib/services/catalog';
 
 export const metadata: Metadata = {
 	title: 'Reservasi | AutoSPA Jakarta',
@@ -33,7 +32,7 @@ const STEPS = [
 	{
 		title: 'Data kendaraan dan jadwal',
 		description:
-			'Untuk coating dan PPF kami butuh model kendaraannya; untuk semuanya kami butuh tanggal dan jam kedatangan.',
+			'Untuk coating dan PPF kami butuh model kendaraannya; untuk semuanya kami butuh kapan Anda ingin datang.',
 	},
 	{
 		title: 'Kirim lewat WhatsApp',
@@ -42,14 +41,7 @@ const STEPS = [
 	},
 ];
 
-export default async function ReservasiPage() {
-	/*
-	 * The service rows of the wizard come from the catalogue, the same
-	 * source the homepage and the service pages use: WordPress first, the
-	 * static mirror as the fallback.
-	 */
-	const services = await listServiceCards();
-
+export default function ReservasiPage() {
 	return (
 		<>
 			<PageHero
@@ -68,7 +60,17 @@ export default async function ReservasiPage() {
 						/>
 
 						<div className="mt-8">
-							<ReservationModal services={services} />
+							<BookingTrigger
+								label="Buat Reservasi"
+								className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-500 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-600"
+							>
+								<CalendarCheck className="size-4" aria-hidden="true" />
+								Buat Reservasi
+							</BookingTrigger>
+
+							<p className="mt-4 text-sm text-white/50">
+								Formulir terbuka di halaman ini - Anda tidak perlu meninggalkan halaman.
+							</p>
 						</div>
 
 						<ol className="mt-12 space-y-5">
