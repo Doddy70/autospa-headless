@@ -115,22 +115,22 @@ export const BRANCHES: ContactBranch[] = [
 		map: { query: 'Autospa Bogor', zoom: 18 },
 	},
 	{
-		// Production publishes no address and no map for this branch.
 		slug: 'serpong',
 		name: 'Autospa Serpong',
-		address: null,
+		address:
+			'Chery Arta Serpong / iCar SM Grup, Jl. Raya Serpong Kilometer 7 No.KM.10, Pd. Jagung, Serpong Utara, Tangerang Selatan',
 		phones: ['+62 819-3777-3888'],
 		hours: 'Every day 08.00 - 18.00 WIB',
-		map: null,
+		map: { query: 'Chery Arta Serpong', zoom: 16 },
 	},
 	{
-		// Production publishes no address and no map for this branch.
 		slug: 'cikupa',
 		name: 'Autospa Cikupa',
-		address: null,
+		address:
+			'Jl. Raya Serang No.km.15, Cikupa, Kec. Cikupa, Kabupaten Tangerang, Banten 15710',
 		phones: ['+62 819-3777-3888'],
 		hours: 'Every day 08.00 - 18.00 WIB',
-		map: null,
+		map: { query: 'Jl. Raya Serang No.km.15 Cikupa Kabupaten Tangerang', zoom: 16 },
 	},
 ];
 
