@@ -77,6 +77,7 @@ service-account*.json
 .env
 .env.local
 .env.*.local
+.env.production
 !.env.example
 
 # Build output and dependencies
