@@ -18,7 +18,19 @@
 
 set -uo pipefail
 
-SITE_DIR="${1:-$(pwd)}"
+# The directory of the repository. The panel clones the repository into the
+# directory of the site and pulls it in place, so this is where the build
+# lives.
+if [ -n "${1:-}" ]; then
+	SITE_DIR="$1"
+elif [ -d ".git" ]; then
+	SITE_DIR="$(pwd)"
+elif [ -d "/www/wwwroot/autospajakarta.com/.git" ]; then
+	SITE_DIR="/www/wwwroot/autospajakarta.com"
+else
+	echo "[deploy] ERROR: the directory of the repository is unknown - pass it as the first argument" >&2
+	exit 1
+fi
 cd "$SITE_DIR" || { echo "[deploy] ERROR: $SITE_DIR does not exist" >&2; exit 1; }
 
 NODE_BIN=/www/server/nodejs/v20.20.2/bin
@@ -57,6 +69,10 @@ if [ ! -d public/wp-content ] && [ -d "$BACKUP_DIR/wp-content" ]; then
 	cp -a "$BACKUP_DIR/wp-content" public/wp-content
 fi
 
+# The files that were restored belong to the user of the application.
+chown www:www .env.production 2>/dev/null || true
+chown -R www:www public/wp-content 2>/dev/null || true
+
 # ───────────────────────────────────────────────
 # 2. The build - next to the live one.
 # ───────────────────────────────────────────────
@@ -89,13 +105,26 @@ if [ -d .next ]; then mv .next .next.prev; fi
 mv .next.new .next
 chown -R www:www .next
 
-# The pm2 application - it is created when it does not exist yet (the first
-# deployment after the reset).
+# The pm2 application. It is created when it does not exist yet, and it is
+# replaced when it still points at the old directory (the reset).
+PM2_EXISTS=0
 if su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" >/dev/null 2>&1; then
+	PM2_EXISTS=1
+fi
+
+PM2_SCRIPT="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" 2>/dev/null | sed -n 's/.*script path.*: \(.*\)$/\1/p' | head -1)"
+
+if [ "$PM2_EXISTS" = "1" ] && [ -n "$PM2_SCRIPT" ] && [ ! -f "$PM2_SCRIPT" ]; then
+	log "the application still points at $PM2_SCRIPT - it is removed"
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 delete autospa-web"
+	PM2_EXISTS=0
+fi
+
+if [ "$PM2_EXISTS" = "1" ]; then
 	log "restarting the application"
 	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 restart autospa-web" || fail "pm2 could not be restarted"
 else
-	log "creating the application"
+	log "creating the application in $SITE_DIR"
 	su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$PM2_BIN:\$PATH && pm2 start ./start.sh --name autospa-web --interpreter /bin/bash && pm2 save" || fail "the application could not be started"
 fi
 
