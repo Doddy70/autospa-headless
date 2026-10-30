@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { CalendarCheck, Check } from 'lucide-react';
 
-import { BookingForm } from '@/components/ui/BookingForm';
+import { ReservationModal } from '@/components/booking/ReservationModal';
 import { PageHero, SectionTitle } from '@/components/ui/SectionTitle';
 import { CONTACT } from '@/data/contact';
+import { listServiceCards } from '@/lib/services/catalog';
 
 export const metadata: Metadata = {
 	title: 'Reservasi | AutoSPA Jakarta',
@@ -12,12 +14,47 @@ export const metadata: Metadata = {
 	alternates: { canonical: '/reservasi' },
 };
 
-export default function ReservasiPage() {
+const STEPS = [
+	{
+		title: 'Pilih layanan',
+		description:
+			'Premium Wash, Premium Detailing, Premium Coating, Premium 360° PPF, Engine & Glass, atau Rust Protection.',
+	},
+	{
+		title: 'Pilih cabang',
+		description:
+			'Sepuluh cabang AutoSPA di Jabodetabek. Ringkasan booking dikirim ke nomor WhatsApp cabang yang Anda pilih.',
+	},
+	{
+		title: 'Pilih ukuran kendaraan',
+		description:
+			'Ukuran kendaraan menentukan lama pengerjaan - dari 30-60 menit untuk wash sampai 4-7 jam untuk full detailing.',
+	},
+	{
+		title: 'Data kendaraan dan jadwal',
+		description:
+			'Untuk coating dan PPF kami butuh model kendaraannya; untuk semuanya kami butuh tanggal dan jam kedatangan.',
+	},
+	{
+		title: 'Kirim lewat WhatsApp',
+		description:
+			'Tim kami membalas untuk memastikan jadwal, paket, dan harga akhir. Booking baru terkonfirmasi setelah dibalas.',
+	},
+];
+
+export default async function ReservasiPage() {
+	/*
+	 * The service rows of the wizard come from the catalogue, the same
+	 * source the homepage and the service pages use: WordPress first, the
+	 * static mirror as the fallback.
+	 */
+	const services = await listServiceCards();
+
 	return (
 		<>
 			<PageHero
-				title="Form Reservasi"
-				subtitle="Isi form di bawah, lalu kirim lewat WhatsApp. Tim kami akan membalas untuk memastikan jadwal dan harga akhir."
+				title="Booking Layanan"
+				subtitle="Isi langkah demi langkah, lalu kirim ringkasannya lewat WhatsApp. Tim kami akan membalas untuk memastikan jadwal, paket, dan harga akhir."
 				crumbs={[{ label: 'Reservasi' }]}
 			/>
 
@@ -30,9 +67,45 @@ export default function ReservasiPage() {
 							description="Passion For Detail - premium autodetailing specialist."
 						/>
 
-						<div className="mt-10">
-							<BookingForm />
+						<div className="mt-8">
+							<ReservationModal services={services} />
 						</div>
+
+						<ol className="mt-12 space-y-5">
+							{STEPS.map((step, index) => (
+								<li key={step.title} className="flex gap-4">
+									<span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-primary-500/40 bg-primary-500/10 text-sm font-bold text-primary-400">
+										{index + 1}
+									</span>
+									<div>
+										<h3 className="text-base font-bold text-white">{step.title}</h3>
+										<p className="mt-1 text-sm leading-relaxed text-white/55">
+											{step.description}
+										</p>
+									</div>
+								</li>
+							))}
+						</ol>
+
+						<ul className="mt-10 space-y-3 rounded-[20px] border border-white/10 bg-background-7 p-6">
+							<li className="flex items-start gap-3 text-sm text-white/60">
+								<Check className="mt-0.5 size-4 shrink-0 text-primary-500" aria-hidden="true" />
+								Booking dikirim ke nomor WhatsApp cabang yang Anda pilih, bukan ke nomor
+								central.
+							</li>
+							<li className="flex items-start gap-3 text-sm text-white/60">
+								<Check className="mt-0.5 size-4 shrink-0 text-primary-500" aria-hidden="true" />
+								Jam yang ditawarkan mengikuti jam buka cabang tersebut.
+							</li>
+							<li className="flex items-start gap-3 text-sm text-white/60">
+								<CalendarCheck
+									className="mt-0.5 size-4 shrink-0 text-primary-500"
+									aria-hidden="true"
+								/>
+								Belum ada konfirmasi otomatis - jadwal baru pasti setelah tim kami
+								membalas.
+							</li>
+						</ul>
 					</div>
 
 					<aside className="lg:pt-4">
