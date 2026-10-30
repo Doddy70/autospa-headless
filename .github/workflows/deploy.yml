@@ -91,7 +91,9 @@ jobs:
         id: release
         run: |
           SHA="$(git rev-parse --short HEAD)"
-          STAMP="$(date +%Y%m%d-%H%M%S)"
+          # The name is written in UTC - the runner and the server do not
+          # keep the same clock.
+          STAMP="$(date -u +%Y%m%d-%H%M%S)"
           echo "name=${STAMP}-${SHA}" >> "$GITHUB_OUTPUT"
 
       - name: Push the code into the new release
