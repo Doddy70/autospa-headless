@@ -6,7 +6,7 @@
     },
     "wordpress": {
       "type": "http",
-      "url": "https://autospajakarta.com/wp-json/mcp/mcp-adapter-default-server",
+      "url": "https://backend.autospajakarta.com/index.php?rest_route=/mcp/mcp-adapter-default-server",
       "headers": {
         "Authorization": "Basic ${WP_MCP_AUTH}"
       }

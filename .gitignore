@@ -82,6 +82,7 @@ service-account*.json
 # Build output and dependencies
 node_modules/
 .next/
+.next-wizard/
 out/
 next-env.d.ts
 test-results/
