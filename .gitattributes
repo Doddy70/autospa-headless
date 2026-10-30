@@ -1,0 +1,7 @@
+# The shell scripts run on the Linux server - they need the line endings of
+# Linux, whatever git does on the machine that commits them.
+*.sh text eol=lf
+
+# The workflow and the other yaml files keep their line endings.
+*.yml text eol=lf
+*.yaml text eol=lf
