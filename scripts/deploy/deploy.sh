@@ -52,7 +52,7 @@ PM2_BIN=/www/server/nodejs/v22.23.3/bin
 KEEP_RELEASES=3
 
 # The port the application listens on (the nginx vhost proxies to it).
-APP_PORT=8089
+APP_PORT="${APP_PORT:-8089}"
 
 # The markers the built pages have to carry. A build that does not contain
 # them is a build of the wrong code - it never goes live.
@@ -108,6 +108,7 @@ case "$SOURCE_DIR/" in
 		# The source is already a release (the runner pushed it into place) -
 		# it is used where it is.
 		RELEASE_DIR="$SOURCE_DIR"
+		RELEASE_NAME="$(basename "$RELEASE_DIR")"
 		log "the release directory is $RELEASE_DIR (the source is already a release)"
 		;;
 	*)
