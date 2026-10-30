@@ -9,6 +9,9 @@ AutoSPA Brand: #27A8DF
   /* Use --font-inter for Inter font loaded by next/font */
   --font-inter-tight: var(--font-inter), 'Inter Tight', sans-serif;
 
+  /* Height of the site header (used by `h-header` / `pt-header`) */
+  --spacing-header: 72px;
+
   /* =============== COLORS - AutoSPA Brand =============== */
   /* Primary Blue - AutoSPA */
   --color-primary-50: #e6f7fd;
@@ -25,6 +28,12 @@ AutoSPA Brand: #27A8DF
   --color-secondary: #1a1a1c;
   --color-accent: #fcfcfc;
   --color-split-text: #1a1a1c;
+
+  /* Gradient reveal on the oversized headlines (the Agntix
+     `.tp_text_invert_2` treatment): the words start on the dark end of the
+     ramp and light up as they scroll into the viewport. */
+  --color-text-invert-from: #e0eeee;
+  --color-text-invert-to: #383c3e;
 
   /* Backgrounds - Dark mode default */
   --color-background-1: #000;

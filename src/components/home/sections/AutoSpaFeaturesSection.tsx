@@ -40,8 +40,8 @@ function CraftsmanshipCard() {
       {/* Image Background */}
       <div className={styles['autospa-features__image-wrap']}>
         <Image
-          src="/assets/frammer/MOBIL_FRAMMER.avif"
-          alt="Premium automotive detailing"
+          src="/assets/autospa-cards/banner3 Autospa.jpg"
+          alt="AutoSPA ceramic coating - gloss finish on a protected car body"
           fill
           className="object-cover"
           sizes="(max-width: 1100px) 100vw, 33vw"
@@ -131,8 +131,8 @@ function StatisticCard() {
       {/* Image Background */}
       <div className={styles['autospa-features__image-wrap']}>
         <Image
-          src="/assets/frammer/Detailing.avif"
-          alt="AutoSPA detailing"
+          src="/assets/autospa-cards/Interior-Detailing.jpg"
+          alt="AutoSPA interior detailing - cleaned and restored car cabin"
           fill
           className="object-cover"
           sizes="(max-width: 1100px) 100vw, 33vw"
@@ -225,8 +225,8 @@ function BookingCard() {
       {/* Image Background */}
       <div className={styles['autospa-features__image-wrap']}>
         <Image
-          src="/assets/frammer/CarSide_Frammer.avif"
-          alt="Book your car detailing"
+          src="/assets/autospa-cards/Premium-Wash.jpg"
+          alt="AutoSPA premium wash - foamy exterior wash of a car"
           fill
           className="object-cover"
           sizes="(max-width: 1100px) 100vw, 33vw"
@@ -271,7 +271,10 @@ function BookingCard() {
  * ─────────────────────────────────────────────── */
 export default function AutoSpaFeaturesSection() {
   return (
-    <section className={styles['autospa-features']} data-section="autospa-features">
+    <section
+      className={`${styles['autospa-features']} render-lazy`}
+      data-section="autospa-features"
+    >
       <div className={styles['autospa-features__grid']}>
         {/* Col 1 — Craftsmanship (image bg + timeline) */}
         <CraftsmanshipCard />

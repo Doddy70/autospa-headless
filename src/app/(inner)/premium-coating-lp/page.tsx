@@ -5,7 +5,6 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { TestimonialSlider } from '@/components/ui/TestimonialSlider';
-import { whatsappLink } from '@/data/contact';
 import lpContent from '@/content/structured/premium-coating-lp.json';
 import { blocksOfType, type StructuredPage } from '@/content/structured/types';
 
@@ -53,16 +52,6 @@ export default function PremiumCoatingLpPage() {
 								Book Now
 								<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
 							</Link>
-							<a
-								href={whatsappLink(
-									'Halo Admin, saya mau booking untuk Premium Coating.',
-								)}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="btn btn-lg border border-stroke-6 bg-transparent text-white hover:bg-white/10"
-							>
-								Booking via WhatsApp
-							</a>
 						</div>
 					</div>
 

@@ -51,7 +51,10 @@ export default function GalleryBanner() {
   const next = () => setActiveSlide((s) => (s + 1) % GALLERY_ITEMS.length);
 
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden" style={{ background: '#030810' }}>
+    <section
+      className="render-lazy relative py-24 lg:py-32 overflow-hidden"
+      style={{ background: '#030810' }}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
         {/* Section Header */}
         <div className="relative max-w-xl mb-12 z-10">
@@ -231,9 +234,9 @@ export default function GalleryBanner() {
         >
           {[
             { value: '1000+', label: 'Happy Customers' },
-            { value: '5+', label: 'Years Experience' },
+            { value: '12+', label: 'Years Experience' },
             { value: '4.9', label: 'Customer Rating' },
-            { value: '3', label: 'Locations' },
+            { value: '10', label: 'Locations' },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <p className="text-3xl font-bold text-white">{stat.value}</p>

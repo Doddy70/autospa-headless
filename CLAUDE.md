@@ -20,11 +20,17 @@ Production is READ ONLY. All development happens on staging only.
 ```
 URL:      https://backend.autospajakarta.com
 Admin:    https://backend.autospajakarta.com/wp-admin
-GraphQL:  https://backend.autospajakarta.com/graphql
+GraphQL:  https://backend.autospajakarta.com/index.php?graphql
+REST:     https://backend.autospajakarta.com/index.php?rest_route=/wp/v2
 PHP:      8.2
 Database: sql_staging_autospajakarta
 Prefix:   wpa_
 ```
+
+> The staging host routes WordPress through `index.php`: nginx answers 404 on
+> `/graphql` and `/wp-json`, both APIs are reached through that file. The
+> frontend is pointed at the staging install - the production site
+> (`autospajakarta.com`) is **not** queried any more.
 
 ## Key Commands
 
@@ -74,6 +80,33 @@ Env: `WORDPRESS_GRAPHQL_URL`, `WORDPRESS_REST_URL`, `WORDPRESS_SITE_URL`,
 `NEXT_PUBLIC_SITE_URL`, `WORDPRESS_REVALIDATE_SECONDS` (see `.env.example`).
 
 Details: `docs/phase-2e-headless-content-sync.md`.
+
+## Service Architecture (Layanan)
+
+The Agntix "Projects" block (portfolio metro rows) is the architecture of the
+service catalogue. The rows of the template were projects; here they are the
+six AutoSPA services.
+
+```bash
+# The catalogue: WordPress first, the published mirror as fallback.
+src/lib/services/catalog.ts     listServiceCards() / getServiceDetail(slug)
+src/lib/services/adapters.ts    WordPress + mirror -> one presentation model
+src/components/showcase/        the reused Agntix blocks (headline, rows, hero)
+```
+
+| Route | Source |
+|-------|--------|
+| `/` (section "Layanan") | `ServiceShowcase` over the catalogue |
+| `/services` | catalogue rows + the 12 packages |
+| `/services/<slug>` | detail page, portfolio detail architecture |
+| `/our-services` | permanent redirect to `/services` |
+
+Rules: the catalogue is read on the server, WordPress wins per field, the
+static mirror (`src/data/services.ts`) fills the gaps, and the catalogue is
+never empty. The GraphQL endpoint in production does not expose the service
+queries yet, so the mirror currently carries the content.
+
+Details: `docs/service-architecture.md`.
 
 ## API Contract (Phase 2D.8 Results)
 
@@ -167,13 +200,17 @@ Testimonial:
 | Category consolidation | — | Scheduled for 2D.9 |
 | FAQ faqCategory not exposed | Low | Documented in 2D.8 report |
 | Project challenge/solution/result not exposed | Low | Documented in 2D.8 report |
-| Staging GraphQL `/graphql` returns 404, WPGraphQL unreachable | High | Open - content origin is production (read-only) |
+| Staging GraphQL `/graphql` returns 404 | High | Worked around - the endpoint is `index.php?graphql`; the content origin is now the staging install |
+| Staging exposes no custom post types in GraphQL | High | `services`/`serviceBy`/`projects`/`locations` are absent from the schema, so the service catalogue falls back to the static mirror |
 
 ## Documentation
 
+- **Agent onboarding / project state:** `docs/agent-onboarding.md`
 - **Content Sync (Phase 2E):** `docs/phase-2e-headless-content-sync.md`
 - **Security — Elementor Pro backdoor:** `docs/security-elementor-pro-nulled-backdoor.md`
 - **Architecture evaluation — Agntix:** `docs/agntix-standalone-evaluation.md`
+- **Agntix "Projects" architecture:** `docs/agntix-projects-architecture.md`
+- **Service architecture (Layanan):** `docs/service-architecture.md`
 
 > The phase 1A–2D9 planning documents were retired in favour of the Phase 2E
 > architecture above. Their content now lives in the git history.

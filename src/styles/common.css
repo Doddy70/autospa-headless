@@ -15,6 +15,15 @@ Common Styles all over the sites
   @apply lp:px-0 mx-auto max-w-[1290px] px-5;
 }
 
+/* ==========DEFERRED RENDER========== */
+/* Sections below the fold are skipped by the renderer until they come close
+   to the viewport. `contain-intrinsic-size: auto` keeps the last known size,
+   so the scrollbar and the layout do not jump (no CLS). */
+@utility render-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
 /* ==========SCROLLBAR========== */
 .scroll-bar::-webkit-scrollbar {
   @apply hidden;

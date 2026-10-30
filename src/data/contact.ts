@@ -148,7 +148,27 @@ export function branchMapUrl(branch: ContactBranch): string | null {
 }
 
 /** wa.me deep link with a prefilled message. */
-export function whatsappLink(message?: string): string {
-	const base = `https://wa.me/${CONTACT.whatsapp}`;
+export function whatsappLink(message?: string, number: string = CONTACT.whatsapp): string {
+	const base = `https://wa.me/${number}`;
 	return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
+/**
+ * The WhatsApp number of a branch, in the international format.
+ *
+ * Every branch publishes its own phone number - that number is the WhatsApp
+ * line of the workshop. A booking that names a branch is therefore handed
+ * over to that branch, not to the central number of the site.
+ *
+ * The first phone of the branch is used; the ones behind it are the personal
+ * numbers of the service advisors.
+ */
+export function branchWhatsapp(branch: ContactBranch): string {
+	const digits = (branch.phones[0] ?? '').replace(/\D/g, '');
+
+	if (!digits) return CONTACT.whatsapp;
+	if (digits.startsWith('62')) return digits;
+	if (digits.startsWith('0')) return `62${digits.slice(1)}`;
+
+	return `62${digits}`;
 }

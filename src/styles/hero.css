@@ -1,0 +1,94 @@
+/* =========================
+Hero entrance animation
+===========================
+The hero headline is the largest contentful paint of the homepage. With a
+JavaScript driven fade (framer-motion) the element stays invisible until the
+bundle is parsed and React has hydrated - on a slow connection that pushed the
+LCP to ~6s. These keyframes start with the first paint instead, so the
+headline shows up immediately.
+
+`both` keeps the "from" state during the delay, `prefers-reduced-motion`
+switches everything off.
+=========================== */
+
+@keyframes hero-fade-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* The headline itself only moves - it never fades. An element that is
+   invisible at the first paint is not eligible as a contentful paint, so the
+   headline would be missing from the LCP candidates and the hero video would
+   take its place. */
+@keyframes hero-headline {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-anim-headline {
+  animation: hero-headline 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-anim-scale {
+  animation: hero-fade-scale 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-anim-fade {
+  animation: hero-fade 0.8s ease-out both;
+}
+
+.hero-anim-rise {
+  animation: hero-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-anim-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.hero-anim-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.hero-anim-delay-3 {
+  animation-delay: 0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim-scale,
+  .hero-anim-fade,
+  .hero-anim-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
