@@ -9,7 +9,7 @@
 
 import { readFile } from 'node:fs/promises';
 
-const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://autospajakarta.com';
+const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://backend.autospajakarta.com';
 const LOCAL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3100';
 
 const manifest = JSON.parse(await readFile('src/content/manifest.json', 'utf8'));

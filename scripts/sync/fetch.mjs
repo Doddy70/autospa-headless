@@ -1,9 +1,12 @@
 /**
- * Step 1 - Pull the raw WordPress REST payloads we need from the production
- * site (READ ONLY) into `.cache/wp/`.
+ * Step 1 - Pull the raw WordPress REST payloads we need from the staging
+ * install (READ ONLY) into `.cache/wp/`.
  *
- * Production is never written to. Every call below is a GET against
- * /wp-json/wp/v2/*.
+ * The CMS is never written to. Every call below is a GET against the REST
+ * API of `https://backend.autospajakarta.com`.
+ *
+ * The staging host routes WordPress through `index.php`, so the REST API is
+ * reached with the `rest_route` query parameter.
  *
  * Usage: node scripts/sync/fetch.mjs
  */
@@ -11,14 +14,37 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const REST = process.env.WORDPRESS_REST_URL ?? 'https://autospajakarta.com/wp-json';
-const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://autospajakarta.com';
+const REST = process.env.WORDPRESS_REST_URL ?? 'https://backend.autospajakarta.com/index.php?rest_route=/wp/v2';
+const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://backend.autospajakarta.com';
 const OUT = path.resolve('.cache/wp');
+
+/**
+ * Builds a REST URL for a collection.
+ *
+ * Two shapes are supported: a `/wp-json` base (the path is appended) and an
+ * `index.php?rest_route=/wp/v2` base (the path is appended to the parameter).
+ */
+function restUrl(collection, query) {
+  const base = REST.replace(/\/$/, '');
+  const url = new URL(base);
+
+  if (url.searchParams.has('rest_route')) {
+    url.searchParams.set(
+      'rest_route',
+      `${url.searchParams.get('rest_route')}/${collection}`,
+    );
+  } else {
+    url.pathname = `${base}/${collection}`;
+  }
+
+  url.search = query.toString();
+  return url.toString();
+}
 
 /** Fetch every page of a REST collection, following X-WP-TotalPages. */
 async function fetchAll(collection, params = {}) {
   const query = new URLSearchParams({ per_page: '100', ...params });
-  const first = await fetch(`${REST}/wp/v2/${collection}?${query}`);
+  const first = await fetch(restUrl(collection, query));
 
   if (!first.ok) {
     throw new Error(`${collection}: HTTP ${first.status} ${first.statusText}`);
@@ -29,8 +55,10 @@ async function fetchAll(collection, params = {}) {
   const items = await first.json();
 
   for (let page = 2; page <= totalPages; page += 1) {
-    const next = new URL(`${REST}/wp/v2/${collection}`);
-    next.search = new URLSearchParams({ ...Object.fromEntries(query), page: String(page) });
+    const next = restUrl(
+      collection,
+      new URLSearchParams({ ...Object.fromEntries(query), page: String(page) }),
+    );
     const res = await fetch(next);
     if (!res.ok) throw new Error(`${collection} page ${page}: HTTP ${res.status}`);
     items.push(...(await res.json()));

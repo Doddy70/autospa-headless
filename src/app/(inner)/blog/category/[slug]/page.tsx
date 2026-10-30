@@ -2,7 +2,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import ArticleCard from '@/components/content/ArticleCard';
-import { fetchArticles, fetchCategories, withCategoryNames } from '@/lib/wordpress/rest';
+import BlogHero from '@/components/content/BlogHero';
+import {
+  fetchArticles,
+  fetchCategories,
+  withArticleMeta,
+  withCategoryNames,
+} from '@/lib/wordpress/rest';
 
 export const revalidate = 300;
 
@@ -24,6 +30,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
+/**
+ * The articles of one category.
+ *
+ * Same layout as the article listing - the Agntix `blog-grid-2-col`
+ * template - with the banner of the category on top.
+ */
 export default async function BlogCategoryPage({ params }: Params) {
   const { slug } = await params;
   const categories = await fetchCategories();
@@ -34,30 +46,31 @@ export default async function BlogCategoryPage({ params }: Params) {
   }
 
   const result = await fetchArticles({ perPage: 24, category: category.id });
-  const articles = await withCategoryNames(result.articles);
+  const articles = await withArticleMeta(await withCategoryNames(result.articles));
 
   return (
-    <div className="min-h-screen bg-background-8 pt-24">
-      <section className="relative px-6 py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-6xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary-500">
-            Kategori
-          </span>
-          <h1 className="mt-4 text-4xl font-bold text-white md:text-5xl">
-            {category.name}
-          </h1>
-          <p className="mt-4 text-white/70">{category.count} artikel</p>
-        </div>
-      </section>
+    <>
+      <BlogHero
+        eyebrow="Kategori"
+        title={category.name}
+        description={`${category.count} artikel dalam kategori ini.`}
+      />
 
-      <section className="px-6 pb-20">
-        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
+      <section className="bg-background-8 pb-24 pt-8">
+        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+          {articles.length === 0 ? (
+            <p className="py-20 text-center text-white/60">
+              Belum ada artikel yang cocok.
+            </p>
+          ) : (
+            <div className="grid gap-x-8 gap-y-16 md:grid-cols-2">
+              {articles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
-    </div>
+    </>
   );
 }

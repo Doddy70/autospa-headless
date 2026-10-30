@@ -15,6 +15,14 @@
  * Only transport-level failures - network, non-2xx, unparseable body - throw.
  */
 
+/**
+ * The GraphQL endpoint of the staging install.
+ *
+ * The staging host routes WordPress through `index.php`; the `/graphql` path
+ * answers 404 on nginx.
+ */
+const DEFAULT_GRAPHQL_URL = 'https://backend.autospajakarta.com/index.php?graphql';
+
 const DEFAULT_REVALIDATE = 300;
 
 export interface GraphQLError {
@@ -41,13 +49,10 @@ export class WordPressTransportError extends Error {
 }
 
 function endpoint(): string {
-  const url = process.env.WORDPRESS_GRAPHQL_URL;
-  if (!url) {
-    throw new WordPressTransportError(
-      'WORDPRESS_GRAPHQL_URL is not set. Copy .env.example to .env.local.',
-    );
-  }
-  return url;
+  const url = process.env.WORDPRESS_GRAPHQL_URL?.trim();
+  /* The staging endpoint is the default, so the app also runs without a
+     .env.local file. */
+  return url || DEFAULT_GRAPHQL_URL;
 }
 
 function revalidateSeconds(): number {

@@ -22,14 +22,23 @@ production site was only ever read.
 
 ### Blocker found on the staging host
 
-`https://backend.autospajakarta.com/graphql` answers **404**, and WPGraphQL does not
-answer on `index.php` either - the plugin is not reachable on that host. The staging REST
-API only works through `index.php?rest_route=...`, and it does not expose the
-service/location CPTs either.
+`https://backend.autospajakarta.com/graphql` answers **404** - nginx only routes
+WordPress through `index.php`. Both APIs work through that file:
 
-Consequence: `WORDPRESS_GRAPHQL_URL` points at **production** GraphQL, and the article
-APIs point at **production** REST. Both are read-only. The frontend never issues a
-mutation, so production stays untouched.
+```
+POST https://backend.autospajakarta.com/index.php?graphql
+GET  https://backend.autospajakarta.com/index.php?rest_route=/wp/v2
+```
+
+The staging install carries the same 204 articles as the production site, but its
+WPGraphQL schema exposes **no custom post types** (`services`, `serviceBy`,
+`projects`, `locations`, `fAQs` are all absent), so the Phase 2D CPTs are not
+registered there.
+
+Consequence (updated): the CMS origin of the frontend is the **staging** install.
+The article APIs and the GraphQL client read from it, and the production site
+(`autospajakarta.com`) is not queried any more. The service catalogue falls back to
+the static mirror while the CPTs are missing from the staging schema.
 
 ---
 
@@ -100,6 +109,38 @@ Front-end routes built on top of them:
 | `/blog` | listing with category filter + pagination (SSR, `revalidate = 300`) |
 | `/blog/<slug>` | article page, prerendered as SSG for all 204 articles, `revalidate = 300` |
 | `/blog/category/<slug>` | category listing |
+
+### The blog templates
+
+The two blog routes follow the layout of the Agntix template that ships with the
+project (`autospa-web-agntix`):
+
+| Agntix source | AutoSPA component | Used by |
+|---------------|-------------------|---------|
+| `pages/blogs/blog-grid-2-col/BlogGridTwoCol.tsx` + `BlogListBreadCrumb` | `src/components/content/BlogHero.tsx` | `/blog`, `/blog/category/<slug>` |
+| `components/blog/subComponents/BlogGridTwoItem.tsx` | `src/components/content/ArticleCard.tsx` | the card of the listing |
+| `components/blog/BlogListPagination.tsx` | `src/components/content/BlogPagination.tsx` | the pagination of the listing |
+| `pages/blogs/blog-details/BlogDeailsMain.tsx` + `postbox-details-*` | `src/components/content/ArticleHeader.tsx` | `/blog/<slug>` |
+| `components/blog/BlogSidebar*.tsx` | `src/components/content/ArticleSidebar.tsx` | the sidebar of the article |
+| `components/blog/PostboxComment.tsx` | `src/components/content/CommentList.tsx` | the comments of the article |
+| `components/forms/PostboxDetailsForm.tsx` | `src/components/content/CommentForm.tsx` | the reply form of the article |
+
+The Agntix markup is Bootstrap + SCSS (`tp-blog-masonry-item`, `postbox-details-*`,
+`sidebar-widget`), which does not exist in this project, so every block is rebuilt
+with Tailwind and the AutoSPA tokens (`--color-primary-500`).
+
+**The comment form does not write to the CMS.** The WordPress REST API of the origin
+answers `rest_comment_login_required` to an anonymous `POST /wp/v2/comments`, and the
+CMS stays read-only, so the form hands the message to WhatsApp - the channel AutoSPA
+Jakarta already uses for enquiries - instead of posting a comment. The comment *list*
+is read from `GET /wp/v2/comments`, which works.
+
+**The article images come from the media library.** `withArticleMeta()` resolves the
+featured image, the author and the tags of every article with three batched REST
+requests (`/media?include=`, `/users?include=`, `/tags?include=`), so a listing of
+twelve articles costs five requests in total instead of one per article. The library
+keeps a resized copy of every upload, and the card, the cover and the thumbnail pick
+the size that matches their slot.
 
 Each article page emits `BlogPosting` JSON-LD. The sitemap (`src/app/sitemap.ts`) now
 lists the native routes, the 16 mirrored pages, the 18 categories and the 204 articles -

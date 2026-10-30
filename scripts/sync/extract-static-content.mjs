@@ -468,7 +468,7 @@ const manifest = JSON.parse(
 
 await mkdir(OUT_DIR, { recursive: true });
 
-const baseUrl = process.env.WORDPRESS_SITE_URL || 'https://autospajakarta.com';
+const baseUrl = process.env.WORDPRESS_SITE_URL || 'https://backend.autospajakarta.com';
 const only = process.argv.slice(2).filter((arg) => !arg.startsWith('-'));
 
 let written = 0;

@@ -2,7 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import ArticleCard from '@/components/content/ArticleCard';
-import { fetchArticles, fetchCategories, withCategoryNames } from '@/lib/wordpress/rest';
+import BlogHero from '@/components/content/BlogHero';
+import BlogPagination from '@/components/content/BlogPagination';
+import {
+  fetchArticles,
+  fetchCategories,
+  withArticleMeta,
+  withCategoryNames,
+} from '@/lib/wordpress/rest';
 
 export const metadata: Metadata = {
   title: 'Blog & Artikel | AutoSPA Jakarta',
@@ -15,6 +22,14 @@ export const revalidate = 300;
 
 const PER_PAGE = 12;
 
+/**
+ * The article listing.
+ *
+ * The layout is the Agntix `blog-grid-2-col` template: the breadcrumb banner
+ * of `BlogListBreadCrumb`, a two column grid of `BlogGridTwoItem` cards and
+ * the `BlogListPagination` under it. The content comes from the WordPress
+ * REST API of the origin, read-only.
+ */
 export default async function BlogPage({
   searchParams,
 }: {
@@ -36,7 +51,7 @@ export default async function BlogPage({
     search,
   });
 
-  const articles = await withCategoryNames(result.articles);
+  const articles = await withArticleMeta(await withCategoryNames(result.articles));
 
   const buildHref = (target: number) => {
     const query = new URLSearchParams();
@@ -48,26 +63,17 @@ export default async function BlogPage({
   };
 
   return (
-    <div className="min-h-screen bg-background-8 pt-24">
-      <section className="relative px-6 py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-6xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary-500">
-            Blog
-          </span>
-          <h1 className="mt-4 text-4xl font-bold text-white md:text-5xl">
-            Artikel & Insights
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-white/70">
-            Panduan praktis seputar detailing, coating, dan perawatan kendaraan dari tim AutoSPA.
-          </p>
-        </div>
-      </section>
+    <>
+      <BlogHero
+        eyebrow="News & Insight"
+        title="Cerita, panduan, dan insights"
+        description="Panduan praktis seputar detailing, coating, dan perawatan kendaraan dari tim AutoSPA Jakarta."
+      />
 
-      <section className="px-6 pb-20">
-        <div className="mx-auto max-w-6xl">
+      <section id="down" className="bg-background-8 pb-24 pt-8">
+        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
           {/* Category filter */}
-          <nav className="mb-10 flex flex-wrap gap-2">
+          <nav className="mb-12 flex flex-wrap items-center gap-2">
             <Link
               href="/blog"
               className={`rounded-full border px-4 py-2 text-sm transition-colors ${
@@ -98,39 +104,21 @@ export default async function BlogPage({
               Belum ada artikel yang cocok.
             </p>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            /* The two column grid of the Agntix `blog-grid-2-col` template. */
+            <div className="grid gap-x-8 gap-y-16 md:grid-cols-2">
               {articles.map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))}
             </div>
           )}
 
-          {/* Pagination */}
-          {result.totalPages > 1 ? (
-            <nav className="mt-12 flex items-center justify-center gap-3">
-              {page > 1 ? (
-                <Link
-                  href={buildHref(page - 1)}
-                  className="rounded-full border border-white/15 px-5 py-2 text-sm text-white/80 transition-colors hover:border-primary-500/60"
-                >
-                  Sebelumnya
-                </Link>
-              ) : null}
-              <span className="text-sm text-white/60">
-                Halaman {page} dari {result.totalPages} ({result.total} artikel)
-              </span>
-              {page < result.totalPages ? (
-                <Link
-                  href={buildHref(page + 1)}
-                  className="rounded-full border border-white/15 px-5 py-2 text-sm text-white/80 transition-colors hover:border-primary-500/60"
-                >
-                  Berikutnya
-                </Link>
-              ) : null}
-            </nav>
-          ) : null}
+          <BlogPagination
+            page={page}
+            totalPages={result.totalPages}
+            buildHref={buildHref}
+          />
         </div>
       </section>
-    </div>
+    </>
   );
 }

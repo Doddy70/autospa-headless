@@ -5,10 +5,17 @@
  * than escaped - the same decision the `RichText` component makes. Styling
  * lives in `src/styles/article.css`.
  */
-export default function ArticleBody({ html }: { html: string }) {
+export default function ArticleBody({
+  html,
+  className = '',
+}: {
+  html: string;
+  /** Extra classes; the reading measure can be overridden with `max-w-none`. */
+  className?: string;
+}) {
   return (
     <div
-      className="article-body mx-auto max-w-3xl"
+      className={`article-body mx-auto max-w-3xl ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

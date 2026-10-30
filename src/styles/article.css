@@ -4,12 +4,25 @@
  * The content is plain Gutenberg HTML (headings, paragraphs, lists, tables,
  * images, blockquotes). Tailwind's preflight removes the browser defaults, so
  * the reading experience has to be re-established here.
+ *
+ * The measurements follow the Agntix `postbox-details-text` block of the
+ * `blog-details` template: 17px, line-height 1.6, weight 500, white at 70%.
  */
 
 .article-body {
   color: var(--color-accent, rgba(255, 255, 255, 0.72));
-  font-size: 1rem;
-  line-height: 1.85;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* The base layer styles every `p` on its own, so the reading measure of the
+   article has to be restated for the paragraphs of the body. */
+.article-body p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .article-body > * + * {
@@ -18,7 +31,9 @@
 
 .article-body h2,
 .article-body h3,
-.article-body h4 {
+.article-body h4,
+.article-body h5,
+.article-body h6 {
   color: #fff;
   font-weight: 700;
   line-height: 1.3;
@@ -33,7 +48,9 @@
   font-size: 1.25rem;
 }
 
-.article-body h4 {
+.article-body h4,
+.article-body h5,
+.article-body h6 {
   font-size: 1.05rem;
 }
 

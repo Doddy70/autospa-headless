@@ -17,9 +17,9 @@ const CACHE = path.resolve('.cache/wp');
 const OUT = path.resolve('src/content');
 const PAGES_OUT = path.join(OUT, 'pages');
 
-const SITE = 'https://autospajakarta.com';
+const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://backend.autospajakarta.com';
 
-/** Drop the production origin from an absolute URL so it resolves locally. */
+/** Drop the WordPress origin from an absolute URL so it resolves locally. */
 function localise(value) {
   return value.split(SITE).join('');
 }

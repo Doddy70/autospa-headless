@@ -19,7 +19,7 @@ import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://autospajakarta.com';
+const SITE = process.env.WORDPRESS_SITE_URL ?? 'https://backend.autospajakarta.com';
 const CACHE = path.resolve('.cache/wp');
 const PUBLIC = path.resolve('public');
 const CONCURRENCY = 8;
@@ -28,10 +28,11 @@ const failures = [];
 let downloaded = 0;
 let skipped = 0;
 
-/** Map an absolute production URL to its local path inside public/. */
+/** Map an absolute WordPress URL to its local path inside public/. */
 function localPathFor(url) {
   const u = new URL(url);
-  if (u.host !== 'autospajakarta.com') return null;
+  /* Both the staging and the production host keep the same upload paths. */
+  if (!u.host.endsWith('autospajakarta.com')) return null;
   return path.join(PUBLIC, decodeURIComponent(u.pathname).replace(/^\/+/, ''));
 }
 

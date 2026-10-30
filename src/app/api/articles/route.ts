@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 
-import { fetchArticles, fetchCategories, withCategoryNames } from '@/lib/wordpress/rest';
+import {
+  fetchArticles,
+  fetchCategories,
+  withArticleMeta,
+  withCategoryNames,
+} from '@/lib/wordpress/rest';
 
 export const revalidate = 300;
 
@@ -64,7 +69,7 @@ export async function GET(request: Request) {
       order,
     });
 
-    const articles = await withCategoryNames(result.articles);
+    const articles = await withArticleMeta(await withCategoryNames(result.articles));
 
     return NextResponse.json({
       articles,
