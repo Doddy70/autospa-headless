@@ -48,6 +48,15 @@ export interface Service {
 	image: string;
 	/** Large image used on the single service page. */
 	heroImage: string;
+	/**
+	 * The clip that opens the single service page.
+	 *
+	 * The Agntix portfolio detail layout opens with a video; the service
+	 * pages reuse the footage of `public/videos`. A wide clip (16:9) is used
+	 * on every service, because the frame of the template is a wide one and a
+	 * vertical clip would be cropped to a sliver.
+	 */
+	video: string;
 	gallery: string[];
 	packages: ServicePackage[];
 	/** Facts that are not tied to a package. */
@@ -71,6 +80,7 @@ export const SERVICES: Service[] = [
 		icon: 'sparkles',
 		image: `${UPLOADS}/2026/05/Premium-Wash.jpg`,
 		heroImage: `${UPLOADS}/2025/07/Premium-Car-Wash-Hero4.jpg`,
+		video: '/videos/car2.mp4',
 		gallery: [
 			`${UPLOADS}/2025/07/Premium-Car-Wash-Hero4.jpg`,
 			`${UPLOADS}/2026/10/washme.jpg`,
@@ -141,6 +151,7 @@ export const SERVICES: Service[] = [
 		icon: 'car',
 		image: `${UPLOADS}/2024/08/Slider-3.jpg`,
 		heroImage: `${UPLOADS}/2024/08/Slider-3.jpg`,
+		video: '/videos/ferarri_wide.mp4',
 		gallery: [
 			`${UPLOADS}/2024/08/Slider-3.jpg`,
 			`${UPLOADS}/2024/08/Slider-45.jpg`,
@@ -224,6 +235,7 @@ export const SERVICES: Service[] = [
 		icon: 'shield',
 		image: `${UPLOADS}/2024/08/Slider-45.jpg`,
 		heroImage: `${UPLOADS}/2024/08/Slider-45.jpg`,
+		video: '/videos/hero.mp4',
 		gallery: [
 			`${UPLOADS}/2024/08/Slider-45.jpg`,
 			`${UPLOADS}/2025/11/Auto-Detailing-1.jpg`,
@@ -317,6 +329,7 @@ export const SERVICES: Service[] = [
 		icon: 'lock',
 		image: `${UPLOADS}/2026/05/PPF.jpg`,
 		heroImage: `${UPLOADS}/2026/05/PPF.jpg`,
+		video: '/videos/hero_video.mp4',
 		gallery: [
 			`${UPLOADS}/2026/05/PPF.jpg`,
 			`${UPLOADS}/2025/07/choose-1.png`,
@@ -386,6 +399,7 @@ export const SERVICES: Service[] = [
 		icon: 'droplet',
 		image: `${UPLOADS}/2026/05/Engine-BAy.jpg`,
 		heroImage: `${UPLOADS}/2026/05/Engine-BAy.jpg`,
+		video: '/videos/buat_section_videol.mp4',
 		gallery: [
 			`${UPLOADS}/2026/05/Engine-BAy.jpg`,
 			`${UPLOADS}/2026/05/6-1.jpg`,
@@ -411,6 +425,7 @@ export const SERVICES: Service[] = [
 		icon: 'wrench',
 		image: `${UPLOADS}/2026/05/Anti-Rust-1.jpg`,
 		heroImage: `${UPLOADS}/2026/05/Anti-Rust-1.jpg`,
+		video: '/videos/Rust_Protection.mp4',
 		gallery: [
 			`${UPLOADS}/2026/05/Anti-Rust-1.jpg`,
 			`${UPLOADS}/2026/05/5-4.jpg`,

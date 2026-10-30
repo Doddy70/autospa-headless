@@ -10,7 +10,7 @@ const footerLinks = [
       { label: 'Premium 360° PPF', href: '/services/premium-360-ppf' },
       { label: 'Engine & Glass', href: '/services/engine-glass' },
       { label: 'Rust Protection', href: '/services/rust-protection' },
-      { label: 'All Services', href: '/our-services' },
+      { label: 'All Services', href: '/services' },
     ],
   },
   {

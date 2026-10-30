@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next';
 
-import { SERVICES } from '@/data/services';
 import { NATIVE_SLUGS, pages } from '@/lib/wordpress/pages';
 import { fetchArticles, fetchCategories } from '@/lib/wordpress/rest';
+import { listServiceCards } from '@/lib/services/catalog';
 
 export const revalidate = 3600;
 
@@ -12,7 +12,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
     { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/our-services`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/locations`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/reservasi`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
@@ -25,10 +24,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
   ];
 
-  // Service pages - the catalogue is static, so they are always current.
-  for (const service of SERVICES) {
+  // Service pages - read from the catalogue, so a service that only exists
+  // in WordPress is listed as well.
+  for (const service of await listServiceCards()) {
     entries.push({
-      url: `${baseUrl}/services/${service.slug}`,
+      url: `${baseUrl}${service.href}`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,

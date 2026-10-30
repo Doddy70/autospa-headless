@@ -1,0 +1,65 @@
+/* ============================================================
+   ServiceVideoSection - scoped styles
+   Ported from the Agntix template
+   `public/assets/scss/layout/pages/_portfolio.scss`
+   (`.project-details-video`, `.video-progress-btn-wrap`,
+   `.project-details-video-overlay`)
+   ============================================================ */
+
+/*
+ * The overlay fades the pinned video into the page background.
+ *
+ * The template paints the fade on `::after` of the overlay: it starts
+ * transparent at the top of the overlay and reaches the page background at
+ * 26.67% of its height. The overlay scrolls up over the pinned video, so the
+ * video dissolves into the background while the facts and the title arrive.
+ */
+.overlay {
+	position: relative;
+	z-index: 1;
+}
+
+.overlay::after {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 106%;
+	content: '';
+	z-index: -1;
+	background: linear-gradient(
+		180deg,
+		rgba(18, 18, 18, 0) 1.63%,
+		var(--color-background-8) 26.67%
+	);
+}
+
+/*
+ * The progress bar of the player.
+ *
+ * The `progress` element cannot be styled through Tailwind alone - the filled
+ * part lives in a vendor pseudo element (`::-webkit-progress-value` and
+ * `::-moz-progress-bar`), which is why the whole rule set is here.
+ */
+.progress {
+	appearance: none;
+	border: none;
+	display: inline;
+	height: 3px;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.progress::-webkit-progress-bar {
+	background-color: transparent;
+}
+
+.progress::-webkit-progress-value {
+	background-color: #fff;
+	transition: width 1s linear;
+}
+
+.progress::-moz-progress-bar {
+	background-color: #fff;
+	transition: width 1s linear;
+}

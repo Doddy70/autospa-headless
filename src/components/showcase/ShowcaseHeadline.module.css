@@ -1,0 +1,31 @@
+/* ============================================================
+   ShowcaseHeadline - scoped styles
+   Ported from the Agntix template
+   `public/assets/scss/layout/pages/_project.scss` (`.tp_text_invert_2`)
+   ============================================================ */
+
+/*
+ * The headline is revealed through a two tone gradient that scrolls across
+ * it. The template applies the gradient to the lines that SplitText creates
+ * (`.tp_text_invert_2 > div`), so the same is done here - a class on the
+ * span is not enough, the split lines are the elements that carry the text.
+ *
+ * The gradient runs light -> deep grey. It starts on the right hand side
+ * (`background-position: 100%`, so the words start dark) and scrolls left as
+ * the headline enters the viewport, which is what `backgroundPositionX: 0`
+ * in the animation does.
+ */
+.invert > div {
+	background-image: linear-gradient(
+		to right,
+		var(--color-text-invert-from) 50%,
+		var(--color-text-invert-to) 50%
+	);
+	background-size: 200% 100%;
+	background-position: 100%;
+	padding: 10px 0;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}

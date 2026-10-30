@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // The output directory. It can be moved aside with NEXT_DIST_DIR so a
+  // build does not collide with a dev server that is running at the same time
+  // (two Next.js processes in one checkout corrupt each other's .next).
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   reactStrictMode: true,
 
   // Performance optimizations
@@ -8,7 +12,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   // WordPress media lives on the staging host. Only that host is allowed so a
-  // compromised CMS field cannot turn next/image into an open proxy.
+  // compromised CMS field cannot turn next/image into an open proxy - and so
+  // nothing in this app reads from the production site.
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],

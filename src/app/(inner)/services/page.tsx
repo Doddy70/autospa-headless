@@ -1,119 +1,127 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Car, Droplets, Lock, Shield, Sparkles, Wrench } from 'lucide-react';
 
-import { SERVICES, type ServiceIcon } from '@/data/services';
+import ShowcaseHeadline from '@/components/showcase/ShowcaseHeadline';
+import ShowcaseRows from '@/components/showcase/ShowcaseRows';
+import { CtaBand } from '@/components/ui/CtaBand';
+import { SectionTitle, PageHero } from '@/components/ui/SectionTitle';
+import { PACKAGES } from '@/data/packages';
+import { toAssetUrl } from '@/lib/services/assets';
+import { listServiceCards } from '@/lib/services/catalog';
 
 export const metadata: Metadata = {
-	title: 'Our Services | AutoSPA Jakarta',
+	title: 'Layanan | AutoSPA Jakarta',
 	description:
-		'Premium Wash, Premium Detailing, Premium Coating, Premium 360° PPF, Engine & Glass, dan Rust Protection - AutoSPA Jakarta.',
+		'Premium Wash, Premium Detailing, Premium Coating, Premium 360° PPF, Engine & Glass dan Rust Protection - AutoSPA Jakarta.',
 	alternates: { canonical: '/services' },
 };
 
-const ICONS: Record<ServiceIcon, typeof Shield> = {
-	shield: Shield,
-	sparkles: Sparkles,
-	car: Car,
-	lock: Lock,
-	droplet: Droplets,
-	wrench: Wrench,
-};
+/* The catalogue is re-read every five minutes, so the page follows the CMS
+   as soon as it answers - and picks up the mirror again when it does not. */
+export const revalidate = 300;
 
 /**
- * The static services page.
+ * The service catalogue.
  *
- * The six services and every line of copy come from the production site -
- * see `src/data/services.ts` for the per-service sources.
+ * The Agntix `portfolio-metro` page, re-purposed: the rows of the template
+ * were projects, here they are the services of AutoSPA. The rows are read
+ * from the service catalogue, so the page follows the CMS whenever the
+ * GraphQL endpoint answers and falls back to the published mirror when it
+ * does not.
  */
-export default function ServicesPage() {
+export default async function ServicesPage() {
+	const services = await listServiceCards();
+
 	return (
-		<div className="min-h-screen bg-background-8 pt-24">
-			{/* Hero */}
-			<section className="relative px-6 py-20">
-				<div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-transparent" />
-				<div className="relative mx-auto max-w-6xl text-center">
-					<span className="text-sm font-semibold uppercase tracking-wider text-primary-500">
-						Our Services
-					</span>
-					<h1 className="mt-4 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-						What We Offer
-					</h1>
-					<p className="mx-auto mt-4 max-w-2xl text-lg text-white/70">
-						We always keep up with the times and use the best products for Indonesia
-						weather, providing a long-lasting protection that enhances the appearance and
-						value of the car.
-					</p>
+		<>
+			<PageHero
+				title="Layanan"
+				subtitle="Kami selalu memakai produk terbaik untuk cuaca Indonesia, sehingga perlindungan yang kami terapkan bertahan lama dan mengangkat tampilan serta nilai kendaraan Anda."
+				crumbs={[{ label: 'Layanan' }]}
+			/>
+
+			{/* The catalogue rows */}
+			<section className="design-project-area title-box relative overflow-hidden bg-background-8 pt-[70px] lg:pt-[120px]">
+				<div className="mx-auto w-full max-w-[1536px] px-6 md:px-10">
+					<ShowcaseHeadline
+						first="Layanan"
+						second="Kami"
+						label="Layanan AutoSPA"
+						description="Enam layanan yang kami kerjakan setiap hari - dari wash rutin sampai pelapis anti karat untuk underbody."
+					/>
+
+					<ShowcaseRows items={services} label="Daftar layanan AutoSPA" />
 				</div>
 			</section>
 
-			{/* Service cards */}
-			<section className="px-6 pb-20">
-				<div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{SERVICES.map((service) => {
-						const Icon = ICONS[service.icon];
+			{/* The packages - the other axis of the catalogue: a service can
+			    be delivered through more than one package. */}
+			<section className="bg-background-8 px-6 py-16 md:py-24">
+				<div className="mx-auto max-w-[1536px]">
+					<SectionTitle
+						eyebrow="Paket"
+						title="Paket yang bisa dipilih"
+						description="Dua belas paket yang kami kerjakan, dari coating tier ringan sampai pelapis 360° penuh. Harga mengikuti ukuran kendaraan."
+					/>
 
-						return (
+					<div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+						{PACKAGES.map((servicePackage) => (
 							<article
-								key={service.slug}
-								className="group flex flex-col overflow-hidden rounded-[20px] border border-white/10 bg-background-7 transition-all duration-300 hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-500/10"
+								key={servicePackage.slug}
+								className="flex flex-col overflow-hidden rounded-[20px] border border-white/10 bg-background-7"
 							>
-								<div className="relative aspect-[4/3] overflow-hidden">
-									<img
-										src={service.image}
-										alt={service.title}
-										loading="lazy"
-										className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+								<div className="relative aspect-[16/10] overflow-hidden">
+									<Image
+										src={toAssetUrl(servicePackage.image)}
+										alt={servicePackage.name}
+										width={800}
+										height={500}
+										className="size-full object-cover"
 									/>
-									<div className="absolute inset-0 bg-gradient-to-t from-background-7 via-background-7/30 to-transparent" />
-									<span className="absolute left-5 top-5 rounded-full bg-primary-500 px-3 py-1 text-xs font-bold tracking-wider text-white">
-										{service.number}
-									</span>
 								</div>
 
 								<div className="flex flex-1 flex-col p-6">
-									<div className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-primary-500/10">
-										<Icon className="size-6 text-primary-500" strokeWidth={1.5} />
-									</div>
+									<span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-500/80">
+										{servicePackage.category}
+									</span>
 
-									<h2 className="text-xl font-bold text-white">{service.title}</h2>
-									<p className="mt-3 flex-1 text-sm leading-relaxed text-accent/60">
-										{service.tagline}
+									<h3 className="mt-3 text-lg font-bold text-white">{servicePackage.name}</h3>
+
+									<p className="mt-2 text-sm leading-relaxed text-accent/60">
+										{servicePackage.description}
 									</p>
 
+									{servicePackage.includes.length > 0 ? (
+										<ul className="mt-5 flex-1 space-y-2">
+											{servicePackage.includes.map((item) => (
+												<li key={item} className="text-sm leading-relaxed text-accent/70">
+													{item}
+												</li>
+											))}
+										</ul>
+									) : null}
+
+									{servicePackage.priceFrom ? (
+										<p className="mt-5 text-sm font-semibold text-primary-300">
+											Mulai dari {servicePackage.priceFrom}
+										</p>
+									) : null}
+
 									<Link
-										href={`/services/${service.slug}`}
-										className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-500 transition-colors hover:gap-3"
+										href="/reservasi"
+										className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-500 hover:underline"
 									>
-										Lihat detail
-										<ArrowRight className="size-4" />
+										Cek harga
 									</Link>
 								</div>
 							</article>
-						);
-					})}
+						))}
+					</div>
 				</div>
 			</section>
 
-			{/* CTA */}
-			<section className="relative overflow-hidden border-t border-white/5 px-6 py-20">
-				<div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-transparent to-primary-500/10" />
-				<div className="relative mx-auto max-w-3xl text-center">
-					<h2 className="text-3xl font-bold text-white md:text-4xl">
-						Still have a question? Just ask us anything
-					</h2>
-					<p className="mt-4 text-white/70">
-						Our Service Advisor will recommend the right package for your vehicle.
-					</p>
-					<Link
-						href="/contact"
-						className="btn btn-lg btn-primary group mt-8 inline-flex"
-					>
-						Book Sekarang
-						<ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-					</Link>
-				</div>
-			</section>
-		</div>
+			<CtaBand />
+		</>
 	);
 }
