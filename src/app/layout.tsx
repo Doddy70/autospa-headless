@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Footer from '@/components/shared/footer/Footer';
-import WhatsAppButton from '@/components/shared/WhatsAppButton';
+import Header from '@/components/layout/Header';
+import BeautyCarePopup from '@/components/layout/BeautyCarePopup';
+import { resolvePopupMasterEnabled } from '@/config/popup';
+import { PopupProvider } from '@/context/PopupContext';
 
 // Load Inter font with optimal settings for Core Web Vitals
 const inter = Inter({
@@ -53,6 +56,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // The site wide switch of the admin. It is read on the server, so the
+  // Beauty Care popout can be switched off without a rebuild.
+  const popupEnabled = resolvePopupMasterEnabled();
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AutoRepairShop',
@@ -89,9 +96,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background-8 text-white antialiased">
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <PopupProvider masterEnabled={popupEnabled}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <BeautyCarePopup />
+        </PopupProvider>
       </body>
     </html>
   );
