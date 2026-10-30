@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
 #
-# The deploy script of the AutoSPA frontend (the aaPanel Git Manager runs it
-# after it pulls the repository).
+# The deploy script of the AutoSPA frontend.
 #
-# The panel does the pull - this script does the rest:
+# The aaPanel webhook plugin runs it (the URL of the hook is registered as a
+# webhook of the GitHub repository, so a push to `main` lands here):
 #
-#   1. it makes sure the files that are not in git are in place
-#      (the environment of the production and the mirror of the CMS),
-#   2. it builds the new version next to the live one, so the site keeps
+#   1. it pulls the repository - the directory of the site is the clone,
+#   2. it restores the files that are not in git (the environment of the
+#      production and the mirror of the CMS),
+#   3. it builds the new version next to the live one, so the site keeps
 #      serving the old build while the new one is built,
-#   3. it checks the new build before it is allowed to go live,
-#   4. it swaps the two builds and restarts pm2,
-#   5. if the site does not come up, it swaps them back.
+#   4. it checks the build before it is allowed to go live,
+#   5. it swaps the two builds and restarts the application,
+#   6. if the site does not come up, it swaps them back.
 #
-# The path of the site directory is taken from the first argument, or from
-# the current directory (the panel runs the script inside the site).
+# The path of the repository is taken from the first argument, or from the
+# current directory.
 
 set -uo pipefail
 
+# The branch that is deployed.
+BRANCH="${BRANCH:-main}"
+
 # The directory of the repository. The panel clones the repository into the
-# directory of the site and pulls it in place, so this is where the build
-# lives.
+# directory of the site, so this is where the build lives.
 if [ -n "${1:-}" ]; then
 	SITE_DIR="$1"
 elif [ -d ".git" ]; then
@@ -53,10 +56,19 @@ APP_PORT=8089
 log() { printf '[deploy] %s\n' "$*"; }
 fail() { printf '[deploy] ERROR: %s\n' "$*" >&2; exit 1; }
 
-log "the site directory is $SITE_DIR"
+log "the repository is $SITE_DIR"
 
 # ───────────────────────────────────────────────
-# 1. The files that are not in git.
+# 1. The pull.
+# ───────────────────────────────────────────────
+log "pulling the branch $BRANCH"
+su -s /bin/bash www -c "cd '$SITE_DIR' && git fetch origin '$BRANCH' --prune && git reset --hard 'origin/$BRANCH'" \
+	|| fail "the pull failed"
+COMMIT="$(su -s /bin/bash www -c "cd '$SITE_DIR' && git rev-parse --short HEAD")"
+log "the commit is $COMMIT"
+
+# ───────────────────────────────────────────────
+# 2. The files that are not in git.
 # ───────────────────────────────────────────────
 if [ ! -f .env.production ] && [ -f "$BACKUP_DIR/.env.production" ]; then
 	log "restoring the environment of the production"
@@ -69,12 +81,13 @@ if [ ! -d public/wp-content ] && [ -d "$BACKUP_DIR/wp-content" ]; then
 	cp -a "$BACKUP_DIR/wp-content" public/wp-content
 fi
 
-# The files that were restored belong to the user of the application.
+# The files of the pull and the ones that were restored belong to the user
+# of the application.
+chown -R www:www . 2>/dev/null || true
 chown www:www .env.production 2>/dev/null || true
-chown -R www:www public/wp-content 2>/dev/null || true
 
 # ───────────────────────────────────────────────
-# 2. The build - next to the live one.
+# 3. The build - next to the live one.
 # ───────────────────────────────────────────────
 log "installing the dependencies"
 su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$NODE_BIN:\$PATH && npm ci" || fail "npm ci failed"
@@ -86,7 +99,7 @@ su -s /bin/bash www -c "cd '$SITE_DIR' && export PATH=$NODE_BIN:\$PATH && NEXT_D
 [ -f .next.new/BUILD_ID ] || fail "the build did not produce a BUILD_ID"
 
 # ───────────────────────────────────────────────
-# 3. The check.
+# 4. The check.
 # ───────────────────────────────────────────────
 INDEX_HTML="$SITE_DIR/.next.new/server/app/index.html"
 [ -f "$INDEX_HTML" ] || fail "the build did not produce the homepage"
@@ -97,7 +110,7 @@ done
 log "the build carries every marker"
 
 # ───────────────────────────────────────────────
-# 4. The swap - the new build goes live.
+# 5. The swap - the new build goes live.
 # ───────────────────────────────────────────────
 log "swapping the build"
 rm -rf .next.prev
@@ -105,7 +118,7 @@ if [ -d .next ]; then mv .next .next.prev; fi
 mv .next.new .next
 chown -R www:www .next
 
-# The pm2 application. It is created when it does not exist yet, and it is
+# The pm2 application - it is created when it does not exist yet, and it is
 # replaced when it still points at the old directory (the reset).
 PM2_EXISTS=0
 if su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 describe autospa-web" >/dev/null 2>&1; then
@@ -129,7 +142,7 @@ else
 fi
 
 # ───────────────────────────────────────────────
-# 5. The health check - and the way back.
+# 6. The health check - and the way back.
 # ───────────────────────────────────────────────
 log "waiting for the site to answer"
 OK=0
@@ -150,4 +163,5 @@ fi
 log "the site answers with 200"
 
 rm -rf .next.prev
-log "the deployment is done"
+log "the deployment of $COMMIT is done"
+log "status: success"
