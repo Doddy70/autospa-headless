@@ -73,7 +73,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref }}
+          # The ref of a manual deployment, or the ref of the push.
+          ref: ${{ inputs.ref || github.ref }}
           # The full history is not needed - the server receives the files.
           fetch-depth: 1
 

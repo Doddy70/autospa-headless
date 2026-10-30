@@ -310,10 +310,38 @@ Testimonial:
 | A WPGraphQL image field of a `wysiwyg`/`textarea` field needs the markup stripped | Medium | Fixed - `toPlainText()` in `src/lib/wordpress/html.ts`; the CMS stores HTML, the presentation layer prints text |
 | An attachment inherits the visibility of its parent | Medium | If the parent is of a type the schema does not expose, the attachment is invisible to GraphQL and every ACF image field that points at it resolves to null - see `acf-json/repair-media-parents.php` |
 
+## Deployment (CI/CD)
+
+A push to `main` builds the site on the production server, checks it and puts
+it live. One engine, two callers:
+
+```bash
+.github/workflows/deploy.yml      the push to main (GitHub Actions -> ssh)
+scripts/deploy/aapanel-deploy.sh the webhook of aaPanel (the server pulls)
+scripts/deploy/deploy.sh          the engine: build, check, switch, roll back
+scripts/deploy/verify-deploy.sh   the check of the public site
+```
+
+The live site is never built over: every deployment gets its own directory
+under `releases/`, `current` is switched to it atomically, and the previous
+one stays on disk as the way back. pm2 runs `run.sh`, a stable path that
+enters the release `current` points at.
+
+| Route | Source |
+|-------|--------|
+| `https://autospajakarta.com` | the release `current` points at |
+| `/www/wwwroot/autospa-frontend` | the root of the deployment (`releases/`, `shared/`, `current`) |
+| `/www/wwwroot/autospajakarta.com` | the clone of the repository (the source, not the live site) |
+
+The settings of the repository (secret `DEPLOY_SSH_KEY`, variables
+`DEPLOY_SSH_HOST`, `DEPLOY_SSH_USER`, `DEPLOY_SSH_PORT`, `APP_ROOT`) and the
+path through aaPanel are in `docs/deployment.md`.
+
 ## Documentation
 
 - **Agent onboarding / project state:** `docs/agent-onboarding.md`
 - **Content Sync (Phase 2E):** `docs/phase-2e-headless-content-sync.md`
+- **Deployment (CI/CD):** `docs/deployment.md`
 - **Security — Elementor Pro backdoor:** `docs/security-elementor-pro-nulled-backdoor.md`
 - **Architecture evaluation — Agntix:** `docs/agntix-standalone-evaluation.md`
 - **Agntix "Projects" architecture:** `docs/agntix-projects-architecture.md`
