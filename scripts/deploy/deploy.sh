@@ -232,7 +232,10 @@ esac
 # How many processes carry the name. Two of them would fight over the port,
 # so the duplicates are removed before the application is started.
 PM2_COUNT="$(su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 jlist" 2>/dev/null \
-	| grep -o '"name":"autospa-web"' | wc -l | tr -d ' ' || true)"
+	| node -e 'let s=""; process.stdin.on("data", d => s += d).on("end", () => {
+		try { console.log(JSON.parse(s).filter(p => p && p.name === "autospa-web").length) }
+		catch (e) { console.log(0) }
+	})' || true)"
 case "$PM2_COUNT" in
 	'' | *[!0-9]*) PM2_COUNT=0 ;;
 esac
@@ -249,7 +252,10 @@ fi
 
 if [ -z "$PM2_SCRIPT" ]; then
 	log "starting the application"
-	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 start '$RUN_SCRIPT' --name autospa-web --interpreter /bin/bash && pm2 save" \
+	# The working directory is given to pm2 on purpose: it inherits the one
+	# of the shell otherwise, and a directory the user `www` may not enter
+	# kills the process the moment it starts.
+	su -s /bin/bash www -c "export PATH=$PM2_BIN:\$PATH; pm2 start '$RUN_SCRIPT' --name autospa-web --interpreter /bin/bash --cwd '$APP_ROOT' && pm2 save" \
 		|| fail "the application could not be started"
 else
 	log "restarting the application"
