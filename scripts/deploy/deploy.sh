@@ -113,22 +113,45 @@ case "$SOURCE_DIR/" in
 	*)
 		log "copying the source into the release $RELEASE_NAME"
 		mkdir -p "$RELEASE_DIR"
-		rsync -a --delete \
-		--exclude '.git' \
-		--exclude 'node_modules' \
-		--exclude '.next' \
-		--exclude '.next-*' \
-		--exclude '.cache' \
-		--exclude '.remember' \
-		--exclude '.claude' \
-		--exclude 'tmp' \
-		--exclude 'test-results' \
-		--exclude 'playwright-report' \
-		--exclude 'tsconfig.tsbuildinfo' \
-		--exclude '.env.local' \
-		--exclude '.env.production' \
-		--exclude '*.tar.gz' \
-		"$SOURCE_DIR/" "$RELEASE_DIR/"
+		if command -v rsync >/dev/null 2>&1; then
+			rsync -a --delete \
+				--exclude '.git' \
+				--exclude 'node_modules' \
+				--exclude '.next' \
+				--exclude '.next-*' \
+				--exclude '.cache' \
+				--exclude '.remember' \
+				--exclude '.claude' \
+				--exclude 'tmp' \
+				--exclude 'test-results' \
+				--exclude 'playwright-report' \
+				--exclude 'tsconfig.tsbuildinfo' \
+				--exclude '.env.local' \
+				--exclude '.env.production' \
+				--exclude '*.tar.gz' \
+				"$SOURCE_DIR/" "$RELEASE_DIR/"
+		else
+			# rsync is not everywhere - a plain copy has to do then.
+			log "rsync is not on this machine - the source is copied"
+			rm -rf "$RELEASE_DIR"
+			mkdir -p "$RELEASE_DIR"
+			tar -C "$SOURCE_DIR" \
+				--exclude './.git' \
+				--exclude './node_modules' \
+				--exclude './.next' \
+				--exclude './.next-*' \
+				--exclude './.cache' \
+				--exclude './.remember' \
+				--exclude './.claude' \
+				--exclude './tmp' \
+				--exclude './test-results' \
+				--exclude './playwright-report' \
+				--exclude './tsconfig.tsbuildinfo' \
+				--exclude './.env.local' \
+				--exclude './.env.production' \
+				--exclude '*.tar.gz' \
+				-cf - . | tar -C "$RELEASE_DIR" -xf -
+		fi
 		;;
 esac
 chown -R www:www "$RELEASE_DIR"

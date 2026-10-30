@@ -95,26 +95,27 @@ jobs:
 
       - name: Push the code into the new release
         run: |
-          ssh -i ~/.ssh/deploy_key -p "${DEPLOY_SSH_PORT}" \
-            "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}" \
-            "mkdir -p '${APP_ROOT}/releases/${{ steps.release.outputs.name }}'"
-          rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p ${DEPLOY_SSH_PORT}" \
-            --exclude '.git' \
-            --exclude 'node_modules' \
-            --exclude '.next' \
-            --exclude '.next-*' \
-            --exclude '.cache' \
-            --exclude '.remember' \
-            --exclude '.claude' \
-            --exclude 'tmp' \
-            --exclude 'test-results' \
-            --exclude 'playwright-report' \
-            --exclude 'tsconfig.tsbuildinfo' \
-            --exclude '.env.local' \
-            --exclude '.env.production' \
-            --exclude '*.tar.gz' \
-            ./ "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}:${APP_ROOT}/releases/${{ steps.release.outputs.name }}/"
+          NAME="${{ steps.release.outputs.name }}"
+          # A tar over ssh - the runner and the server always have it, and
+          # the release arrives exactly as the checkout is.
+          tar -czf - \
+            --exclude='./.git' \
+            --exclude='./node_modules' \
+            --exclude='./.next' \
+            --exclude='./.next-*' \
+            --exclude='./.cache' \
+            --exclude='./.remember' \
+            --exclude='./.claude' \
+            --exclude='./tmp' \
+            --exclude='./test-results' \
+            --exclude='./playwright-report' \
+            --exclude='./tsconfig.tsbuildinfo' \
+            --exclude='./.env.local' \
+            --exclude='./.env.production' \
+            --exclude='*.tar.gz' \
+            . | ssh -i ~/.ssh/deploy_key -p "${DEPLOY_SSH_PORT}" \
+              "${DEPLOY_SSH_USER}@${DEPLOY_SSH_HOST}" \
+              "mkdir -p '${APP_ROOT}/releases/${NAME}' && tar -xzf - -C '${APP_ROOT}/releases/${NAME}'"
 
       - name: Build, verify and switch the release
         run: |
